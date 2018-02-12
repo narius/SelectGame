@@ -99,3 +99,6 @@ ENV/
 
 # mypy
 .mypy_cache/
+*.sqlite3
+Sites/__pycache__/settings.cpython-35.pyc
+*.pyc
