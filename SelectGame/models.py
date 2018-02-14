@@ -26,6 +26,15 @@ class model_game(models.Model):
 #toppings = models.ManyToManyField(Topping)
 
 #Model for ratings
+class model_rating(models.Model):
+    game=models.ForeignKey(model_game)
+    user=models.ForeignKey(User)
+    rating=models.IntegerField()
+    class Meta:
+        verbose_name=gettext("rating")
+        verbose_name_plural=gettext("ratings")
+    def __str__(self):
+        return self.user+" "+self.game+" "+str(self.rating)
 
 #Model for location
 class model_location(models.Model):
