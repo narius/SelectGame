@@ -6,30 +6,29 @@ from  django.contrib.auth.models import User
 #Model for categories
 class model_category(models.Model):
     name = models.CharField(max_length=30,
-                            verbose_name="Name")
+                            verbose_name=gettext("name"))
     class Meta:
-        verbose_name = "category"
-        verbose_name_plural = "categories"
+        verbose_name = gettext("category")
+        verbose_name_plural = gettext("categories")
     def __str__(self):
         return self.name
 
 #Model for games
 class model_game(models.Model):
-    name=models.CharField(max_length=30, verbose_name="Name")
+    name=models.CharField(max_length=30, verbose_name=gettext("name"))
     category=models.ManyToManyField(model_category)
-    comment=models.TextField(verbose_name="Comment")
+    comment=models.TextField(verbose_name=gettext("Comment"))
     class Meta:
         verbose_name = gettext("game")
         verbose_name_plural = gettext("games")
     def __str__(self):
         return self.name
-#toppings = models.ManyToManyField(Topping)
 
 #Model for ratings
 class model_rating(models.Model):
     game=models.ForeignKey(model_game, on_delete=models.CASCADE)
     user=models.ForeignKey(User, on_delete=models.CASCADE)
-    rating=models.IntegerField()
+    rating=models.IntegerField(verbose_name=gettext("rating"))
     class Meta:
         verbose_name=gettext("rating")
         verbose_name_plural=gettext("ratings")
