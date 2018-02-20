@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'SelectGame.apps.SelectgameConfig',
+    'bootstrap3',
 ]
 
 MIDDLEWARE = [
