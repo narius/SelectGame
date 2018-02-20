@@ -44,3 +44,17 @@ class model_location(models.Model):
         verbose_name_plural=gettext("Address")
     def __str__(self):
         return str(self.owner)+"-"+str(self.address)
+
+#Model for an event.
+class model_event(models.Model):
+    owner=models.ForeignKey(User, on_delete=models.CASCADE, related_name="event_owner")
+    participants=models.ManyToManyField(User, verbose_name=gettext("participants"), related_name="event_participants")
+    date=models.DateTimeField(verbose_name=gettext("date"))
+    games=models.ManyToManyField(model_game, verbose_name=gettext("games"))
+    location=models.ForeignKey(model_location, on_delete=models.CASCADE, verbose_name=gettext("location"))
+    is_public=models.BooleanField(verbose_name=gettext("public"))
+    class Meta:
+        verbose_name=gettext("event")
+        verbose_name_plural=gettext("events")
+    def __str__(self):
+        return str(self.owner)+" "+str(self.date)
