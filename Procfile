@@ -1,1 +1,1 @@
-web: gunicorn selectgame.wsgi --log-file 
+python manage.py runserver
