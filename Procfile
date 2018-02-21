@@ -1,1 +1,1 @@
-web: gunicorn selectgame.wsgi --log-file -- workers 1 --preload
+web: gunicorn selectgame.wsgi --log -- workers 1 --preload
