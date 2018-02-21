@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'Sites.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
-DEBUG = dj_database_url.config('DEBUG', default=False, cast=bool)
+DEBUG = dj_database_url.config('DEBUG', default=False)
 DATABASES = {
     'default': dj_database_url.config(
         default=dj_database_url.config('DATABASE_URL')
