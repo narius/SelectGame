@@ -1,1 +1,1 @@
-web: gunicorn SelectGame.wsgi -- workers 1 --preload
+web: gunicorn Sites.wsgi -- workers 1 --preload
