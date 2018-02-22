@@ -78,11 +78,12 @@ WSGI_APPLICATION = 'Sites.wsgi.application'
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
 DEBUG = dj_database_url.config('DEBUG', default=False)
-DATABASES = {
-    'default': dj_database_url.config(
-        default=dj_database_url.config('DATABASE_URL')
-    )
-}
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         default=dj_database_url.config('DATABASE_URL')
+#     )
+# }
+DATABASES['default'] = dj_database_url.config()
 DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql_psycopg2'
 # Update database configuration with $DATABASE_URL.
 #db_from_env = dj_database_url.config(conn_max_age=500)
