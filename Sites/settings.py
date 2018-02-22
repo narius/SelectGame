@@ -83,9 +83,9 @@ DEBUG = dj_database_url.config('DEBUG', default=False)
 #         default=dj_database_url.config('DATABASE_URL')
 #     )
 # }
-DATABASES['default'] = dj_database_url.config(conn_max_age=600)
+DATABASES['default'] = dj_database_url.config(engine='postgresql',conn_max_age=600)
 #DATABASES['default'] = dj_database_url.config()
-DATABASES['default']['ENGINE'] = 'postgresql'
+#DATABASES['default']['ENGINE'] = 'postgresql'
 # Update database configuration with $DATABASE_URL.
 #db_from_env = dj_database_url.config(conn_max_age=500)
 #DATABASES['default'].update(db_from_env)
