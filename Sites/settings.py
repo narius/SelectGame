@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/2.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.0/ref/settings/
 """
-
+import django_heroku
 import os
 import dj_database_url
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -20,14 +20,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-#SECRET_KEY = 'de7s1%*qgi=%-ihlxuh%415&a0j#1ml6rf_y4g%4222gf@06a9'
-SECRET_KEY = dj_database_url.config('SECRET_KEY')
+SECRET_KEY = 'de7s1%*qgi=%-ihlxuh%415&a0j#1ml6rf_y4g%4222gf@06a9'
+#SECRET_KEY = dj_database_url.config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-#ALLOWED_HOSTS = []
-ALLOWED_HOSTS = dj_database_url.config('ALLOWED_HOSTS', cast=Csv())
+ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -77,19 +76,12 @@ WSGI_APPLICATION = 'Sites.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
-DEBUG = dj_database_url.config('DEBUG', default=False)
-# DATABASES = {
-#     'default': dj_database_url.config(
-#         default=dj_database_url.config('DATABASE_URL')
-#     )
-# }
-DATABASES['default'] = dj_database_url.config(engine='postgresql',conn_max_age=600)
-#DATABASES['default'] = dj_database_url.config()
-#DATABASES['default']['ENGINE'] = 'postgresql'
-# Update database configuration with $DATABASE_URL.
-#db_from_env = dj_database_url.config(conn_max_age=500)
-#DATABASES['default'].update(db_from_env)
-
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
 
@@ -143,5 +135,5 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 # Configure Django App for Heroku.
-import django_heroku
+
 django_heroku.settings(locals())
