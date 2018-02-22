@@ -83,7 +83,8 @@ DEBUG = dj_database_url.config('DEBUG', default=False)
 #         default=dj_database_url.config('DATABASE_URL')
 #     )
 # }
-DATABASES['default'] = dj_database_url.config()
+DATABASES['default'] = dj_database_url.config(conn_max_age=600)
+#DATABASES['default'] = dj_database_url.config()
 DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql_psycopg2'
 # Update database configuration with $DATABASE_URL.
 #db_from_env = dj_database_url.config(conn_max_age=500)
