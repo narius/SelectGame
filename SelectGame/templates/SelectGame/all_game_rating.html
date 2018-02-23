@@ -11,14 +11,14 @@
 <table class="table table-striped">
 	<tr>
 		<th>{% trans "Name" %}</th>
-		<th>{% trans "User" %}</th>
+		<th>{% trans "Number of users" %}</th>
 		<th>{% trans "Rating" %}</th>
 	</tr>
-  {% for rating in ratings.all %}
+  {% for rating in ratings %}
 		<tr>
-			<td>{{rating.game}}</td>
-      <td>{{rating.user}}</td>
-      <td>{{rating.rating}}</td>
+			<td>{{rating.0}}</td>
+      <td>{{rating.2}}</td>
+      <td>{{rating.1}}</td>
 		</tr>
   {% endfor %}
 </table>
