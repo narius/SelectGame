@@ -3,6 +3,7 @@ import numpy
 from .models import model_rating
 from .models import model_game
 class rating_functions():
+    #Function to calulate the average for games
     def mean_rating_per_game(games):
         mean_rating_per_game=[]
         for game in games:
