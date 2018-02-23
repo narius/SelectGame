@@ -17,7 +17,7 @@ class model_category(models.Model):
 class model_game(models.Model):
     name=models.CharField(max_length=30, verbose_name=gettext("name"))
     category=models.ManyToManyField(model_category)
-    comment=models.TextField(verbose_name=gettext("Comment"))
+    comment=models.TextField(verbose_name=gettext("Comment"), blank=True)
     class Meta:
         verbose_name = gettext("game")
         verbose_name_plural = gettext("games")
@@ -58,3 +58,13 @@ class model_event(models.Model):
         verbose_name_plural=gettext("events")
     def __str__(self):
         return str(self.owner)+" "+str(self.date)
+
+#A model for games that a person owns
+class model_game_library(models.Model):
+    owner=models.ForeignKey(User, on_delete=models.CASCADE, related_name="game_owner")
+    games=models.ManyToManyField(model_game, verbose_name=gettext("games"))
+    class Meta:
+        verbose_name=gettext("game library")
+        verbose_name_plural=gettext("game library")
+    def __str__(self):
+        return gettext("library")+" "+str(self.owner)
