@@ -25,6 +25,7 @@
         <div id="navbar container" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li><a href="{% url 'selectgame:index' %}">Hem</a></li>
+            <li><a href="{% url 'selectgame:all_game_rating' %}">Alla betyg</a></li>
 			{% if user.is_authenticated %}
 				<li><a href="{% url 'selectgame:index' %}">Logga ut</a></li>
 			{% else %}

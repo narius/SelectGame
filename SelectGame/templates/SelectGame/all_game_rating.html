@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{{ title }}{% endblock %}
+<div class="row">
+{% block content %}
+{% if message_length > 0%}
+	<div class="alert alert-danger" role="alert">
+		{{message}}
+	</div>
+{%endif%}
+<table class="table table-striped">
+	<tr>
+		<th>{% trans "Name" %}</th>
+		<th>{% trans "User" %}</th>
+		<th>{% trans "Rating" %}</th>
+	</tr>
+  {% for rating in ratings.all %}
+		<tr>
+			<td>{{rating.game}}</td>
+      <td>{{rating.user}}</td>
+      <td>{{rating.rating}}</td>
+		</tr>
+  {% endfor %}
+</table>
+{% endblock %}
+</div>
