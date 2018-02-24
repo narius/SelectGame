@@ -27,9 +27,9 @@
             <li><a href="{% url 'selectgame:index' %}">Hem</a></li>
             <li><a href="{% url 'selectgame:all_game_rating' %}">Alla betyg</a></li>
 			{% if user.is_authenticated %}
-				<li><a href="{% url 'selectgame:index' %}">Logga ut</a></li>
+				<li><a href="{% url 'selectgame:logout' %}">Logga ut</a></li>
 			{% else %}
-				<li><a href="{% url 'selectgame:index' %}">Logga in</a></li>
+				<li><a href="{% url 'selectgame:login' %}">Logga in</a></li>
 			{% endif %}
 			<li><a href="{% url 'admin:index' %}">Admin</a></li>
           </ul>
