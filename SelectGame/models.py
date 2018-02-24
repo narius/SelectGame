@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils.translation import gettext
 from  django.contrib.auth.models import User
+from django.core.validators import MaxValueValidator
+from django.core.validators import MinValueValidator
 # Create your models here.
 
 #Model for categories
@@ -28,7 +30,9 @@ class model_game(models.Model):
 class model_rating(models.Model):
     game=models.ForeignKey(model_game, on_delete=models.CASCADE)
     user=models.ForeignKey(User, on_delete=models.CASCADE)
-    rating=models.IntegerField(verbose_name=gettext("rating"))
+    rating=models.IntegerField(verbose_name=gettext("rating"),
+            default=0,
+            validators=[MaxValueValidator(5), MinValueValidator(1)])
     review=models.TextField(verbose_name=gettext("review"), blank=True)
     class Meta:
         verbose_name=gettext("rating")
