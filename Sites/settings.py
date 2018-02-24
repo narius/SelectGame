@@ -39,6 +39,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+LOCALE_PATHS = [
+    BASE_DIR+'SelectGame/locale',
+    BASE_DIR+'/translations/locale',
+]
+
 # Application definition
 
 INSTALLED_APPS = [

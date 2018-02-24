@@ -1,0 +1,139 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-02-24 18:08+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: sv-SE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: .\SelectGame\models.py:11 .\SelectGame\models.py:20
+msgid "name"
+msgstr "namn"
+
+#: .\SelectGame\models.py:13
+msgid "category"
+msgstr "kategori"
+
+#: .\SelectGame\models.py:14
+msgid "categories"
+msgstr "kategorier"
+
+#: .\SelectGame\models.py:22
+msgid "Comment"
+msgstr "Kommentar"
+
+#: .\SelectGame\models.py:24
+msgid "game"
+msgstr "spel"
+
+#: .\SelectGame\models.py:25 .\SelectGame\models.py:58
+#: .\SelectGame\models.py:70
+msgid "games"
+msgstr "spel"
+
+#: .\SelectGame\models.py:33 .\SelectGame\models.py:38
+msgid "rating"
+msgstr "betyg"
+
+#: .\SelectGame\models.py:36
+msgid "review"
+msgstr "omdömme"
+
+#: .\SelectGame\models.py:39
+msgid "ratings"
+msgstr "betyg"
+
+#: .\SelectGame\models.py:45
+msgid "address"
+msgstr "adress"
+
+#: .\SelectGame\models.py:48 .\SelectGame\models.py:49
+msgid "Address"
+msgstr "Adress"
+
+#: .\SelectGame\models.py:56
+msgid "participants"
+msgstr "deltagare"
+
+#: .\SelectGame\models.py:57
+msgid "date"
+msgstr "datum"
+
+#: .\SelectGame\models.py:59
+msgid "location"
+msgstr "plats"
+
+#: .\SelectGame\models.py:60
+msgid "public"
+msgstr "publikt"
+
+#: .\SelectGame\models.py:62
+msgid "event"
+msgstr "event"
+
+#: .\SelectGame\models.py:63
+msgid "events"
+msgstr "event"
+
+#: .\SelectGame\models.py:72 .\SelectGame\models.py:73
+msgid "game library"
+msgstr "spel bibliotek"
+
+#: .\SelectGame\models.py:75
+msgid "library"
+msgstr "bibliotek"
+
+#: .\SelectGame\signals.py:10
+msgid "Logged in."
+msgstr "In loggad."
+
+#: .\SelectGame\signals.py:14
+msgid "Logged out."
+msgstr "Utloggad."
+
+#: .\SelectGame\templates\SelectGame\all_game_rating.html:13
+msgid "Name"
+msgstr "Namn"
+
+#: .\SelectGame\templates\SelectGame\all_game_rating.html:14
+msgid "Number of users"
+msgstr "Antal användare"
+
+#: .\SelectGame\templates\SelectGame\all_game_rating.html:15
+msgid "Rating"
+msgstr "Betyg"
+
+#: .\SelectGame\templates\base.html:23
+msgid "Home"
+msgstr "Hem"
+
+#: .\SelectGame\templates\base.html:24
+msgid "All ratings"
+msgstr "Alla betyg"
+
+#: .\SelectGame\templates\base.html:26
+msgid "Sign out"
+msgstr "Logga ut"
+
+#: .\SelectGame\templates\base.html:28
+msgid "Sign in"
+msgstr "Logga in"
+
+#: .\SelectGame\templates\base.html:31
+msgid "Admin"
+msgstr "Admin"
+
+#: .\SelectGame\templates\registration\login.html:26
+msgid "login"
+msgstr "Logga in"
