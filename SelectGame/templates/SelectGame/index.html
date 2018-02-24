@@ -3,6 +3,13 @@
 {% block title %}{{ title }}{% endblock %}
 <div class="row">
 {% block content %}
+{% if messages %}
+  <ul class="alert alert-dangers">
+    {% for message in messages %}
+      <div class="{{ message.tags }}">{{ message }}<div>
+    {% endfor %}
+  </ul>
+{% endif %}
 {% if message_length > 0%}
 	<div class="alert alert-danger" role="alert">
 		{{message}}

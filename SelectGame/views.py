@@ -4,6 +4,22 @@ from .models import model_rating
 from .models import model_game
 from .rating import rating_functions
 from django.contrib.auth import logout
+from django.core.signals import request_finished
+from django.dispatch import receiver
+from django.contrib.auth.signals import user_logged_out
+from django.contrib.auth.signals import user_logged_in
+from django.contrib import messages
+from django.utils.translation import gettext
+@receiver(user_logged_in)
+def on_user_logged_in(sender, request, **kwargs):
+    messages.add_message(request, messages.SUCCESS, gettext('Logged in.'))
+
+@receiver(user_logged_out)
+def on_user_logged_out(sender, request, **kwargs):
+    messages.add_message(request, messages.SUCCESS, gettext('Logged out.'))
+
+
+
 def index(request):
     return render(request, 'SelectGame/index.html')
 
