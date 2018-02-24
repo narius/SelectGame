@@ -16,11 +16,11 @@ from django.contrib.messages import constants as message_constants
 from django.contrib import messages
 MESSAGE_LEVEL = message_constants.DEBUG
 MESSAGE_TAGS={
-    message_constants.DEBUG: 'alert alert-primary',
-    message_constants.INFO: 'alert alert-info',
-    message_constants.SUCCESS: 'alert alert-success',
-    message_constants.WARNING: 'alert alert-warning',
-    message_constants.ERROR: 'alert alert-danger',
+    message_constants.DEBUG: 'alert alert-primary alert-dismissible',
+    message_constants.INFO: 'alert alert-info alert-dismissible',
+    message_constants.SUCCESS: 'alert alert-success alert-dismissible',
+    message_constants.WARNING: 'alert alert-warning alert-dismissible',
+    message_constants.ERROR: 'alert alert-danger alert-dismissible',
 }
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'SelectGame.apps.SelectgameConfig',
     'bootstrap3',
+    'bootstrap',
+    'fontawesome',
 ]
 
 MIDDLEWARE = [
