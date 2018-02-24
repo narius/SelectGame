@@ -32,7 +32,7 @@ class model_rating(models.Model):
     user=models.ForeignKey(User, on_delete=models.CASCADE)
     rating=models.IntegerField(verbose_name=gettext("rating"),
             default=0,
-            validators=[MaxValueValidator(5), MinValueValidator(1)])
+            validators=[MaxValueValidator(5), MinValueValidator(0)])
     review=models.TextField(verbose_name=gettext("review"), blank=True)
     class Meta:
         verbose_name=gettext("rating")
