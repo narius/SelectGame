@@ -8,7 +8,7 @@
 {% if user.is_authenticated %}
 <p>Du Ã¤r redan inloggad</p>
 {% else %}
-<form method="post" action="{% url 'avprovningDjango:login' %}">
+<form method="post" action="{% url 'selectgame:login' %}">
 {% csrf_token %}
 <table>
 <tr>
