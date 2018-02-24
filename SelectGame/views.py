@@ -10,15 +10,7 @@ from django.contrib.auth.signals import user_logged_out
 from django.contrib.auth.signals import user_logged_in
 from django.contrib import messages
 from django.utils.translation import gettext
-@receiver(user_logged_in)
-def on_user_logged_in(sender, request, **kwargs):
-    messages.add_message(request, messages.SUCCESS, gettext('Logged in.'))
-
-@receiver(user_logged_out)
-def on_user_logged_out(sender, request, **kwargs):
-    messages.add_message(request, messages.SUCCESS, gettext('Logged out.'))
-
-
+from .signals import *
 
 def index(request):
     return render(request, 'SelectGame/index.html')
