@@ -29,6 +29,7 @@ class model_rating(models.Model):
     game=models.ForeignKey(model_game, on_delete=models.CASCADE)
     user=models.ForeignKey(User, on_delete=models.CASCADE)
     rating=models.IntegerField(verbose_name=gettext("rating"))
+    review=models.TextField(verbose_name=gettext("review"), blank=True)
     class Meta:
         verbose_name=gettext("rating")
         verbose_name_plural=gettext("ratings")
