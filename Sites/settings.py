@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'bootstrap',
     'fontawesome',
     'django.contrib.admindocs',
+    'djrichtextfield',
 ]
 
 MIDDLEWARE = [
