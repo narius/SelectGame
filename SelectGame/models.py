@@ -1,8 +1,11 @@
 from django.db import models
 from django.utils.translation import gettext
-from  django.contrib.auth.models import User
+from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator
 from django.core.validators import MinValueValidator
+
+#Models from Social
+from Social.models import model_group
 # Create your models here.
 
 #Model for categories
@@ -58,6 +61,7 @@ class model_event(models.Model):
     games=models.ManyToManyField(model_game, verbose_name=gettext("games"))
     location=models.ForeignKey(model_location, on_delete=models.CASCADE, verbose_name=gettext("location"))
     is_public=models.BooleanField(verbose_name=gettext("public"))
+    group=models.ForeignKey(model_group, blank=True, on_delete=models.CASCADE, null=True)
     class Meta:
         verbose_name=gettext("event")
         verbose_name_plural=gettext("events")
