@@ -23,6 +23,6 @@
 </form>
 
 <h1>Profile for {{user.get_username}}</h1>
-<p>{{profile.biography}}</p>
+<p>{{profile.biography|safe}}</p>
 {% endblock %}
 </div>
