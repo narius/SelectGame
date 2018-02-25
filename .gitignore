@@ -108,3 +108,5 @@ ENV/
 .mypy_cache/
 Sites/__pycache__/settings.cpython-35.pyc
 *.pyc
+*.sqlite3
+db.sqlite3
