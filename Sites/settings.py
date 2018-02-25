@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'bootstrap3',
     'bootstrap',
     'fontawesome',
+    'django.contrib.admindocs',
 ]
 
 MIDDLEWARE = [
@@ -77,7 +78,7 @@ ROOT_URLCONF = 'Sites.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['Sites/templates/',],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
