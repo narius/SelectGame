@@ -110,3 +110,4 @@ Sites/__pycache__/settings.cpython-35.pyc
 *.pyc
 *.sqlite3
 db.sqlite3
+*.pyc
