@@ -22,6 +22,7 @@
           <ul class="nav navbar-nav">
             <li><a href="{% url 'selectgame:index' %}">{% trans "Home" %}</a></li>
             <li><a href="{% url 'selectgame:all_game_rating' %}">{% trans "All ratings" %}</a></li>
+            <li><a href="{% url 'social:profiles' %}">{% trans "All profiles" %}</a></li>
 			{% if user.is_authenticated %}
 				<li><a href="{% url 'selectgame:logout' %}">{% trans "Sign out" %}</a></li>
 			{% else %}
