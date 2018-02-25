@@ -145,7 +145,20 @@ STATICFILES_DIRS = (
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-
+DJRICHTEXTFIELD_CONFIG = {
+    'js': ['//cdn.ckeditor.com/4.4.4/standard/ckeditor.js'],
+    'init_template': 'djrichtextfield/init/ckeditor.js',
+    'settings': {  # CKEditor
+    'toolbar': [
+        {'items': ['Format', '-', 'Bold', 'Italic', '-',
+                   'RemoveFormat']},
+        {'items': ['Link', 'Unlink', 'Image', 'Table']},
+        {'items': ['Source']}
+    ],
+    'format_tags': 'p;h1;h2;h3',
+    'width': 700
+    }
+}
 
 # Configure Django App for Heroku.
 
