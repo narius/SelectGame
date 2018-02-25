@@ -3,16 +3,24 @@ from django.shortcuts import HttpResponse
 from django.contrib.auth.models import User
 from Social.models import model_user_profile
 from django.core.exceptions import ObjectDoesNotExist
+
 # Create your views here.
 def index(request):
     return HttpResponse("Hello, world. You're at the social index.")
 
 def display_profile(request, user_id):
-    user=User.objects.get(pk=user_id)
-    users=User.objects.all()
-    to_display_profile=True
     try:
-        profile=model_user_profile.objects.get(user=user)
+        to_display_profile=True
+        user=User.objects.get(pk=user_id)
+    except ObjectDoesNotExist:
+        user={}
+        to_display_profile=False
+    users=User.objects.all()
+    try:
+        profile={}
+        if user!={}:
+            to_display_profile=True
+            profile=model_user_profile.objects.get(user=user)
     except ObjectDoesNotExist:
         profile={}
     return render(request, 'Social/profile.html',{'to_display_profile':to_display_profile,'users':users,
