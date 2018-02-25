@@ -10,16 +10,18 @@ def index(request):
 def display_profile(request, user_id):
     user=User.objects.get(pk=user_id)
     users=User.objects.all()
+    to_display_profile=True
     try:
         profile=model_user_profile.objects.get(user=user)
     except ObjectDoesNotExist:
         profile={}
-    return render(request, 'Social/profile.html',{'users':users,
-                                                    'user':user,
+    return render(request, 'Social/profile.html',{'to_display_profile':to_display_profile,'users':users,
+                                                    'display_user':user,
                                                     'profile':profile,})
 def display_profiles(request):
     users=User.objects.all()
     if request.method=="POST":
+        to_display_profile=True
         user_id=request.POST.get("user")
         print("user id: "+str(user_id))
         user=User.objects.get(pk=user_id)
@@ -27,8 +29,10 @@ def display_profiles(request):
             profile=model_user_profile.objects.get(user=user)
         except ObjectDoesNotExist:
             profile={}
-        return render(request, 'Social/profile.html',{'users':users,
-                                                        'disply_user':user,
+        return render(request, 'Social/profile.html',{  'to_display_profile':to_display_profile,
+                                                        'users':users,
+                                                        'display_user':user,
                                                         'profile':profile,})
     else:
-        return render(request, 'Social/profile.html',{'users':users,})
+        to_display_profile=False
+        return render(request, 'Social/profile.html',{'to_display_profile':to_display_profile,'users':users,})
