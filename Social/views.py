@@ -9,7 +9,10 @@ def index(request):
 
 def display_profile(request, user_id):
     user=User.objects.get(pk=user_id)
-    profile=model_user_profile.objects.get(user=user)
+    try:
+        profile=model_user_profile.objects.get(user=user)
+    except ObjectDoesNotExist:
+        profile={}
     return render(request, 'Social/profile.html',{'user':user,
                                                     'profile':profile,})
 def display_profiles(request):
