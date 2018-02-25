@@ -59,7 +59,8 @@ INSTALLED_APPS = [
     'bootstrap',
     'fontawesome',
     'django.contrib.admindocs',
-    'djrichtextfield',
+    'django_wysiwyg',
+    'ckeditor'
 ]
 
 MIDDLEWARE = [
@@ -145,20 +146,8 @@ STATICFILES_DIRS = (
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-DJRICHTEXTFIELD_CONFIG = {
-    'js': ['//cdn.ckeditor.com/4.4.4/standard/ckeditor.js'],
-    'init_template': 'djrichtextfield/init/ckeditor.js',
-    'settings': {  # CKEditor
-    'toolbar': [
-        {'items': ['Format', '-', 'Bold', 'Italic', '-',
-                   'RemoveFormat']},
-        {'items': ['Link', 'Unlink', 'Image', 'Table']},
-        {'items': ['Source']}
-    ],
-    'format_tags': 'p;h1;h2;h3',
-    'width': 700
-    }
-}
+DJANGO_WYSIWYG_FLAVOR = 'ckeditor'  # Requires you to also place the ckeditor files here:
+DJANGO_WYSIWYG_MEDIA_URL = STATIC_URL + "ckeditor/"
 
 # Configure Django App for Heroku.
 

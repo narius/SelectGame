@@ -4,6 +4,7 @@ django-bootstrap-static==3.3.7.2
 django-bootstrap3==9.1.0
 django-bootstrap4==0.0.6
 django-heroku==0.2.0
+django-wysiwyg==0.8.0
 docutils==0.14
 gunicorn==19.7.1
 numpy==1.14.1

@@ -46,3 +46,8 @@ def display_profiles(request):
     else:
         to_display_profile=False
         return render(request, 'Social/profile.html',{'to_display_profile':to_display_profile,'users':users,})
+
+def edit_profile(request, user_id):
+    # if this is a POST request we need to process the form data
+
+    return render(request, 'Social/edit_profile.html', {})

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load wysiwyg %}
+{% block title %}{{ title }}{% endblock %}
+{% block extra_head %}
+{% wysiwyg_setup  %}
+{% endblock %}
+<div class="row">
+{% block content %}
+<form action="social:edit_profile" method="post">
+    {% csrf_token %}
+    <textarea id="my_text">This is some text. Please edit it</textarea>
+    {% wysiwyg_editor "my_text" %}
+    <input type="submit" value="Submit" />
+</form>
+{% endblock %}
+</div>

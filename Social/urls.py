@@ -6,5 +6,6 @@ app_name = 'social'
 urlpatterns = [
     path('', views.index, name='index'),
     path('profile/<int:user_id>/', views.display_profile, name='user_profile'),
-    path('profile/', views.display_profiles, name='profiles')
+    path('profile/', views.display_profiles, name='profiles'),
+    path('edit_profile', views.edit_profile, name='edit_profile')
 ]
