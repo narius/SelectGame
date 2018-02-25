@@ -22,7 +22,9 @@
   <input type="submit">
 </form>
 
+{%if disply_user.get_username|length > 0%}
 <h1>Profile for {{display_user.get_username}}</h1>
 <p>{{profile.biography|safe}}</p>
+{% endif %}
 {% endblock %}
 </div>
