@@ -60,7 +60,7 @@ class model_friends(models.Model):
         verbose_name_plural=gettext("friends")
         unique_together = (("user1", "user2"),)
     def __str__(self):
-        return str(self.user1)+"-"+str(self.user2)
+        return str(self.user1)+"("+self.get_status_user1_display()+") - "+str(self.user2)+"("+self.get_status_user2_display()+")"
 
 class model_private_message(models.Model):
     participants=models.ManyToManyField(User, verbose_name=gettext('participants'), related_name="participants")
