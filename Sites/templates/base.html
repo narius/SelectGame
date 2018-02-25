@@ -26,6 +26,7 @@
             <li><a href="{% url 'social:profiles' %}">{% trans "All profiles" %}</a></li>
 			{% if user.is_authenticated %}
 				<li><a href="{% url 'selectgame:logout' %}">{% trans "Sign out" %}</a></li>
+        <li><a href="{% url 'social:edit_profile' %}">{% trans "edit profile" %}</a></li>
 			{% else %}
 				<li><a href="{% url 'selectgame:login' %}">{% trans "Sign in" %}</a></li>
 			{% endif %}
