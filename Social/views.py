@@ -9,11 +9,13 @@ def index(request):
 
 def display_profile(request, user_id):
     user=User.objects.get(pk=user_id)
+    users=User.objects.all()
     try:
         profile=model_user_profile.objects.get(user=user)
     except ObjectDoesNotExist:
         profile={}
-    return render(request, 'Social/profile.html',{'user':user,
+    return render(request, 'Social/profile.html',{'users':users,
+                                                    'user':user,
                                                     'profile':profile,})
 def display_profiles(request):
     users=User.objects.all()
@@ -26,7 +28,7 @@ def display_profiles(request):
         except ObjectDoesNotExist:
             profile={}
         return render(request, 'Social/profile.html',{'users':users,
-                                                        'user':user,
+                                                        'disply_user':user,
                                                         'profile':profile,})
     else:
         return render(request, 'Social/profile.html',{'users':users,})
