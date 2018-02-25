@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'SelectGame.apps.SelectgameConfig',
+    'Social.apps.SocialConfig',
     'bootstrap3',
     'bootstrap',
     'fontawesome',
