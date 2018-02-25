@@ -3,7 +3,8 @@ from django.shortcuts import HttpResponse
 from django.contrib.auth.models import User
 from Social.models import model_user_profile
 from django.core.exceptions import ObjectDoesNotExist
-
+from django.contrib import messages
+from django.utils.translation import gettext
 # Create your views here.
 def index(request):
     return HttpResponse("Hello, world. You're at the social index.")
@@ -14,6 +15,7 @@ def display_profile(request, user_id):
         user=User.objects.get(pk=user_id)
     except ObjectDoesNotExist:
         user={}
+        messages.add_message(request, messages.ERROR, gettext("User doesn't exist."))
         to_display_profile=False
     users=User.objects.all()
     try:
