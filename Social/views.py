@@ -47,7 +47,20 @@ def display_profiles(request):
         to_display_profile=False
         return render(request, 'Social/profile.html',{'to_display_profile':to_display_profile,'users':users,})
 
-def edit_profile(request, user_id):
+def edit_profile(request):
     # if this is a POST request we need to process the form data
+    current_user = request.user
+    print(request.POST.get("biography"))
+    print(request.method)
 
-    return render(request, 'Social/edit_profile.html', {})
+    try:
+        profile=model_user_profile.objects.get(user=current_user)
+        print(profile)
+    except ObjectDoesNotExist:
+        profile=model_user_profile.objects.create(user=current_user)
+    if request.method=="POST":
+        new_profile_text=request.POST.get('biography')
+        print(new_profile_text)
+        profile.biography=new_profile_text
+        profile.save()
+    return render(request, 'Social/edit_profile.html', {'profile':profile,})

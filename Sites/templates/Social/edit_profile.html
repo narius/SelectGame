@@ -7,11 +7,11 @@
 {% endblock %}
 <div class="row">
 {% block content %}
-<form action="social:edit_profile" method="post">
+<form action="{% url 'social:edit_profile'%}" method="post">
     {% csrf_token %}
-    <textarea id="my_text">This is some text. Please edit it</textarea>
-    {% wysiwyg_editor "my_text" %}
-    <input type="submit" value="Submit" />
+    <textarea id="biography" name="biography">{{profile.biography|safe}}</textarea>
+    {% wysiwyg_editor "biography" %}
+    <input type="submit">
 </form>
 {% endblock %}
 </div>
