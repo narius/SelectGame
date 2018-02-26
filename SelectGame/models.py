@@ -70,7 +70,7 @@ class model_event(models.Model):
 
 #A model for games that a person owns
 class model_game_library(models.Model):
-    owner=models.ForeignKey(User, on_delete=models.CASCADE, related_name="game_owner")
+    owner=models.OneToOneField(User, on_delete=models.CASCADE)
     games=models.ManyToManyField(model_game, verbose_name=gettext("games"))
     class Meta:
         verbose_name=gettext("game library")
