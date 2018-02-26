@@ -5,6 +5,7 @@ from Social.models import model_user_profile
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib import messages
 from django.utils.translation import gettext
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 def index(request):
     return HttpResponse("Hello, world. You're at the social index.")
@@ -28,6 +29,7 @@ def display_profile(request, user_id):
     return render(request, 'Social/profile.html',{'to_display_profile':to_display_profile,'users':users,
                                                     'display_user':user,
                                                     'profile':profile,})
+
 def display_profiles(request):
     users=User.objects.all()
     if request.method=="POST":
@@ -47,6 +49,7 @@ def display_profiles(request):
         to_display_profile=False
         return render(request, 'Social/profile.html',{'to_display_profile':to_display_profile,'users':users,})
 
+@login_required(login_url='/login/')
 def edit_profile(request):
     # if this is a POST request we need to process the form data
     current_user = request.user
