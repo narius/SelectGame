@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext
 from django.contrib.auth.models import User
+from django.conf import settings
 # Create your models here.
 class model_group(models.Model):
     name=models.CharField(max_length=30, verbose_name=gettext('name'))
@@ -33,6 +34,8 @@ class model_group_message(models.Model):
 class model_user_profile(models.Model):
     user=models.OneToOneField(User, on_delete=models.CASCADE)
     biography=models.TextField(verbose_name=gettext('biography'))
+    avatar=models.ImageField(null=True,upload_to='uploads/avatars')
+    #TODO add image field
     class Meta:
         verbose_name=gettext('user profile')
         verbose_name_plural=gettext('user profiles')

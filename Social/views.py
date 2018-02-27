@@ -7,6 +7,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.contrib import messages
 from django.utils.translation import gettext
 from django.contrib.auth.decorators import login_required
+from django.conf import settings
 # Create your views here.
 def index(request):
     return HttpResponse("Hello, world. You're at the social index.")
@@ -40,7 +41,8 @@ def display_profile(request, user_id):
                                                     'profile':profile,
                                                     'to_display_game_lbrary':to_display_game_lbrary,
                                                     'game_library':game_library,
-                                                    'games': games})
+                                                    'games': games,
+                                                    'MEDIA_URL':settings.MEDIA_URL})
 
 def display_profiles(request):
     users=User.objects.all()
@@ -67,7 +69,8 @@ def display_profiles(request):
                                                         'profile':profile,
                                                         'to_display_game_lbrary':to_display_game_lbrary,
                                                         'game_library':game_library,
-                                                        'games': games})
+                                                        'games': games,
+                                                        'MEDIA_URL':settings.MEDIA_URL})
     else:
         to_display_profile=False
         return render(request, 'Social/profile.html',{'to_display_profile':to_display_profile,'users':users,})
