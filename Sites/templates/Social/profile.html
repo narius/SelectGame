@@ -27,7 +27,7 @@
 {% blocktrans with name=display_user.get_username context "greeting" %}
 <h1>Profile for {{ name }}</h1>
 {% endblocktrans %}
-<img src="{{MEDIA_URL}}{{profile.avatar}}" alt="..." class="img-thumbnail">
+<img src="{{MEDIA_URL}}{{profile.avatar}}" alt="{% trans 'No image' %}" class="img-thumbnail">
 <p>{{profile.biography|safe}}</p>
 {% endif %}
 {% if to_display_game_lbrary %}
