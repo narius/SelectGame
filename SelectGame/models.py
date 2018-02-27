@@ -20,7 +20,7 @@ class model_category(models.Model):
 
 #Model for games
 class model_game(models.Model):
-    #TODO add image field
+    image=models.ImageField(null=True,upload_to='uploads/game_images')
     name=models.CharField(max_length=30, verbose_name=gettext("name"))
     category=models.ManyToManyField(model_category)
     comment=models.TextField(verbose_name=gettext("Comment"), blank=True)
