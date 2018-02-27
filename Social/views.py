@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.shortcuts import HttpResponse
 from django.contrib.auth.models import User
 from Social.models import model_user_profile
+from SelectGame.models import model_game_library
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib import messages
 from django.utils.translation import gettext
@@ -26,9 +27,20 @@ def display_profile(request, user_id):
             profile=model_user_profile.objects.get(user=user)
     except ObjectDoesNotExist:
         profile={}
+    try:
+        to_display_game_lbrary=True
+        game_library=model_game_library.objects.get(owner=user)
+        games=game_library.games.all()
+    except ObjectDoesNotExist:
+        to_display_game_lbrary=False
+        game_library={}
+        games={}
     return render(request, 'Social/profile.html',{'to_display_profile':to_display_profile,'users':users,
                                                     'display_user':user,
-                                                    'profile':profile,})
+                                                    'profile':profile,
+                                                    'to_display_game_lbrary':to_display_game_lbrary,
+                                                    'game_library':game_library,
+                                                    'games': games})
 
 def display_profiles(request):
     users=User.objects.all()
@@ -41,10 +53,21 @@ def display_profiles(request):
             profile=model_user_profile.objects.get(user=user)
         except ObjectDoesNotExist:
             profile={}
+        try:
+            to_display_game_lbrary=True
+            game_library=model_game_library.objects.get(owner=user)
+            games=game_library.games.all()
+        except ObjectDoesNotExist:
+            to_display_game_lbrary=False
+            game_library={}
+            games={}
         return render(request, 'Social/profile.html',{  'to_display_profile':to_display_profile,
                                                         'users':users,
                                                         'display_user':user,
-                                                        'profile':profile,})
+                                                        'profile':profile,
+                                                        'to_display_game_lbrary':to_display_game_lbrary,
+                                                        'game_library':game_library,
+                                                        'games': games})
     else:
         to_display_profile=False
         return render(request, 'Social/profile.html',{'to_display_profile':to_display_profile,'users':users,})

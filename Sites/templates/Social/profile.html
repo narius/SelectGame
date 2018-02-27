@@ -23,8 +23,24 @@
 </form>
 
 {% if to_display_profile %}
-<h1>Profile for {{display_user.get_username}}</h1>
+{% blocktrans with name=display_user.get_username context "greeting" %}
+<h1>Profile for {{ name }}</h1>
+{% endblocktrans %}
 <p>{{profile.biography|safe}}</p>
+{% endif %}
+{% if to_display_game_lbrary %}
+<h1>{% trans "Game library" %}</h1>
+
+<table class="table table-striped">
+	<tr>
+		<th>{% trans "Name" %}</th>
+	</tr>
+  {% for game in games %}
+		<tr>
+			<td>{{game.name}}</td>
+		</tr>
+  {% endfor %}
+</table>
 {% endif %}
 {% endblock %}
 </div>
