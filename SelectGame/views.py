@@ -11,6 +11,7 @@ from django.contrib.auth.signals import user_logged_in
 from django.contrib import messages
 from django.utils.translation import gettext
 from .signals import *
+from .forms import  add_game_form
 
 def index(request):
     return render(request, 'SelectGame/index.html')
@@ -29,3 +30,17 @@ def logout_view(request):
     logout(request)
     # Redirect to a success page.
     return render(request,'registration/logged_out.html')
+
+def add_game(request):
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = add_game_form(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            h=1
+            # process the data in form.cleaned_data as required
+            # ...
+            # redirect to a new URL:
+    # if a GET (or any other method) we'll create a blank form
+    form=add_game_form()
+    return render(request, 'SelectGame/add_game.html',{'form':form})
