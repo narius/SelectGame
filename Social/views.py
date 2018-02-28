@@ -12,21 +12,20 @@ from django.conf import settings
 def index(request):
     return HttpResponse("Hello, world. You're at the social index.")
 
-def display_profile(request, user_id):
+def display_profiles(request, user_id=-1):
+    users=User.objects.all()
+    if request.method=="POST":
+        to_display_profile=True
+        user_id=request.POST.get("user")
+        print("user id: "+str(user_id))
+        user=User.objects.get(pk=user_id)
+    else:
+        user=User.objects.get(pk=user_id) if int(user_id)>-1 else -1
     try:
         to_display_profile=True
-        user=User.objects.get(pk=user_id)
+        profile=model_user_profile.objects.get(user=user)
     except ObjectDoesNotExist:
-        user={}
-        messages.add_message(request, messages.ERROR, gettext("User doesn't exist."))
         to_display_profile=False
-    users=User.objects.all()
-    try:
-        profile={}
-        if user!={}:
-            to_display_profile=True
-            profile=model_user_profile.objects.get(user=user)
-    except ObjectDoesNotExist:
         profile={}
     try:
         to_display_game_lbrary=True
@@ -36,34 +35,7 @@ def display_profile(request, user_id):
         to_display_game_lbrary=False
         game_library={}
         games={}
-    return render(request, 'Social/profile.html',{'to_display_profile':to_display_profile,'users':users,
-                                                    'display_user':user,
-                                                    'profile':profile,
-                                                    'to_display_game_lbrary':to_display_game_lbrary,
-                                                    'game_library':game_library,
-                                                    'games': games,
-                                                    'MEDIA_URL':settings.MEDIA_URL})
-
-def display_profiles(request):
-    users=User.objects.all()
-    if request.method=="POST":
-        to_display_profile=True
-        user_id=request.POST.get("user")
-        print("user id: "+str(user_id))
-        user=User.objects.get(pk=user_id)
-        try:
-            profile=model_user_profile.objects.get(user=user)
-        except ObjectDoesNotExist:
-            profile={}
-        try:
-            to_display_game_lbrary=True
-            game_library=model_game_library.objects.get(owner=user)
-            games=game_library.games.all()
-        except ObjectDoesNotExist:
-            to_display_game_lbrary=False
-            game_library={}
-            games={}
-        return render(request, 'Social/profile.html',{  'to_display_profile':to_display_profile,
+    return render(request, 'Social/profile.html',{  'to_display_profile':to_display_profile,
                                                         'users':users,
                                                         'display_user':user,
                                                         'profile':profile,
@@ -71,9 +43,6 @@ def display_profiles(request):
                                                         'game_library':game_library,
                                                         'games': games,
                                                         'MEDIA_URL':settings.MEDIA_URL})
-    else:
-        to_display_profile=False
-        return render(request, 'Social/profile.html',{'to_display_profile':to_display_profile,'users':users,})
 
 @login_required(login_url='/login/')
 def edit_profile(request):
