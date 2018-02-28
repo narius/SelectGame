@@ -20,18 +20,22 @@ def display_profiles(request, user_id=-1):
         print("user id: "+str(user_id))
         user=User.objects.get(pk=user_id)
     else:
-        user=User.objects.get(pk=user_id) if int(user_id)>-1 else -1
+        try:
+            user=User.objects.get(pk=user_id) if int(user_id)>-1 else -1
+        except ObjectDoesNotExist:
+            user={}
+            messages.add_message(request, messages.ERROR, gettext('User doesn\'t exist'))
     try:
         to_display_profile=True
         profile=model_user_profile.objects.get(user=user)
-    except ObjectDoesNotExist:
+    except:
         to_display_profile=False
         profile={}
     try:
         to_display_game_lbrary=True
         game_library=model_game_library.objects.get(owner=user)
         games=game_library.games.all()
-    except ObjectDoesNotExist:
+    except:
         to_display_game_lbrary=False
         game_library={}
         games={}
@@ -50,7 +54,6 @@ def edit_profile(request):
     current_user = request.user
     print(request.POST.get("biography"))
     print(request.method)
-
     try:
         profile=model_user_profile.objects.get(user=current_user)
         print(profile)
