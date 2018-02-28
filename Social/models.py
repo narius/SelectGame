@@ -33,9 +33,8 @@ class model_group_message(models.Model):
 
 class model_user_profile(models.Model):
     user=models.OneToOneField(User, on_delete=models.CASCADE)
-    biography=models.TextField(verbose_name=gettext('biography'))
-    avatar=models.ImageField(null=True,upload_to='uploads/avatars')
-    #TODO add image field
+    biography=models.TextField(verbose_name=gettext('biography'), null=True, blank=True)
+    avatar=models.ImageField(null=True,upload_to='uploads/avatars', blank=True)
     class Meta:
         verbose_name=gettext('user profile')
         verbose_name_plural=gettext('user profiles')
@@ -72,4 +71,4 @@ class model_private_message(models.Model):
         verbose_name=gettext("private message")
         verbose_name_plural=gettext("private messages")
     def __str__(self):
-        return str(participants)
+        return str(self.participants)
