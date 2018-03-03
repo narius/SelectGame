@@ -12,7 +12,6 @@ from django.contrib import messages
 from django.utils.translation import gettext
 from .signals import *
 from .forms import  add_game_form
-
 def index(request):
     return render(request, 'SelectGame/index.html')
 
@@ -20,10 +19,8 @@ def all_game_rating(request):
     ratings=model_rating.objects.all()
     games=model_game.objects.all()
     mean_rating_per_game=rating_functions.mean_rating_per_game(games)
-    print(type(mean_rating_per_game))
-    print(ratings)
     for mean_r in mean_rating_per_game:
-        print(mean_r)
+        print(type(mean_r))
     return render(request, 'SelectGame/all_game_rating.html',{'ratings':mean_rating_per_game,})
 
 def logout_view(request):

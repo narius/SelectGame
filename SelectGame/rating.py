@@ -13,5 +13,7 @@ class rating_functions():
                 mean_rating=sum(rating['rating'] for rating in ratings) /total
             else:
                 mean_rating=0
-            mean_rating_per_game.append([game,mean_rating, total])
+            mean_rating_per_game.append({'game':game,
+                                        'mean_rating':mean_rating,
+                                        'votes':total})
         return mean_rating_per_game
