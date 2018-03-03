@@ -62,6 +62,7 @@ def create_event(request):
         location=model_location.objects.get(pk=location_id)
         is_public=request.POST.get('is_public')
         event_date=request.POST.get('event_date')
+        #TODO: Change so that create takes real values from form.
         new_event=model_event.objects.create(name="Marcus",
                             location=location,
                             owner=user,
@@ -71,3 +72,8 @@ def create_event(request):
         messages.add_message(request, messages.SUCCESS, gettext('Event created'))
     return render(request, 'SelectGame/create_event.html',{'locations':locations,
                                                             })
+
+@login_required(login_url='/login/')
+def all_events(request):
+    events=model_event.objects.all()
+    return render(request, 'SelectGame/all_events.html',{'events': events,})
