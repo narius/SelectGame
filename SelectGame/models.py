@@ -57,9 +57,9 @@ class model_location(models.Model):
 #Model for an event.
 class model_event(models.Model):
     owner=models.ForeignKey(User, on_delete=models.CASCADE, related_name="event_owner")
-    participants=models.ManyToManyField(User, verbose_name=gettext("participants"), related_name="event_participants")
+    participants=models.ManyToManyField(User, verbose_name=gettext("participants"), related_name="event_participants", blank=True, null=True)
     date=models.DateTimeField(verbose_name=gettext("date"))
-    games=models.ManyToManyField(model_game, verbose_name=gettext("games"))
+    games=models.ManyToManyField(model_game, verbose_name=gettext("games"), blank=True)
     location=models.ForeignKey(model_location, on_delete=models.CASCADE, verbose_name=gettext("location"))
     is_public=models.BooleanField(verbose_name=gettext("public"))
     group=models.ForeignKey(model_group, blank=True, on_delete=models.CASCADE, null=True)
