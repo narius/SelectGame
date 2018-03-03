@@ -3,6 +3,8 @@ from django.shortcuts import render
 from .models import model_rating
 from .models import model_game
 from .rating import rating_functions
+from .models import model_location
+from .models import model_event
 from django.contrib.auth import logout
 from django.core.signals import request_finished
 from django.dispatch import receiver
@@ -12,6 +14,9 @@ from django.contrib import messages
 from django.utils.translation import gettext
 from .signals import *
 from .forms import  add_game_form
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+
 def index(request):
     return render(request, 'SelectGame/index.html')
 
@@ -41,3 +46,28 @@ def add_game(request):
     # if a GET (or any other method) we'll create a blank form
     form=add_game_form()
     return render(request, 'SelectGame/add_game.html',{'form':form})
+
+@login_required(login_url='/login/')
+def create_event(request):
+    user=request.user
+    #user=User.objects.get(pk=user_id)
+    try:
+        locations=model_location.objects.filter(owner=user)
+    except ObjectDoesNotExist:
+        messages.add_message(request, messages.ERROR, gettext('User has no locations'))
+        locations={}
+    if request.method=="POST":
+        event_name=request.POST.get('event_name')
+        location_id=request.POST.get('location_id')
+        location=model_location.objects.get(pk=location_id)
+        is_public=request.POST.get('is_public')
+        event_date=request.POST.get('event_date')
+        new_event=model_event.objects.create(name="Marcus",
+                            location=location,
+                            owner=user,
+                            is_public=True,
+                            date=event_date)
+        new_event.save()
+        messages.add_message(request, messages.SUCCESS, gettext('Event created'))
+    return render(request, 'SelectGame/create_event.html',{'locations':locations,
+                                                            })
