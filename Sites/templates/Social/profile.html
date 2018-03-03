@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% block title %}{{ title }}{% endblock %}
+<div class="row">
+{% block content %}
+{% if messages %}
+  <ul class="alert alert-dangers">
+    {% for message in messages %}
+      <div class="{{ message.tags }}" role="alert" >
+				<button class="close" data-dismiss="alert">&times;</button>
+				{{ message }}<div>
+    {% endfor %}
+  </ul>
+{% endif %}
+<form action="{% url 'social:profiles'%}" method="post">{% csrf_token %}
+  <select name="user">
+    {%for user_to_select in users%}
+    <option value="{{user_to_select.id}}">{{user_to_select.get_username}}</option>
+    {%endfor%}
+  </select>
+  <br><br>
+  <input type="submit">
+</form>
+
+{% if to_display_profile %}
+{% blocktrans with name=display_user.get_username context "greeting" %}
+<h1>Profile for {{ name }}</h1>
+{% endblocktrans %}
+<img src="{{MEDIA_URL}}{{profile.avatar}}" alt="{% trans 'No image' %}" class="img-thumbnail">
+<p>{{profile.biography|safe}}</p>
+{% endif %}
+{% if to_display_game_lbrary %}
+<h1>{% trans "Game library" %}</h1>
+
+<table class="table table-striped">
+	<tr>
+		<th>{% trans "Name" %}</th>
+	</tr>
+  {% for game in games %}
+		<tr>
+			<td>{{game.name}}</td>
+		</tr>
+  {% endfor %}
+</table>
+{% endif %}
+{% endblock %}
+</div>

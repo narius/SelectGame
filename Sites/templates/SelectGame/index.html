@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{{ title }}{% endblock %}
+<div class="row">
+{% block content %}
+{% if messages %}
+  <ul class="alert alert-dangers">
+    {% for message in messages %}
+      <div class="{{ message.tags }}" role="alert" >
+				<button class="close" data-dismiss="alert">&times;</button>
+				{{ message }}<div>
+    {% endfor %}
+  </ul>
+{% endif %}
+{% blocktrans %}
+  <h1>Welcome to Select Game</h1>
+  This is a gaming community that is being developed. If you have any suggestions,
+  bugs or something else. Please don't hesitate to to create a issue at <a href="https://github.com/narius/SelectGame">GitHub</a>
+{% endblocktrans %}
+
+{% endblock %}
+</div>

@@ -6,6 +6,12 @@ __pycache__/
 # C extensions
 *.so
 
+#sqlite2
+*.sqlite*
+
+#Ignore user uploaded files
+media/uploads*
+
 # Distribution / packaging
 .Python
 env/
@@ -104,4 +110,11 @@ ENV/
 # mypy
 .mypy_cache/
 Sites/__pycache__/settings.cpython-35.pyc
+*.pyc
+*.sqlite3
+db.sqlite3
+*.pyc
+Sites/__pycache__/settings.cpython-35.pyc
+*.sqlite3
+*.pyc
 *.pyc

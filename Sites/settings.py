@@ -12,9 +12,20 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 import django_heroku
 import os
 import dj_database_url
+from django.contrib.messages import constants as message_constants
+from django.contrib import messages
+MESSAGE_LEVEL = message_constants.DEBUG
+MESSAGE_TAGS={
+    message_constants.DEBUG: 'alert alert-primary alert-dismissible',
+    message_constants.INFO: 'alert alert-info alert-dismissible',
+    message_constants.SUCCESS: 'alert alert-success alert-dismissible',
+    message_constants.WARNING: 'alert alert-warning alert-dismissible',
+    message_constants.ERROR: 'alert alert-danger alert-dismissible',
+}
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+LOGIN_REDIRECT_URL="/"
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
@@ -28,6 +39,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+LOCALE_PATHS = [
+    BASE_DIR+'SelectGame/locale',
+    BASE_DIR+'/translations/locale',
+]
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -38,7 +54,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'SelectGame.apps.SelectgameConfig',
+    'Social.apps.SocialConfig',
     'bootstrap3',
+    'bootstrap',
+    'fontawesome',
+    'django.contrib.admindocs',
+    'django_wysiwyg',
+    'ckeditor'
 ]
 
 MIDDLEWARE = [
@@ -50,6 +72,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
 ]
 
 ROOT_URLCONF = 'Sites.urls'
@@ -57,7 +80,7 @@ ROOT_URLCONF = 'Sites.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['Sites/templates/',],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -89,15 +112,6 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
 ]
 
 
@@ -122,6 +136,9 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 
+MEDIA_ROOT  = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
 # Extra places for collectstatic to find static files.
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
@@ -132,7 +149,8 @@ STATICFILES_DIRS = (
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-
+DJANGO_WYSIWYG_FLAVOR = 'ckeditor'  # Requires you to also place the ckeditor files here:
+DJANGO_WYSIWYG_MEDIA_URL = STATIC_URL + "ckeditor/"
 
 # Configure Django App for Heroku.
 

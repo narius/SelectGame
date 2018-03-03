@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+
+{% block content %}
+{% if messages %}
+  <ul class="alert alert-dangers">
+    {% for message in messages %}
+      <div class="{{ message.tags }}" role="alert" >
+				<button class="close" data-dismiss="alert">&times;</button>
+				{{ message }}<div>
+    {% endfor %}
+  </ul>
+{% endif %}
+
+{% if form.errors %}
+<p>Your username and password didn't match. Please try again.</p>
+{% endif %}
+{% if user.is_authenticated %}
+<p>Du Ã¤r redan inloggad</p>
+{% else %}
+<form method="post" action="{% url 'selectgame:login' %}">
+{% csrf_token %}
+<table>
+<tr>
+    <td>{{ form.username.label_tag }}</td>
+    <td>{{ form.username }}</td>
+</tr>
+<tr>
+    <td>{{ form.password.label_tag }}</td>
+    <td>{{ form.password }}</td>
+</tr>
+</table>
+
+<input type="submit" value="{% trans "login" %}" />
+<input type="hidden" name="next" value="{{ next }}" />
+</form>
+
+{% endif %}
+
+{% endblock %}
