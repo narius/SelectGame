@@ -63,6 +63,7 @@ class model_event(models.Model):
     location=models.ForeignKey(model_location, on_delete=models.CASCADE, verbose_name=gettext("location"))
     is_public=models.BooleanField(verbose_name=gettext("public"))
     group=models.ForeignKey(model_group, blank=True, on_delete=models.CASCADE, null=True)
+    name=models.CharField(max_length=100, verbose_name=gettext("name"), blank=True)
     class Meta:
         verbose_name=gettext("event")
         verbose_name_plural=gettext("events")
