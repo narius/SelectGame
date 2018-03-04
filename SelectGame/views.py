@@ -62,7 +62,6 @@ def create_event(request):
         location=model_location.objects.get(pk=location_id)
         is_public=True if request.POST.get('is_public')=='on' else False
         event_date=request.POST.get('event_date')
-        #TODO: Change so that create takes real values from form.
         new_event=model_event.objects.create(name=event_name,
                             location=location,
                             owner=user,
