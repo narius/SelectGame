@@ -49,6 +49,16 @@ def add_game(request):
 
 @login_required(login_url='/login/')
 def create_event(request):
+    '''
+
+            **Return dictionary**
+
+            * locations: all the locations that the current user own.
+
+            **Template:**
+
+            :template:`SelectGame/create_event.html`
+    '''
     user=request.user
     #user=User.objects.get(pk=user_id)
     try:
