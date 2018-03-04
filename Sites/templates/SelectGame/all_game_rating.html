@@ -17,8 +17,24 @@
   {% for rating in ratings %}
 		<tr>
 			<td>{{rating.game}}</td>
-      <td>{{rating.votes}}</td>
-      <td>{{rating.meat_rating}}</td>
+      <td>
+				<div class="progress">
+  				<div class="progress-bar bg-success" role="progressbar" style="width: {{rating.width.0}}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">1/{{rating.votes.0}}/{{rating.width.0}}%</div>
+				</div>
+				<div class="progress">
+  				<div class="progress-bar bg-success" role="progressbar" style="width: {{rating.width.1}}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">2/{{rating.votes.1}}/{{rating.width.1}}%</div>
+				</div>
+				<div class="progress">
+  				<div class="progress-bar bg-success" role="progressbar" style="width: {{rating.width.2}}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">3/{{rating.votes.2}}/{{rating.width.2}}%</div>
+				</div>
+				<div class="progress">
+  				<div class="progress-bar bg-success" role="progressbar" style="width: {{rating.width.3}}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">4/{{rating.votes.3}}/{{rating.width.3}}%</div>
+				</div>
+				<div class="progress">
+  				<div class="progress-bar bg-success" role="progressbar" style="width: {{rating.width.4}}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">5/{{rating.votes.4}}/{{rating.width.4}}%</div>
+				</div>
+			</td>
+      <td>{{rating.mean_rating}}</td>
 		</tr>
   {% endfor %}
 </table>

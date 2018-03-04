@@ -9,11 +9,22 @@ class rating_functions():
         for game in games:
             ratings=model_rating.objects.filter(game=game).values('rating')
             total=len(ratings)
+            votes=[0,0,0,0,0]
+            width=[0,0,0,0,0]
             if (total!=0):
+                for rating in ratings:
+                    print(rating['rating'])
+                    votes[rating['rating']-1]=votes[rating['rating']-1]+1
+                n=0
+                while n<5:
+                    width[n]=int(round((votes[n]/total)*100))
+                    n=n+1
                 mean_rating=sum(rating['rating'] for rating in ratings) /total
             else:
                 mean_rating=0
             mean_rating_per_game.append({'game':game,
                                         'mean_rating':mean_rating,
-                                        'votes':total})
+                                        'total':total,
+                                        'votes':votes,
+                                        'width':width})
         return mean_rating_per_game
