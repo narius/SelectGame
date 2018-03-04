@@ -41,9 +41,8 @@ class rating_functions():
             #Retrieve all games that the users own.
             game_library=model_game_library.objects.get(owner=user)
             for game in game_library.games:
-                user_ratings=model_rating.objects.all().filter(user=user).filter(game=game).filter(rating=>lower_limit)
+                user_ratings=model_rating.objects.all().filter(user=user).filter(game=game)
                 ratings.append(user_ratings)
                 games.append(game)
         #By now whe should have two list, one with all available game,
         #one with all ratings.
-        
