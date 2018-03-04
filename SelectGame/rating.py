@@ -2,6 +2,7 @@
 import numpy
 from .models import model_rating
 from .models import model_game
+from .models import model_game_library
 class rating_functions():
     #Function to calulate the average for games
     def mean_rating_per_game(games):
@@ -28,3 +29,18 @@ class rating_functions():
                                         'votes':votes,
                                         'width':width})
         return mean_rating_per_game
+
+    def users_rating(users, lower_limit):
+        """
+            This function will return the average rating for all games that :model:`auth.User` have
+            rated higher than lower_limit
+        """
+        games=[]
+        ratings=[]
+        for user in users:
+            #Retrieve all games that the users own.
+            game_library=model_game_library.objects.get(owner=user)
+            for game in game_library.games:
+                user_ratings=model_rating.objects.all().filter(user=user).filter(game=game).filter(rating=>lower_limit)
+                ratings.append(user_ratings)
+                games.append(game)
