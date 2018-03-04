@@ -85,3 +85,26 @@ def locations(request):
     except ObjectDoesNotExist:
         locations={}
     return render(request, 'SelectGame/locations.html',{'locations':locations,})
+
+@login_required(login_url='/login/')
+def view_event(request, event_id):
+    """
+        View for locking at a specific event.
+    """
+    user=request.user
+    #Get event, or return message if it doesn't exist
+    try:
+        event=model_event.objects.get(pk=event_id)
+    except:
+        message.add_message(request, messages.ERROR, gettext('Event id doesn\'t exist'))
+        return render(request, 'SelectGame/view_event.html')
+    #Check if user is owner or in participants
+    owner=event.owner
+    participants=event.participants.all()
+    if not (user==owner or user in participants):
+        message.add_message(request, messages.ERROR, gettext('You are not part of this event'))
+        return render(request, 'SelectGame/view_event.html')
+    #We now know that the event exist and that the user is part of the events
+
+    game_suggestion=rating_functions.users_rating(participants, 2)
+    return render(request, 'SelectGame/view_event.html')

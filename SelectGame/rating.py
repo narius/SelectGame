@@ -37,12 +37,21 @@ class rating_functions():
         """
         games=[]
         ratings=[]
+        suggested_games=[]
         for user in users:
             #Retrieve all games that the users own.
             game_library=model_game_library.objects.get(owner=user)
-            for game in game_library.games:
+            for game in game_library.games.all():
                 user_ratings=model_rating.objects.all().filter(user=user).filter(game=game)
                 ratings.append(user_ratings)
                 games.append(game)
         #By now whe should have two list, one with all available game,
         #one with all ratings.
+        print("ratings\n")
+        print(ratings)
+        print("games\n")
+        print(games)
+        for rating in ratings:
+            if rating.rating>lower_limit:
+                suggested_games=rating.games
+        print(suggested_games)
