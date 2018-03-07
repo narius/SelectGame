@@ -17,8 +17,13 @@ from .forms import  add_game_form
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
+
 def index(request):
     return render(request, 'SelectGame/index.html')
+
+
+def test_acc(request):
+    return render(request, 'SelectGame/test_acc.html')
 
 def all_game_rating(request):
     ratings=model_rating.objects.all()

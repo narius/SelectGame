@@ -11,6 +11,7 @@ urlpatterns = [
     path('create_event/', views.create_event, name='create_event'),
     path('all_events/', views.all_events, name='all_events'),
     path('locations/', views.locations, name='locations'),
+    path('test_acc/', views.test_acc, name='test_acc'),
     path('view_game/<int:game_id>/', views.view_game, name='view_game'),
     path('logout/', logout, {'next_page': 'selectgame:index'},name='logout'),
 ]
