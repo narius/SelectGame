@@ -35,14 +35,29 @@ class rating_functions():
             This function will return the average rating for all games that :model:`auth.User` have
             rated higher than lower_limit
         """
-        games=[]
-        ratings=[]
+        games = []
+        ratings = {}
+        number_of_votes = {}
+        avarage = []
         for user in users:
             #Retrieve all games that the users own.
             game_library=model_game_library.objects.get(owner=user)
-            for game in game_library.games:
+            for game in game_library.games.all():
                 user_ratings=model_rating.objects.all().filter(user=user).filter(game=game)
-                ratings.append(user_ratings)
-                games.append(game)
+                for rating in user_ratings:
+                    if rating.rating > lower_limit:
+                        print(rating.game.name)
+                        ratings[rating.game.name] = ratings.setdefault(rating.game.name,0)+rating.rating
+                        number_of_votes[rating.game.name] = number_of_votes.setdefault(rating.game.name,0)+1
+                if game not in games:
+                    games.append(game)
         #By now whe should have two list, one with all available game,
         #one with all ratings.
+        for game in games:
+            #Find all ratings for this game
+            game_avarage = ratings[game.name]/number_of_votes[game.name]
+            avarage.append({'game':game,
+                            'number_of_votes':number_of_votes,
+                            'avarage': game_avarage
+            })
+        return avarage
