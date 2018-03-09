@@ -65,7 +65,7 @@ class model_event(models.Model):
     is_public=models.BooleanField(verbose_name=gettext("public"))
     group=models.ForeignKey(model_group, blank=True, on_delete=models.CASCADE, null=True)
     name=models.CharField(max_length=100, verbose_name=gettext("name"), blank=True)
-    messages = models.ManyToManyField(model_message)
+    messages = models.ManyToManyField(model_message, null=True, blank=True)
     class Meta:
         verbose_name=gettext("event")
         verbose_name_plural=gettext("events")

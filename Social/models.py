@@ -15,6 +15,7 @@ class model_group(models.Model):
         return self.name
 
 class model_message(models.Model):
+    writer = models.ForeignKey(User, on_delete=models.CASCADE)
     text=models.TextField(verbose_name=gettext('text'))
     created_date=models.DateTimeField(auto_now_add=True, verbose_name=gettext('created'))
     class Meta:

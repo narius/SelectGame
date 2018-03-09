@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% block title %}{{ title }}{% endblock %}
+<div class="row">
+{% block content %}
+{% if messages %}
+  <ul class="alert alert-dangers">
+    {% for message in messages %}
+      <div class="{{ message.tags }}" role="alert" >
+				<button class="close" data-dismiss="alert">&times;</button>
+				{{ message }}<div>
+    {% endfor %}
+  </ul>
+{% endif %}
+<h1>{{event.name}}</h1>
+{% endblock %}
+</div>
