@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.translation import gettext
 from django.contrib.auth.models import User
 from django.conf import settings
+
 # Create your models here.
 class model_group(models.Model):
     name=models.CharField(max_length=30, verbose_name=gettext('name'))
