@@ -46,6 +46,16 @@
             </div>
         </div>
     </div>
+    <div class="well">
+      <h1>{% trans "Messages" %}</h1>
+      <form action="{% url 'social:view_event' event_id=event.id%}" method="post">
+          {% csrf_token %}
+          <textarea id="message" name="message">{{h|safe}}</textarea>
+          {% wysiwyg_editor "message" %}
+          <input type="submit">
+      </form>
+
+    </div>
 </div>
 </div>
 <div class="col-sm-9 col-md-9">
@@ -70,13 +80,6 @@
       {% endfor %}
     </div>
     <div class="well">
-      <h1>{% trans "Messages" %}</h1>
-      <form action="{% url 'social:view_event' event_id=event.id%}" method="post">
-          {% csrf_token %}
-          <textarea id="message" name="message">{{h|safe}}</textarea>
-          {% wysiwyg_editor "message" %}
-          <input type="submit">
-      </form>
       {% for message in event.messages.all%}
       <div class="panel panel-default">
         <div class="panel-heading">
