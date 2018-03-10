@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.translation import gettext
 from django.contrib.auth.models import User
 from django.conf import settings
+
 # Create your models here.
 
 
@@ -23,6 +24,7 @@ class model_group(models.Model):
 
 
 class model_message(models.Model):
+    writer = models.ForeignKey(User, on_delete=models.CASCADE)
     text=models.TextField(verbose_name=gettext('text'))
     created_date=models.DateTimeField(auto_now_add=True, verbose_name=gettext('created'))
     writer = models.ForeignKey(User, on_delete=models.CASCADE, blank=True)
