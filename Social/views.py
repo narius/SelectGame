@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from Social.models import model_user_profile
 from SelectGame.models import model_game_library
 from SelectGame.models import model_event
+from SelectGame.rating import users_rating
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib import messages
 from django.utils.translation import gettext
