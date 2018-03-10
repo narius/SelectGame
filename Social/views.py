@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.shortcuts import HttpResponse
 from django.contrib.auth.models import User
 from Social.models import model_user_profile
+from Social.models import model_message
 from SelectGame.models import model_game_library
 from SelectGame.models import model_event
 from SelectGame.rating import rating_functions
@@ -79,6 +80,10 @@ def view_event(request, event_id):
     if not user_is_allowed:
         messages.add_message(request, messages.ERROR, gettext('You are not allowed to see this event'))
         return render(request, 'SelectGame/index.html')
+    if request.method=='POST':
+        message=model_message(writer=user, text=request.POST.get('message'))
+        message.save()
+        event.messages.add(message)
     users=[]
     users.append(event.owner)
     for participant in event.participants.all():
