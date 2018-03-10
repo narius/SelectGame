@@ -27,10 +27,10 @@ class model_message(models.Model):
     writer = models.ForeignKey(User, on_delete=models.CASCADE)
     text=models.TextField(verbose_name=gettext('text'))
     created_date=models.DateTimeField(auto_now_add=True, verbose_name=gettext('created'))
-    writer = models.ForeignKey(User, on_delete=models.CASCADE, blank=True)
     class Meta:
         verbose_name=gettext('message')
         verbose_name_plural=gettext('messages')
+        ordering = ['-created_date']
     def __str__(self):
         return str(self.created_date)+": "+self.text
 
