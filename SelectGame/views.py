@@ -17,8 +17,13 @@ from .forms import  add_game_form
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
+
 def index(request):
     return render(request, 'SelectGame/index.html')
+
+
+def test_acc(request):
+    return render(request, 'SelectGame/test_acc.html')
 
 def all_game_rating(request):
     ratings=model_rating.objects.all()
@@ -49,6 +54,16 @@ def add_game(request):
 
 @login_required(login_url='/login/')
 def create_event(request):
+    '''
+
+            **Return dictionary**
+
+            * locations: all the locations that the current user own.
+
+            **Template:**
+
+            :template:`SelectGame/create_event.html`
+    '''
     user=request.user
     #user=User.objects.get(pk=user_id)
     try:
@@ -85,3 +100,6 @@ def locations(request):
     except ObjectDoesNotExist:
         locations={}
     return render(request, 'SelectGame/locations.html',{'locations':locations,})
+
+def view_game(request, game_id):
+    return render(request, 'SelectGame/view_game.html')

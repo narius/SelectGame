@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'SelectGame.apps.SelectgameConfig',
     'Social.apps.SocialConfig',
+    'Frontend.apps.FrontendConfig',
     'bootstrap3',
     'bootstrap',
     'fontawesome',
