@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from Social.models import model_user_profile
 from SelectGame.models import model_game_library
 from SelectGame.models import model_event
-from SelectGame.rating import users_rating
+from SelectGame.rating import rating_functions
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib import messages
 from django.utils.translation import gettext
@@ -79,4 +79,10 @@ def view_event(request, event_id):
     if not user_is_allowed:
         messages.add_message(request, messages.ERROR, gettext('You are not allowed to see this event'))
         return render(request, 'SelectGame/index.html')
-    return render(request, 'Social/view_event.html', {'event': event})
+    users=[]
+    users.append(event.owner)
+    for participant in event.participants.all():
+        users.append(participant)
+    average=rating_functions.users_rating(users, 2)
+    return render(request, 'Social/view_event.html', {'event': event,
+                                                    'averages': average})

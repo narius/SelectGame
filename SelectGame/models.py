@@ -74,7 +74,7 @@ class model_event(models.Model):
 
 #A model for games that a person owns
 class model_game_library(models.Model):
-    owner=models.OneToOneField(User, on_delete=models.CASCADE)
+    owner=models.OneToOneField(User, on_delete=models.CASCADE, unique=True)
     games=models.ManyToManyField(model_game, verbose_name=gettext("games"))
     class Meta:
         verbose_name=gettext("game library")

@@ -50,6 +50,22 @@
         {% trans "Owner" %}: {{event.owner.get_username}}<br>
     </div>
     <div class="well">
+      {% for average in averages %}
+      {% if not average.too_low %}
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">{{average.game}}</h3>
+        </div>
+        <div class="panel-body">
+          {{average.number_of_votes}}<br>
+          {{average.average}}
+        </div>
+      </div>
+      {% endif %}
+      {% endfor %}
+    </div>
+    <div class="well">
+      <h1>{% trans "Messages" %}</h1>
       {% for message in event.messages.all%}
       <div class="panel panel-default">
         <div class="panel-heading">
@@ -61,6 +77,7 @@
       </div>
       {% endfor %}
     </div>
+
 </div>
 {% endblock %}
 </div>
