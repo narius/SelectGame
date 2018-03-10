@@ -17,7 +17,7 @@
   {% for event in events %}
 		<tr>
 			<td>{{event.owner}}</td>
-      <td>{{event.name}}</td>
+      <td><a href="{% url 'Social:view_event' event_id=event.id %}">{{event.name}}</a></td>
       <td>{{event.date}}</td>
 		</tr>
   {% endfor %}

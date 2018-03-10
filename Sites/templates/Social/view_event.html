@@ -13,6 +13,42 @@
     {% endfor %}
   </ul>
 {% endif %}
-<h1>{{event.name}}</h1>
+<div class="col-sm-3 col-md-3">
+<div class="panel-group" id="accordion">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><span class="glyphicon glyphicon-folder-close">
+                </span>{% trans "Partcipants" %}</a>
+            </h4>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse in">
+            <div class="panel-body">
+                <table class="table">
+                    <tr>
+                        <td>
+                            <span class="glyphicon glyphicon-user text-primary"></span><a href="{% url 'Social:user_profile' user_id=event.owner.id %}">{{event.owner.get_username}}</a>
+                        </td>
+                    </tr>
+                    {% for participant in event.participants.all %}
+                      <tr>
+                          <td>
+                              <span class="glyphicon glyphicon-user text-success"></span><a href="{% url 'Social:user_profile' user_id=participant.id %}">{{participant.get_username}}</a>
+                          </td>
+                      </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div class="col-sm-9 col-md-9">
+    <div class="well">
+        <h1>{{event.name}}</h1>
+        {% trans "Location" %}: {{event.location.address}}<br>
+        {% trans "Owner" %}: {{event.owner.get_username}}<br>
+    </div>
+</div>
 {% endblock %}
 </div>
