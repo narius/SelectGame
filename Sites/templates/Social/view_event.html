@@ -2,7 +2,11 @@
 {% load i18n %}
 {% load static %}
 {% load wysiwyg %}
+
 {% block title %}{{ title }}{% endblock %}
+{% block extra_head %}
+{% wysiwyg_setup  %}
+{% endblock %}
 <div class="row">
 {% block content %}
 {% if messages %}
@@ -69,7 +73,7 @@
       <h1>{% trans "Messages" %}</h1>
       <form action="{% url 'social:view_event' event_id=event.id%}" method="post">
           {% csrf_token %}
-          <textarea id="biography" name="message"></textarea>
+          <textarea id="message" name="message">{{h|safe}}</textarea>
           {% wysiwyg_editor "message" %}
           <input type="submit">
       </form>
@@ -79,7 +83,7 @@
           <h3 class="panel-title">{{message.writer}} {{message.created_date|date:"Y-m-d H:i"}}</h3>
         </div>
         <div class="panel-body">
-          {{message.text}}
+          {{message.text|safe}}
         </div>
       </div>
       {% endfor %}
