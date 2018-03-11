@@ -51,6 +51,8 @@ class model_rating(models.Model):
     class Meta:
         verbose_name=gettext("rating")
         verbose_name_plural=gettext("ratings")
+        #A user may only rate a game once
+        unique_together = (("game", "user"),)
     def __str__(self):
         return str(self.user)+" "+str(self.game)+" "+str(self.rating)
 
