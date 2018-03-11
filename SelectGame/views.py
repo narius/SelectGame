@@ -41,17 +41,26 @@ def logout_view(request):
 
 def add_game(request):
     if request.method == 'POST':
-        # create a form instance and populate it with data from the request:
-        form = add_game_form(request.POST)
-        # check whether it's valid:
-        if form.is_valid():
-            h=1
-            # process the data in form.cleaned_data as required
-            # ...
-            # redirect to a new URL:
-    # if a GET (or any other method) we'll create a blank form
-    form=add_game_form()
-    categories=model_category.objects.all()
+        print(request.POST.get('image'))
+        data={
+            'name':request.POST.get('name'),
+            'category':request.POST.get('category'),
+            'comment':request.POST.get('comment'),
+            'image':request.POST.get['image'],
+            'minimum_number_of_players':request.POST.get('minimum_number_of_players'),
+            'maximum_number_of_players':request.POST.get('maximum_number_of_players')
+        }
+        new_game = model_game(name=data['name'],
+                        comment=data['comment'],
+                        image=data['image'],
+                        minimum_number_of_players=data['minimum_number_of_players'],
+                        maximum_number_of_players=data['maximum_number_of_players'])
+        new_game.save()
+        for pk in request.POST.getlist('category'):
+            category = model_category.objects.get(pk=pk)
+            new_game.category.add(category)
+        new_game.save()
+    categories = model_category.objects.all()
     return render(request, 'SelectGame/add_game.html',{'categories':categories})
 
 @login_required(login_url='/login/')
