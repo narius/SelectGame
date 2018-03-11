@@ -1,10 +1,11 @@
 from django.http import HttpResponse
 from django.shortcuts import render
-from .models import model_rating
-from .models import model_game
+from SelectGame.models import model_rating
+from SelectGame.models import model_game
 from .rating import rating_functions
-from .models import model_location
-from .models import model_event
+from SelectGame.models import model_location
+from SelectGame.models import model_event
+from SelectGame.models import model_category
 from django.contrib.auth import logout
 from django.core.signals import request_finished
 from django.dispatch import receiver
@@ -50,7 +51,8 @@ def add_game(request):
             # redirect to a new URL:
     # if a GET (or any other method) we'll create a blank form
     form=add_game_form()
-    return render(request, 'SelectGame/add_game.html',{'form':form})
+    categories=model_category.objects.all()
+    return render(request, 'SelectGame/add_game.html',{'categories':categories})
 
 @login_required(login_url='/login/')
 def create_event(request):
@@ -104,4 +106,3 @@ def locations(request):
 
 def view_game(request, game_id):
     return render(request, 'SelectGame/view_game.html')
-
