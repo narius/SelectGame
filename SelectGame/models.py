@@ -6,6 +6,7 @@ from django.core.validators import MinValueValidator
 
 #Models from Social
 from Social.models import model_group
+from Social.models import model_message
 # Create your models here.
 
 #Model for categories
@@ -24,6 +25,12 @@ class model_game(models.Model):
     name=models.CharField(max_length=30, verbose_name=gettext("name"))
     category=models.ManyToManyField(model_category)
     comment=models.TextField(verbose_name=gettext("Comment"), blank=True)
+    minimum_number_of_players=models.IntegerField(default=1,
+                        verbose_name=gettext("minimum number of players"),
+                        validators=[MinValueValidator(1)])
+    maximum_number_of_players=models.IntegerField(default=1,
+                        verbose_name=gettext("maximum number of players"),
+                        validators=[MaxValueValidator(100)])
     class Meta:
         verbose_name = gettext("game")
         verbose_name_plural = gettext("games")
@@ -57,13 +64,20 @@ class model_location(models.Model):
 #Model for an event.
 class model_event(models.Model):
     owner=models.ForeignKey(User, on_delete=models.CASCADE, related_name="event_owner")
-    participants=models.ManyToManyField(User, verbose_name=gettext("participants"), related_name="event_participants", blank=True, null=True)
+    participants=models.ManyToManyField(User, verbose_name=gettext("participants"), related_name="event_participants", blank=True)
     date=models.DateTimeField(verbose_name=gettext("date"))
     games=models.ManyToManyField(model_game, verbose_name=gettext("games"), blank=True)
     location=models.ForeignKey(model_location, on_delete=models.CASCADE, verbose_name=gettext("location"))
     is_public=models.BooleanField(verbose_name=gettext("public"))
     group=models.ForeignKey(model_group, blank=True, on_delete=models.CASCADE, null=True)
     name=models.CharField(max_length=100, verbose_name=gettext("name"), blank=True)
+    messages = models.ManyToManyField(model_message, blank=True)
+    minimum_number_of_players=models.IntegerField(default=1,
+                    verbose_name=gettext("minimum number of players"),
+                    validators=[MinValueValidator(1)])
+    maximum_number_of_players=models.IntegerField(default=1,
+                    verbose_name=gettext("maximum number of players"),
+                    validators=[MaxValueValidator(100)])
     class Meta:
         verbose_name=gettext("event")
         verbose_name_plural=gettext("events")
@@ -72,7 +86,7 @@ class model_event(models.Model):
 
 #A model for games that a person owns
 class model_game_library(models.Model):
-    owner=models.OneToOneField(User, on_delete=models.CASCADE)
+    owner=models.OneToOneField(User, on_delete=models.CASCADE, unique=True)
     games=models.ManyToManyField(model_game, verbose_name=gettext("games"))
     class Meta:
         verbose_name=gettext("game library")

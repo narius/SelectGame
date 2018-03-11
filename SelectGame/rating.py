@@ -35,23 +35,37 @@ class rating_functions():
             This function will return the average rating for all games that :model:`auth.User` have
             rated higher than lower_limit
         """
-        games=[]
-        ratings=[]
-        suggested_games=[]
+
+        games = []
+        ratings = {}
+        number_of_votes = {}
+        avarage = []
         for user in users:
             #Retrieve all games that the users own.
-            game_library=model_game_library.objects.get(owner=user)
+            game_library=model_game_library.objects.get_or_create(owner=user)[0]
             for game in game_library.games.all():
                 user_ratings=model_rating.objects.all().filter(user=user).filter(game=game)
-                ratings.append(user_ratings)
-                games.append(game)
+                for rating in user_ratings:
+                    if rating.rating > lower_limit:
+                        print(rating.game.name)
+                        ratings[rating.game.name] = ratings.setdefault(rating.game.name,0)+rating.rating
+                        number_of_votes[rating.game.name] = number_of_votes.setdefault(rating.game.name,0)+1
+                if game not in games:
+                    print("rating-append: "+str(game))
+                    games.append(game)
         #By now whe should have two list, one with all available game,
         #one with all ratings.
-        print("ratings\n")
+
         print(ratings)
-        print("games\n")
-        print(games)
-        for rating in ratings:
-            if rating.rating>lower_limit:
-                suggested_games=rating.games
-        print(suggested_games)
+        for game in games:
+            #Find all ratings for this game
+            game_avarage = ratings.setdefault(game.name,0)/number_of_votes.setdefault(game.name,1)
+            votes=number_of_votes[game.name]
+            too_low=True if game_avarage==0 else False
+            avarage.append({'game':game,
+                            'number_of_votes':votes,
+                            'average': game_avarage,
+                            'too_low': too_low
+            })
+        return avarage
+

@@ -44,6 +44,11 @@ LOCALE_PATHS = [
     BASE_DIR+'/translations/locale',
 ]
 
+GRAPH_MODELS = {
+  'all_applications': True,
+  'group_models': True,
+}
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -55,12 +60,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'SelectGame.apps.SelectgameConfig',
     'Social.apps.SocialConfig',
+    'Frontend.apps.FrontendConfig',
     'bootstrap3',
     'bootstrap',
     'fontawesome',
     'django.contrib.admindocs',
     'django_wysiwyg',
-    'ckeditor'
+    'ckeditor',
+    'django_extensions'
 ]
 
 MIDDLEWARE = [

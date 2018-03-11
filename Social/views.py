@@ -2,7 +2,10 @@ from django.shortcuts import render
 from django.shortcuts import HttpResponse
 from django.contrib.auth.models import User
 from Social.models import model_user_profile
+from Social.models import model_message
 from SelectGame.models import model_game_library
+from SelectGame.models import model_event
+from SelectGame.rating import rating_functions
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib import messages
 from django.utils.translation import gettext
@@ -65,3 +68,26 @@ def edit_profile(request):
         profile.biography=new_profile_text
         profile.save()
     return render(request, 'Social/edit_profile.html', {'profile':profile,})
+
+
+@login_required(login_url='/login')
+def view_event(request, event_id):
+    event = model_event.objects.get(pk=event_id)
+    user = request.user
+    user_is_allowed = user in event.participants.all()\
+                    or user == event.owner\
+                    or event.is_public
+    if not user_is_allowed:
+        messages.add_message(request, messages.ERROR, gettext('You are not allowed to see this event'))
+        return render(request, 'SelectGame/index.html')
+    if request.method=='POST':
+        message=model_message(writer=user, text=request.POST.get('message'))
+        message.save()
+        event.messages.add(message)
+    users=[]
+    users.append(event.owner)
+    for participant in event.participants.all():
+        users.append(participant)
+    average=rating_functions.users_rating(users, 2)
+    return render(request, 'Social/view_event.html', {'event': event,
+                                                    'averages': average})

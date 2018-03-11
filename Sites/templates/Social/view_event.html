@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% load wysiwyg %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block extra_head %}
+{% wysiwyg_setup  %}
+{% endblock %}
+<div class="row">
+{% block content %}
+{% if messages %}
+  <ul class="alert alert-dangers">
+    {% for message in messages %}
+      <div class="{{ message.tags }}" role="alert" >
+				<button class="close" data-dismiss="alert">&times;</button>
+				{{ message }}<div>
+    {% endfor %}
+  </ul>
+{% endif %}
+<div class="col-sm-3 col-md-3">
+<div class="panel-group" id="accordion">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><span class="glyphicon glyphicon-folder-close">
+                </span>{% trans "Partcipants" %}</a>
+            </h4>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse in">
+            <div class="panel-body">
+                <table class="table">
+                    <tr>
+                        <td>
+                            <span class="glyphicon glyphicon-user text-primary"></span><a href="{% url 'Social:user_profile' user_id=event.owner.id %}">{{event.owner.get_username}}</a>
+                        </td>
+                    </tr>
+                    {% for participant in event.participants.all %}
+                      <tr>
+                          <td>
+                              <span class="glyphicon glyphicon-user text-success"></span><a href="{% url 'Social:user_profile' user_id=participant.id %}">{{participant.get_username}}</a>
+                          </td>
+                      </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="well">
+      <h1>{% trans "Messages" %}</h1>
+      <form action="{% url 'social:view_event' event_id=event.id%}" method="post">
+          {% csrf_token %}
+          <textarea id="message" name="message">{{h|safe}}</textarea>
+          {% wysiwyg_editor "message" %}
+          <input type="submit">
+      </form>
+
+    </div>
+</div>
+</div>
+<div class="col-sm-9 col-md-9">
+    <div class="well">
+        <h1>{{event.name}}</h1>
+        {% trans "Location" %}: {{event.location.address}}<br>
+        {% trans "Owner" %}: {{event.owner.get_username}}<br>
+        {% trans "Maximum number of players" %}: {{event.maximum_number_of_players}}<br>
+        {% trans "Minimum number of players" %}: {{event.minimum_number_of_players}}
+    </div>
+    <div class="well">
+      {% for average in averages %}
+      {% if not average.too_low %}
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">{{average.game}}</h3>
+        </div>
+        <div class="panel-body">
+          {{average.number_of_votes}}<br>
+          {{average.average}}
+        </div>
+      </div>
+      {% endif %}
+      {% endfor %}
+    </div>
+    <div class="well">
+      {% for message in event.messages.all%}
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">{{message.writer}} {{message.created_date|date:"Y-m-d H:i"}}</h3>
+        </div>
+        <div class="panel-body">
+          {{message.text|safe}}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+</div>
+{% endblock %}
+</div>
