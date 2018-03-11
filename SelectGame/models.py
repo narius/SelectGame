@@ -25,6 +25,12 @@ class model_game(models.Model):
     name=models.CharField(max_length=30, verbose_name=gettext("name"))
     category=models.ManyToManyField(model_category)
     comment=models.TextField(verbose_name=gettext("Comment"), blank=True)
+    minimum_number_of_players=models.IntegerField(default=1,
+                        verbose_name=gettext("minimum number of players"),
+                        validators=[MinValueValidator(1)])
+    maximum_number_of_players=models.IntegerField(default=1,
+                        verbose_name=gettext("maximum number of players"),
+                        validators=[MaxValueValidator(100)])
     class Meta:
         verbose_name = gettext("game")
         verbose_name_plural = gettext("games")
@@ -66,6 +72,7 @@ class model_event(models.Model):
     group=models.ForeignKey(model_group, blank=True, on_delete=models.CASCADE, null=True)
     name=models.CharField(max_length=100, verbose_name=gettext("name"), blank=True)
     messages = models.ManyToManyField(model_message, null=True, blank=True)
+
     class Meta:
         verbose_name=gettext("event")
         verbose_name_plural=gettext("events")
