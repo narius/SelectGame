@@ -16,6 +16,7 @@ class model_category(models.Model):
     class Meta:
         verbose_name = gettext("category")
         verbose_name_plural = gettext("categories")
+        ordering = ['name']
     def __str__(self):
         return self.name
 
@@ -31,9 +32,11 @@ class model_game(models.Model):
     maximum_number_of_players=models.IntegerField(default=1,
                         verbose_name=gettext("maximum number of players"),
                         validators=[MaxValueValidator(100)])
+    link = models.URLField(max_length=200, verbose_name=gettext("link"), blank=True)
     class Meta:
         verbose_name = gettext("game")
         verbose_name_plural = gettext("games")
+        ordering = ["name"]
     def __str__(self):
         return self.name
 
