@@ -35,6 +35,7 @@ class rating_functions():
             This function will return the average rating for all games that :model:`auth.User` have
             rated higher than lower_limit
         """
+
         games = []
         ratings = {}
         number_of_votes = {}
@@ -54,6 +55,7 @@ class rating_functions():
                     games.append(game)
         #By now whe should have two list, one with all available game,
         #one with all ratings.
+
         print(ratings)
         for game in games:
             #Find all ratings for this game
@@ -66,3 +68,4 @@ class rating_functions():
                             'too_low': too_low
             })
         return avarage
+

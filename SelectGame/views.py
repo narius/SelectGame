@@ -101,5 +101,7 @@ def locations(request):
         locations={}
     return render(request, 'SelectGame/locations.html',{'locations':locations,})
 
+
 def view_game(request, game_id):
     return render(request, 'SelectGame/view_game.html')
+
