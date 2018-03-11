@@ -41,12 +41,12 @@ def logout_view(request):
 
 def add_game(request):
     if request.method == 'POST':
-        print(request.POST.get('image'))
+        print(request.FILES['image'])
         data={
             'name':request.POST.get('name'),
             'category':request.POST.get('category'),
             'comment':request.POST.get('comment'),
-            'image':request.POST.get['image'],
+            'image':request.FILES['image'],
             'minimum_number_of_players':request.POST.get('minimum_number_of_players'),
             'maximum_number_of_players':request.POST.get('maximum_number_of_players')
         }
