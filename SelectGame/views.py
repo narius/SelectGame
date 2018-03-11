@@ -103,5 +103,5 @@ def locations(request):
 
 
 def view_game(request, game_id):
-    return render(request, 'SelectGame/view_game.html')
-
+    game = model_game.objects.get(pk=game_id)
+    return render(request, 'SelectGame/view_game.html',{'game':game,})
