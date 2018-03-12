@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{{ title }}{% endblock %}
+<div class="row">
+{% block content %}
+{% if messages %}
+  <ul class="alert alert-dangers">
+    {% for message in messages %}
+      <div class="{{ message.tags }}" role="alert" >
+				<button class="close" data-dismiss="alert">&times;</button>
+				{{ message }}<div>
+    {% endfor %}
+  </ul>
+{% endif %}
+ <ul class="nav nav-tabs">
+   <li class="active"><a data-toggle="tab" href="#accepted">{% trans "Accepted" %}</a></li>
+   <li><a data-toggle="tab" href="#waiting_approval">{% trans "Waiting approval" %}</a></li>
+ </ul>
+
+ <div class="tab-content">
+   <div id="accepted" class="tab-pane fade in active">
+     <h3>{% trans "Accepted" %}</h3>
+     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+   </div>
+   <div id="waiting_approval" class="tab-pane fade">
+     <h3>{% trans "Waiting approval" %}</h3>
+     <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+   </div>
+ </div>
+{% endblock %}
+</div>

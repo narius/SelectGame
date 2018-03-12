@@ -3,6 +3,7 @@ from django.shortcuts import HttpResponse
 from django.contrib.auth.models import User
 from Social.models import model_user_profile
 from Social.models import model_message
+from Social.models import model_friends
 from SelectGame.models import model_game_library
 from SelectGame.models import model_event
 from SelectGame.rating import rating_functions
@@ -11,6 +12,7 @@ from django.contrib import messages
 from django.utils.translation import gettext
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
+from django.db.models import Q
 # Create your views here.
 def index(request):
     return HttpResponse("Hello, world. You're at the social index.")
@@ -91,3 +93,11 @@ def view_event(request, event_id):
     average=rating_functions.users_rating(users, 2)
     return render(request, 'Social/view_event.html', {'event': event,
                                                     'averages': average})
+
+
+@login_required(login_url='/login')
+def view_friends(request):
+    user = request.user
+    friends=model_friends.objects.filter(Q(user1=user) | Q(user2=user))
+    print(friends)
+    return render(request, 'Social/view_friends.html',{})
