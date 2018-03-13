@@ -72,6 +72,8 @@ class model_relationsship(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     status = models.CharField(max_length=2, choices=FRIENDS_STATUS,
                                             default=friends_pending)
+    sender_user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    sender_group = models.ForeignKey(model_group, on_delete=models.CASCADE, null=True)
 
 
     class Meta:
