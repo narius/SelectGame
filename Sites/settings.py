@@ -14,6 +14,8 @@ import os
 import dj_database_url
 from django.contrib.messages import constants as message_constants
 from django.contrib import messages
+from dotenv import load_dotenv, find_dotenv
+load_dotenv(find_dotenv())
 MESSAGE_LEVEL = message_constants.DEBUG
 MESSAGE_TAGS={
     message_constants.DEBUG: 'alert alert-primary alert-dismissible',
@@ -31,7 +33,7 @@ LOGIN_REDIRECT_URL="/"
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'de7s1%*qgi=%-ihlxuh%415&a0j#1ml6rf_y4g%4222gf@06a9'
+SECRET_KEY = os.getenv("SECRET_KEY")
 #SECRET_KEY = dj_database_url.config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
