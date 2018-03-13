@@ -3,7 +3,8 @@ from django.shortcuts import HttpResponse
 from django.contrib.auth.models import User
 from Social.models import model_user_profile
 from Social.models import model_message
-from Social.models import model_friends
+from Social.models import model_friend_list
+from Social.models import FRIENDS_STATUS
 from SelectGame.models import model_game_library
 from SelectGame.models import model_event
 from SelectGame.rating import rating_functions
@@ -98,6 +99,25 @@ def view_event(request, event_id):
 @login_required(login_url='/login')
 def view_friends(request):
     user = request.user
-    friends=model_friends.objects.filter(Q(user1=user) | Q(user2=user))
-    print(friends)
-    return render(request, 'Social/view_friends.html',{})
+    friend_list = model_friend_list.objects.get_or_create(user=user)[0]
+    accepted = []
+    pending = []
+    rejected = []
+    removed = []
+    friends_pending = 'pe'
+    friends_accepted = 'ac'
+    friends_rejected = 're'
+    friends_removed = 'rm'
+    for friend in friend_list.friends.all():
+        if friend.status == friends_pending:
+            pending.append(friend)
+        if friend.status == friends_accepted:
+                accepted.append(friend)
+        if friend.status == friends_rejected:
+            rejected.append(friend)
+        if friend.status == friends_removed:
+            removed.append(friend)
+    return render(request, 'Social/view_friends.html', {'accepted': accepted,
+                                                        'pending': pending,
+                                                        'rejected': rejected,
+                                                        'removed': removed})

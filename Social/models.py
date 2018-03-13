@@ -54,28 +54,44 @@ class model_user_profile(models.Model):
     def __str__(self):
         return str(self.user)
 
-#Status for friends
-friends_pending='pe'
-friends_accepted='ac'
-friends_rejected='re'
-friends_removed='rm'
-FRIENDS_STATUS=(
-    (friends_pending,gettext('pending approval')),
-    (friends_accepted,gettext('accepted')),
-    (friends_rejected,gettext('rejected')),
-    (friends_removed,gettext('removed')),
+
+# Status for friends
+friends_pending = 'pe'
+friends_accepted = 'ac'
+friends_rejected = 're'
+friends_removed = 'rm'
+FRIENDS_STATUS = (
+    (friends_pending, gettext('pending approval')),
+    (friends_accepted, gettext('accepted')),
+    (friends_rejected, gettext('rejected')),
+    (friends_removed, gettext('removed')),
 )
-class model_friends(models.Model):
-    status_user1=models.CharField(max_length=2,choices=FRIENDS_STATUS,default=friends_pending)
-    status_user2=models.CharField(max_length=2,choices=FRIENDS_STATUS,default=friends_pending)
-    user1=models.ForeignKey(User, related_name="User1", on_delete=models.CASCADE)
-    user2=models.ForeignKey(User, related_name="User2", on_delete=models.CASCADE)
+
+
+class model_relationsship(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    status = models.CharField(max_length=2, choices=FRIENDS_STATUS,
+                                            default=friends_pending)
+
+
     class Meta:
-        verbose_name=gettext("friend")
-        verbose_name_plural=gettext("friends")
-        unique_together = (("user1", "user2"),)
+        verbose_name = gettext("Relationship status")
+        verbose_name_plural = gettext("Relationship status")
+
     def __str__(self):
-        return str(self.user1)+"("+self.get_status_user1_display()+") - "+str(self.user2)+"("+self.get_status_user2_display()+")"
+        return str(self.user)+" "+str(self.status)
+
+class model_friend_list(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    friends = models.ManyToManyField(model_relationsship)
+
+    class Meta:
+        verbose_name = gettext("Friend list")
+        verbose_name_plural = gettext("Friend list")
+
+    def __str__(self):
+        return str(self.user)
+
 
 class model_private_message(models.Model):
     participants=models.ManyToManyField(User, verbose_name=gettext('participants'), related_name="participants")
