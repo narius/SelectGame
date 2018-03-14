@@ -3,7 +3,7 @@ from django.shortcuts import HttpResponse
 from django.contrib.auth.models import User
 from Social.models import model_user_profile
 from Social.models import model_message
-from Social.models import model_friend_list
+from Social.models import model_friends, model_relationsship
 from Social.models import FRIENDS_STATUS
 from SelectGame.models import model_game_library
 from SelectGame.models import model_event
@@ -99,7 +99,11 @@ def view_event(request, event_id):
 @login_required(login_url='/login')
 def view_friends(request):
     user = request.user
-    friend_list = model_friend_list.objects.get_or_create(user=user)[0]
+    print(user)
+    my_statuses = model_relationsship.objects.all().filter(user=user)
+    friends=[]
+    for status in my_statuses:
+        friends.append(model_friends.objects.all().filter(Q(user_to=status)|Q(user_from=status)))
     accepted = []
     pending = []
     rejected = []
@@ -108,14 +112,18 @@ def view_friends(request):
     friends_accepted = 'ac'
     friends_rejected = 're'
     friends_removed = 'rm'
-    for friend in friend_list.friends.all():
-        if friend.status == friends_pending:
-            pending.append(friend)
-        if friend.status == friends_accepted:
-                accepted.append(friend)
-        if friend.status == friends_rejected:
-            rejected.append(friend)
-        if friend.status == friends_removed:
+    for friend in friends:
+        #Check if the user i user_from or user_to
+        my_friend = friend[0].user_to if friend[0].user_from.user == user else friend[0].user_from
+        if my_friend.status == friends_pending:
+            print("pending: "+str(my_friend))
+            pending.append(my_friend)
+        if my_friend.status == friends_accepted:
+            print("accepted: "+str(my_friend))
+            accepted.append(my_friend)
+        if my_friend.status == friends_rejected:
+            rejected.append(my_friend)
+        if my_friend.status == friends_removed:
             removed.append(friend)
     return render(request, 'Social/view_friends.html', {'accepted': accepted,
                                                         'pending': pending,

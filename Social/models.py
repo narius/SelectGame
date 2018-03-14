@@ -72,10 +72,6 @@ class model_relationsship(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     status = models.CharField(max_length=2, choices=FRIENDS_STATUS,
                                             default=friends_pending)
-    sender_user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    sender_group = models.ForeignKey(model_group, on_delete=models.CASCADE, null=True)
-
-
     class Meta:
         verbose_name = gettext("Relationship status")
         verbose_name_plural = gettext("Relationship status")
@@ -83,16 +79,19 @@ class model_relationsship(models.Model):
     def __str__(self):
         return str(self.user)+" "+str(self.status)
 
-class model_friend_list(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    friends = models.ManyToManyField(model_relationsship)
-
+class model_friends(models.Model):
+    user_to = models.ForeignKey(model_relationsship,
+                    on_delete=models.CASCADE,
+                    related_name="user_to")
+    user_from = models.ForeignKey(model_relationsship,
+                    on_delete=models.CASCADE,
+                    related_name="user_from")
     class Meta:
-        verbose_name = gettext("Friend list")
-        verbose_name_plural = gettext("Friend list")
+        verbose_name = gettext("Friend")
+        verbose_name_plural = gettext("Friends")
 
     def __str__(self):
-        return str(self.user)
+        return str(self.user_to)+" + "+str(self.user_from)
 
 
 class model_private_message(models.Model):
