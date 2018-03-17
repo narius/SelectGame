@@ -143,3 +143,8 @@ class view_friends(View):
     def get(self, request, *args, **kwargs):
         statuses = self.get_friend_list(request.user)
         return render(request, self.template, statuses)
+    def post(self, request, *args, **kwargs):
+        if request.POST.get("1-star"):
+            h=1
+        statuses = self.get_friend_list(request.user)
+        return render(request, self.template, statuses)

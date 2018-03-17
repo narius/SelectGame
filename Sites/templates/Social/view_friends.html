@@ -33,9 +33,28 @@
    </div>
    <div id="waiting_approval" class="tab-pane fade">
      <h3>{% trans "Waiting approval" %}</h3>
-     {% for friend in waiting_approval %}
-      {{friend.user}} knappar <br \>
-     {% endfor %}
+     <form action="{% url 'selectgame:view_game' game_id=game.id%}" method="post">
+       {% csrf_token %}
+       <table>
+       {% for friend in waiting_approval %}
+        <tr>
+          <td>
+            {{friend.user}}
+          </td>
+          <td>
+            <button value=1 name="1-star" type="submit" class="ok_{{friends.id}}" aria-label="Left Align">
+              <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+            </button>
+          </td>
+          <td>
+            <button value=1 name="1-star" type="submit" class="decline_{{friend.id}}" aria-label="Left Align">
+              <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+            </button>
+          </td>
+        </tr>
+       {% endfor %}
+       </table
+      </form>
    </div>
  </div>
 {% endblock %}
