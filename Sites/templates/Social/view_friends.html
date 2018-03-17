@@ -14,6 +14,7 @@
 {% endif %}
  <ul class="nav nav-tabs">
    <li class="active"><a data-toggle="tab" href="#accepted">{% trans "Accepted" %}</a></li>
+   <li><a data-toggle="tab" href="#pending">{% trans "Pending" %}</a></li>
    <li><a data-toggle="tab" href="#waiting_approval">{% trans "Waiting approval" %}</a></li>
  </ul>
 
@@ -24,10 +25,16 @@
       {{friend.user}} <br \>
      {% endfor %}
    </div>
-   <div id="waiting_approval" class="tab-pane fade">
-     <h3>{% trans "Waiting approval" %}</h3>
+   <div id="pending" class="tab-pane fade">
+     <h3>{% trans "Pending" %}</h3>
      {% for friend in pending %}
       {{friend.user}} <br \>
+     {% endfor %}
+   </div>
+   <div id="waiting_approval" class="tab-pane fade">
+     <h3>{% trans "Waiting approval" %}</h3>
+     {% for friend in waiting_approval %}
+      {{friend.user}} knappar <br \>
      {% endfor %}
    </div>
  </div>

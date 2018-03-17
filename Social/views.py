@@ -98,6 +98,16 @@ def view_event(request, event_id):
 
 @login_required(login_url='/login')
 def view_friends(request):
+    '''
+        If a user sends a friend request user_from will be the user,
+        user_from.status will be approved and user_to.status will be pending.
+        returns
+            pending: request that the one I seent to need to approved
+            waiting_approval: requests sent to me, that i need approved
+            accepted: request that both users have Accepted
+            rejected: requests that user_to has rejected
+            removed: requests that user_from has withdrawed.
+    '''
     user = request.user
     print(user)
     my_statuses = model_relationsship.objects.all().filter(user=user)
@@ -108,6 +118,7 @@ def view_friends(request):
     pending = []
     rejected = []
     removed = []
+    waiting_approval = []
     friends_pending = 'pe'
     friends_accepted = 'ac'
     friends_rejected = 're'
@@ -115,17 +126,15 @@ def view_friends(request):
     for friend in friends:
         #Check if the user i user_from or user_to
         my_friend = friend[0].user_to if friend[0].user_from.user == user else friend[0].user_from
-        if my_friend.status == friends_pending:
-            print("pending: "+str(my_friend))
-            pending.append(my_friend)
-        if my_friend.status == friends_accepted:
-            print("accepted: "+str(my_friend))
+        if friend[0].user_from.status == friends_accepted and friend[0].user_to.status == friends_accepted:
             accepted.append(my_friend)
-        if my_friend.status == friends_rejected:
-            rejected.append(my_friend)
-        if my_friend.status == friends_removed:
-            removed.append(friend)
+        if friend[0].user_from.user == user and my_friend.status == friends_pending:
+            pending.append(my_friend)
+        #If I haven't approved the friend request
+        if friend[0].user_to.user == user and friend[0].user_to.status == friends_pending:
+            waiting_approval.append(my_friend)
     return render(request, 'Social/view_friends.html', {'accepted': accepted,
                                                         'pending': pending,
                                                         'rejected': rejected,
-                                                        'removed': removed})
+                                                        'removed': removed,
+                                                        'waiting_approval': waiting_approval})
