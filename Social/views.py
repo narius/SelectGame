@@ -100,7 +100,7 @@ def view_event(request, event_id):
 
 class view_friends(View):
     template='Social/view_friends.html'
-    def get(self, request, *args, **kwargs):
+    def get_friend_list(self, user):
         '''
             If a user sends a friend request user_from will be the user,
             user_from.status will be approved and user_to.status will be pending.
@@ -111,7 +111,6 @@ class view_friends(View):
                 rejected: requests that user_to has rejected
                 removed: requests that user_from has withdrawed.
         '''
-        user = request.user
         print(user)
         my_statuses = model_relationsship.objects.all().filter(user=user)
         friends=[]
@@ -136,11 +135,11 @@ class view_friends(View):
             #If I haven't approved the friend request
             if friend[0].user_to.user == user and friend[0].user_to.status == friends_pending:
                 waiting_approval.append(my_friend)
-        return render(request, self.template,
-            {'accepted': accepted,
+        return {'accepted': accepted,
             'pending': pending,
             'rejected': rejected,
             'removed': removed,
-            'waiting_approval': waiting_approval})
-    #def get(self, request, *args, **kwargs):
-        #self.get_friend_list(self, request, *args, **kwargs)
+            'waiting_approval': waiting_approval}
+    def get(self, request, *args, **kwargs):
+        statuses = self.get_friend_list(request.user)
+        return render(request, self.template, statuses)
