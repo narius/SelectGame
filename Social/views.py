@@ -99,6 +99,7 @@ def view_event(request, event_id):
 
 
 class view_friends(View):
+    template='Social/view_friends.html'
     def get(self, request, *args, **kwargs):
         '''
             If a user sends a friend request user_from will be the user,
@@ -135,8 +136,11 @@ class view_friends(View):
             #If I haven't approved the friend request
             if friend[0].user_to.user == user and friend[0].user_to.status == friends_pending:
                 waiting_approval.append(my_friend)
-        return render(request, 'Social/view_friends.html', {'accepted': accepted,
-                                                            'pending': pending,
-                                                            'rejected': rejected,
-                                                            'removed': removed,
-                                                            'waiting_approval': waiting_approval})
+        return render(request, self.template,
+            {'accepted': accepted,
+            'pending': pending,
+            'rejected': rejected,
+            'removed': removed,
+            'waiting_approval': waiting_approval})
+    #def get(self, request, *args, **kwargs):
+        #self.get_friend_list(self, request, *args, **kwargs)
