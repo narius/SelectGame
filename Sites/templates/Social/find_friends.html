@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% block title %}{{ title }}{% endblock %}
+<div class="row">
+{% block content %}
+{% if messages %}
+  <ul class="alert alert-dangers">
+    {% for message in messages %}
+      <div class="{{ message.tags }}" role="alert" >
+				<button class="close" data-dismiss="alert">&times;</button>
+				{{ message }}<div>
+    {% endfor %}
+  </ul>
+{% endif %}
+  <form action="#" method="post">{% csrf_token %}
+    <table class="table table-striped">
+      {% for user in users %}
+      <tr>
+        <td>
+          <a href="{% url 'social:user_profile' user_id=user.id %}">{{user.get_username}}</a>
+        </td>
+        <td>
+          <button type="button" class="btn btn-success">{% trans "Make friend" %}</button>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+  </form>
+{% endblock %}
+</div>

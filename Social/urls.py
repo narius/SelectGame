@@ -12,4 +12,5 @@ urlpatterns = [
     path('edit_profile/', views.edit_profile, name='edit_profile'),
     path('event/<int:event_id>/', views.view_event, name='view_event'),
     path('view_friends/', login_required(views.view_friends.as_view()), name='view_friends'),
+    path('find_friends/', login_required(views.find_friends.as_view()), name='find_friends'),
 ]

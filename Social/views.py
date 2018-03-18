@@ -159,3 +159,12 @@ class view_friends(View):
                 friend[1].save()
         statuses = self.get_friend_list(request.user)
         return render(request, self.template, statuses)
+
+class find_friends(View):
+    template = "Social/find_friends.html"
+    users = User.objects.filter(groups__name='SelectGameUsers')
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template, {'users': self.users, })
+
+    def post(self, request, *args, **kwargs):
+        return render(request, self.template, {'users': self.users, })
