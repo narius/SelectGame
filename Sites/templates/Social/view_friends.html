@@ -33,21 +33,21 @@
    </div>
    <div id="waiting_approval" class="tab-pane fade">
      <h3>{% trans "Waiting approval" %}</h3>
-     <form action="{% url 'selectgame:view_game' game_id=game.id%}" method="post">
+     <form action="{% url 'social:view_friends' %}" method="post">
        {% csrf_token %}
        <table>
        {% for friend in waiting_approval %}
         <tr>
           <td>
-            {{friend.user}}
+            {{friend.0.user}}
           </td>
           <td>
-            <button value=1 name="1-star" type="submit" class="ok_{{friends.id}}" aria-label="Left Align">
+            <button value=1 name="ok_{{friend.1.id}}" type="submit" class="ok_{{friends.id}}" aria-label="Left Align">
               <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
             </button>
           </td>
           <td>
-            <button value=1 name="1-star" type="submit" class="decline_{{friend.id}}" aria-label="Left Align">
+            <button value=1 name="decline_{{friend.1..id}}" type="submit" class="decline_{{friend.id}}" aria-label="Left Align">
               <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
             </button>
           </td>

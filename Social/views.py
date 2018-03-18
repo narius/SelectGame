@@ -100,6 +100,10 @@ def view_event(request, event_id):
 
 class view_friends(View):
     template='Social/view_friends.html'
+    friends_pending = 'pe'
+    friends_accepted = 'ac'
+    friends_rejected = 're'
+    friends_removed = 'rm'
     def get_friend_list(self, user):
         '''
             If a user sends a friend request user_from will be the user,
@@ -121,20 +125,20 @@ class view_friends(View):
         rejected = []
         removed = []
         waiting_approval = []
-        friends_pending = 'pe'
-        friends_accepted = 'ac'
-        friends_rejected = 're'
-        friends_removed = 'rm'
         for friend in friends:
             #Check if the user i user_from or user_to
+            print("friend: "+str(friend[0].user_to.user))
             my_friend = friend[0].user_to if friend[0].user_from.user == user else friend[0].user_from
-            if friend[0].user_from.status == friends_accepted and friend[0].user_to.status == friends_accepted:
+            my_self = friend[0].user_from if friend[0].user_from.user == user else friend[0].user_to
+            print("my_friend: "+str(my_friend))
+            print("my_self: "+str(my_self))
+            if friend[0].user_from.status == self.friends_accepted and friend[0].user_to.status == self.friends_accepted:
                 accepted.append(my_friend)
-            if friend[0].user_from.user == user and my_friend.status == friends_pending:
+            if friend[0].user_from.user == user and my_friend.status == self.friends_pending:
                 pending.append(my_friend)
             #If I haven't approved the friend request
-            if friend[0].user_to.user == user and friend[0].user_to.status == friends_pending:
-                waiting_approval.append(my_friend)
+            if friend[0].user_to.user == user and friend[0].user_to.status == self.friends_pending:
+                waiting_approval.append([my_friend,my_self])
         return {'accepted': accepted,
             'pending': pending,
             'rejected': rejected,
@@ -144,7 +148,14 @@ class view_friends(View):
         statuses = self.get_friend_list(request.user)
         return render(request, self.template, statuses)
     def post(self, request, *args, **kwargs):
-        if request.POST.get("1-star"):
-            h=1
+        statuses = self.get_friend_list(request.user)
+        waiting_approval = statuses['waiting_approval']
+        for friend in waiting_approval:
+            if request.POST.get("ok_"+str(friend[1].id)):
+                print("ok")
+                print(friend)
+                #friends.append(model_friends.objects.all().filter(Q(user_to=status)|Q(user_from=status)))
+                friend[1].status = self.friends_accepted
+                friend[1].save()
         statuses = self.get_friend_list(request.user)
         return render(request, self.template, statuses)
