@@ -41,7 +41,7 @@ def logout_view(request):
 
 def add_game(request):
     if request.method == 'POST':
-        print(request.FILES['image'])
+        #print(request.FILES['image'])
         data={
             'name':request.POST.get('name'),
             'category':request.POST.get('category'),
