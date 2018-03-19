@@ -89,7 +89,8 @@ class model_friends(models.Model):
     class Meta:
         verbose_name = gettext("Friend")
         verbose_name_plural = gettext("Friends")
-
+        unique_together = (("user_to", "user_from"),
+                            ("user_from", "user_to"))
     def __str__(self):
         return str(self.user_to)+" + "+str(self.user_from)
 

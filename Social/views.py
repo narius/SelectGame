@@ -163,8 +163,33 @@ class view_friends(View):
 class find_friends(View):
     template = "Social/find_friends.html"
     users = User.objects.filter(groups__name='SelectGameUsers')
+    friends_pending = 'pe'
+    friends_accepted = 'ac'
+    friends_rejected = 're'
+    friends_removed = 'rm'
     def get(self, request, *args, **kwargs):
+        me = request.user
+        my_statuses = model_relationsship.objects.all().filter(user=me)
+        friends=[]
+        for status in my_statuses:
+            friends_list = model_friends.objects.all().filter(Q(user_to=status)|Q(user_from=status))
+            for friend in friends_list:
+                my_friend = friend.user_to if friend.user_from.user == me else friend.user_from
+                print("my_friend: "+str(my_friend))
+                print(self.users)
+                self.users.exclude(my_friend.user)
         return render(request, self.template, {'users': self.users, })
 
     def post(self, request, *args, **kwargs):
+        for user in self.users:
+            print("make_friends_"+str(user.id))
+            if request.POST.get("make_friends_"+str(user.id)):
+                print("post->button")
+                user_to = model_relationsship(user=user, status=self.friends_pending)
+                user_to.save()
+                user_from = model_relationsship(user=request.user, status=self.friends_accepted)
+                user_from.save()
+                relationship = model_friends(user_to=user_to, user_from=user_from)
+                relationship.save()
+                messages.add_message(request, messages.SUCCESS, gettext('Friend request is sent.'))
         return render(request, self.template, {'users': self.users, })
