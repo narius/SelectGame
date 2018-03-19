@@ -1,11 +1,11 @@
 from django.contrib import admin
-from  .models import model_category, model_event
-from .models import model_game, model_location,model_rating
-from .models import model_game_library
+from  .models import Category, Event
+from .models import Game, Location,Rating
+from .models import  GameLibrary
 # Register your models here.
-admin.site.register(model_category)
-admin.site.register(model_game)
-admin.site.register(model_location)
-admin.site.register(model_rating)
-admin.site.register(model_event)
-admin.site.register(model_game_library)
+admin.site.register(Category)
+admin.site.register(Game)
+admin.site.register(Location)
+admin.site.register(Rating)
+admin.site.register(Event)
+admin.site.register( GameLibrary)

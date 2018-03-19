@@ -1,14 +1,14 @@
 from django.contrib import admin
-from .models import model_user_profile
-from .models import model_group
-from .models import model_message
-from .models import model_group_message
-from .models import model_friends
-from .models import model_private_message
+from Social.models import UserProfile
+from Social.models import Group
+from Social.models import UserMessage
+from Social.models import GroupMessage
+from Social.models import model_friends
+from Social.models import PrivateMessage
 # Register your models here.
-admin.site.register(model_user_profile)
-admin.site.register(model_group)
-admin.site.register(model_message)
-admin.site.register(model_group_message)
+admin.site.register(UserProfile)
+admin.site.register(Group)
+admin.site.register(UserMessage)
+admin.site.register(GroupMessage)
 admin.site.register(model_friends)
-admin.site.register(model_private_message)
+admin.site.register(PrivateMessage)

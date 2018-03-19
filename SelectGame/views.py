@@ -1,11 +1,11 @@
 from django.http import HttpResponse
 from django.shortcuts import render
-from SelectGame.models import model_rating
-from SelectGame.models import model_game
+from SelectGame.models import Rating
+from SelectGame.models import Game
 from .rating import rating_functions
-from SelectGame.models import model_location
-from SelectGame.models import model_event
-from SelectGame.models import model_category
+from SelectGame.models import Location
+from SelectGame.models import Event
+from SelectGame.models import Category
 from django.contrib.auth import logout
 from django.core.signals import request_finished
 from django.dispatch import receiver
@@ -27,8 +27,8 @@ def test_acc(request):
     return render(request, 'SelectGame/test_acc.html')
 
 def all_game_rating(request):
-    ratings=model_rating.objects.all()
-    games=model_game.objects.all()
+    ratings=Rating.objects.all()
+    games=Game.objects.all()
     mean_rating_per_game=rating_functions.mean_rating_per_game(games)
     for mean_r in mean_rating_per_game:
         print(type(mean_r))
@@ -50,17 +50,17 @@ def add_game(request):
             'minimum_number_of_players':request.POST.get('minimum_number_of_players'),
             'maximum_number_of_players':request.POST.get('maximum_number_of_players')
         }
-        new_game = model_game(name=data['name'],
+        new_game = Game(name=data['name'],
                         comment=data['comment'],
                         image=data['image'],
                         minimum_number_of_players=data['minimum_number_of_players'],
                         maximum_number_of_players=data['maximum_number_of_players'])
         new_game.save()
         for pk in request.POST.getlist('category'):
-            category = model_category.objects.get(pk=pk)
+            category = Category.objects.get(pk=pk)
             new_game.category.add(category)
         new_game.save()
-    categories = model_category.objects.all()
+    categories = Category.objects.all()
     return render(request, 'SelectGame/add_game.html',{'categories':categories})
 
 @login_required(login_url='/login/')
@@ -78,17 +78,17 @@ def create_event(request):
     user=request.user
     #user=User.objects.get(pk=user_id)
     try:
-        locations=model_location.objects.filter(owner=user)
+        locations=Location.objects.filter(owner=user)
     except ObjectDoesNotExist:
         messages.add_message(request, messages.ERROR, gettext('User has no locations'))
         locations={}
     if request.method=="POST":
         event_name=request.POST.get('event_name')
         location_id=request.POST.get('location_id')
-        location=model_location.objects.get(pk=location_id)
+        location=Location.objects.get(pk=location_id)
         is_public=True if request.POST.get('is_public')=='on' else False
         event_date=request.POST.get('event_date')
-        new_event=model_event.objects.create(name=event_name,
+        new_event=Event.objects.create(name=event_name,
                             location=location,
                             owner=user,
                             is_public=is_public,
@@ -100,22 +100,22 @@ def create_event(request):
 
 @login_required(login_url='/login/')
 def all_events(request):
-    events=model_event.objects.all()
+    events=Event.objects.all()
     return render(request, 'SelectGame/all_events.html',{'events': events,})
 
 @login_required(login_url='/login/')
 def locations(request):
     user=request.user
     try:
-        locations=model_location.objects.filter(owner=user)
+        locations=Location.objects.filter(owner=user)
     except ObjectDoesNotExist:
         locations={}
     return render(request, 'SelectGame/locations.html',{'locations':locations,})
 
 
 def view_game(request, game_id):
-    game = model_game.objects.get(pk=game_id)
-    user_rating = model_rating.objects.get_or_create(game=game,user=request.user)[0]
+    game = Game.objects.get(pk=game_id)
+    user_rating = Rating.objects.get_or_create(game=game,user=request.user)[0]
     if request.method == 'POST':
         if request.POST.get("1-star"):
             user_rating.rating = 1

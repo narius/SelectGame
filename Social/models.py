@@ -6,7 +6,7 @@ from django.conf import settings
 # Create your models here.
 
 
-class model_group(models.Model):
+class Group(models.Model):
     name = models.CharField(max_length=30, verbose_name=gettext('name'))
     owners = models.ManyToManyField(User,
                                 verbose_name=gettext('owners'),
@@ -23,7 +23,7 @@ class model_group(models.Model):
         return self.name
 
 
-class model_message(models.Model):
+class UserMessage(models.Model):
     writer = models.ForeignKey(User, on_delete=models.CASCADE)
     text=models.TextField(verbose_name=gettext('text'))
     created_date=models.DateTimeField(auto_now_add=True, verbose_name=gettext('created'))
@@ -35,16 +35,16 @@ class model_message(models.Model):
         return str(self.created_date)+": "+self.text
 
 
-class model_group_message(models.Model):
-    group=models.ForeignKey(model_group, on_delete=models.CASCADE)
-    messages=models.ManyToManyField(model_message)
+class GroupMessage(models.Model):
+    group=models.ForeignKey(Group, on_delete=models.CASCADE)
+    messages=models.ManyToManyField(UserMessage)
     class Meta:
         verbose_name=gettext('group message')
         verbose_name_plural=gettext('group messages')
     def __str__(self):
         return 'Group message'+str(self.group)
 
-class model_user_profile(models.Model):
+class UserProfile(models.Model):
     user=models.OneToOneField(User, on_delete=models.CASCADE)
     biography=models.TextField(verbose_name=gettext('biography'), null=True, blank=True)
     avatar=models.ImageField(null=True,upload_to='uploads/avatars', blank=True)
@@ -77,9 +77,9 @@ class model_friends(models.Model):
     def __str__(self):
         return str(self.user1)+"("+self.get_status_user1_display()+") - "+str(self.user2)+"("+self.get_status_user2_display()+")"
 
-class model_private_message(models.Model):
+class PrivateMessage(models.Model):
     participants=models.ManyToManyField(User, verbose_name=gettext('participants'), related_name="participants")
-    messages=models.ManyToManyField(model_message)
+    messages=models.ManyToManyField(UserMessage)
     class Meta:
         verbose_name=gettext("private message")
         verbose_name_plural=gettext("private messages")

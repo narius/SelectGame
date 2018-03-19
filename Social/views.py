@@ -1,10 +1,10 @@
 from django.shortcuts import render
 from django.shortcuts import HttpResponse
 from django.contrib.auth.models import User
-from Social.models import model_user_profile
-from Social.models import model_message
-from SelectGame.models import model_game_library
-from SelectGame.models import model_event
+from Social.models import UserProfile
+from Social.models import UserMessage
+from SelectGame.models import GameLibrary
+from SelectGame.models import Event
 from SelectGame.rating import rating_functions
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib import messages
@@ -30,24 +30,24 @@ def display_profiles(request, user_id=-1):
             messages.add_message(request, messages.ERROR, gettext('User doesn\'t exist'))
     try:
         to_display_profile=True
-        profile=model_user_profile.objects.get(user=user)
+        profile=UserProfile.objects.get(user=user)
     except:
         to_display_profile=False
         profile={}
     try:
         to_display_game_lbrary=True
-        game_library=model_game_library.objects.get(owner=user)
-        games=game_library.games.all()
+        GameLibrary= GameLibrary.objects.get(owner=user)
+        games= GameLibrary.games.all()
     except:
         to_display_game_lbrary=False
-        game_library={}
+        GameLibrary={}
         games={}
     return render(request, 'Social/profile.html',{  'to_display_profile':to_display_profile,
                                                         'users':users,
                                                         'display_user':user,
                                                         'profile':profile,
                                                         'to_display_game_lbrary':to_display_game_lbrary,
-                                                        'game_library':game_library,
+                                                        'GameLibrary': GameLibrary,
                                                         'games': games,
                                                         'MEDIA_URL':settings.MEDIA_URL})
 
@@ -58,10 +58,10 @@ def edit_profile(request):
     print(request.POST.get("biography"))
     print(request.method)
     try:
-        profile=model_user_profile.objects.get(user=current_user)
+        profile=UserProfile.objects.get(user=current_user)
         print(profile)
     except ObjectDoesNotExist:
-        profile=model_user_profile.objects.create(user=current_user)
+        profile=UserProfile.objects.create(user=current_user)
     if request.method=="POST":
         new_profile_text=request.POST.get('biography')
         print(new_profile_text)
@@ -72,7 +72,7 @@ def edit_profile(request):
 
 @login_required(login_url='/login')
 def view_event(request, event_id):
-    event = model_event.objects.get(pk=event_id)
+    event = Event.objects.get(pk=event_id)
     user = request.user
     user_is_allowed = user in event.participants.all()\
                     or user == event.owner\
@@ -81,7 +81,7 @@ def view_event(request, event_id):
         messages.add_message(request, messages.ERROR, gettext('You are not allowed to see this event'))
         return render(request, 'SelectGame/index.html')
     if request.method=='POST':
-        message=model_message(writer=user, text=request.POST.get('message'))
+        message=UserMessage(writer=user, text=request.POST.get('message'))
         message.save()
         event.messages.add(message)
     users=[]

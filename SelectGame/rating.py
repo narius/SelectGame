@@ -1,14 +1,14 @@
 ##a file for function around ratings
 import numpy
-from .models import model_rating
-from .models import model_game
-from .models import model_game_library
+from .models import Rating
+from .models import Game
+from .models import  GameLibrary
 class rating_functions():
     #Function to calulate the average for games
     def mean_rating_per_game(games):
         mean_rating_per_game=[]
         for game in games:
-            ratings=model_rating.objects.filter(game=game).values('rating')
+            ratings=Rating.objects.filter(game=game).values('rating')
             total=len(ratings)
             votes=[0,0,0,0,0]
             width=[0,0,0,0,0]
@@ -42,9 +42,9 @@ class rating_functions():
         avarage = []
         for user in users:
             #Retrieve all games that the users own.
-            game_library=model_game_library.objects.get_or_create(owner=user)[0]
-            for game in game_library.games.all():
-                user_ratings=model_rating.objects.all().filter(user=user).filter(game=game)
+            GameLibrary = GameLibrary.objects.get_or_create(owner=user)[0]
+            for game in GameLibrary.games.all():
+                user_ratings = Rating.objects.all().filter(user=user).filter(game=game)
                 for rating in user_ratings:
                     if rating.rating > lower_limit:
                         print(rating.game.name)
@@ -68,4 +68,3 @@ class rating_functions():
                             'too_low': too_low
             })
         return avarage
-

@@ -1,7 +1,7 @@
 from django.test import TestCase
-from SelectGame.models import model_rating
-from SelectGame.models import model_game
-from SelectGame.models import model_game_library
+from SelectGame.models import Rating
+from SelectGame.models import Game
+from SelectGame.models import  GameLibrary
 from django.contrib.auth.models import User
 from .rating import rating_functions
 from django.contrib.auth.signals import user_logged_out
@@ -13,18 +13,18 @@ class RatingTestCase(TestCase):
     def setUp(self):
         print("Hi from RatingTestCase")
         user_logged_in.disconnect()
-        self.game=model_game.objects.create(name="TestGame1")
-        self.games=model_game.objects.all()
+        self.game=Game.objects.create(name="TestGame1")
+        self.games=Game.objects.all()
         self.user1 = User.objects.create_user(username='testuser1', password='12345')
         login = self.client.login(username='testuser1', password='12345')
         self.user2 = User.objects.create_user(username='testuser2', password='12345')
         login = self.client.login(username='testuser2', password='12345')
-        model_rating.objects.create(game=self.game, user=self.user1,rating=4)
-        model_rating.objects.create(game=self.game, user=self.user2,rating=5)
-        self.game_library1=model_game_library.objects.create(owner=self.user1)
-        self.game_library1.games.add(self.game)
-        self.game_library2=model_game_library.objects.create(owner=self.user2)
-        self.game_library2.games.add(self.game)
+        Rating.objects.create(game=self.game, user=self.user1,rating=4)
+        Rating.objects.create(game=self.game, user=self.user2,rating=5)
+        self. GameLibrary1= GameLibrary.objects.create(owner=self.user1)
+        self. GameLibrary1.games.add(self.game)
+        self. GameLibrary2= GameLibrary.objects.create(owner=self.user2)
+        self. GameLibrary2.games.add(self.game)
     def test_rating_per_game(self):
         self.assertEqual(rating_functions.mean_rating_per_game(self.games), [{'game': self.game,
                                                                 'mean_rating': 4.5,
