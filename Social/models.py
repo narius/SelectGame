@@ -78,16 +78,3 @@ class PrivateMessage(models.Model):
 
     def __str__(self):
         return str(self.participants)
-
-
-#Status for friends
-friends_pending='pe'
-friends_accepted='ac'
-friends_rejected='re'
-friends_removed='rm'
-FRIENDS_STATUS=(
-    (friends_pending,gettext('pending approval')),
-    (friends_accepted,gettext('accepted')),
-    (friends_rejected,gettext('rejected')),
-    (friends_removed,gettext('removed')),
-)
