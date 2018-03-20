@@ -1,7 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext
 from django.contrib.auth.models import User
-from django.conf import settings
 
 # Create your models here.
 
@@ -9,11 +8,11 @@ from django.conf import settings
 class Group(models.Model):
     name = models.CharField(max_length=30, verbose_name=gettext('name'))
     owners = models.ManyToManyField(User,
-                                verbose_name=gettext('owners'),
-                                related_name="group_owner")
+                                    verbose_name=gettext('owners'),
+                                    related_name="group_owner")
     members = models.ManyToManyField(User,
-                                    verbose_name=gettext('members'),
-                                    related_name="group_members")
+                                     verbose_name=gettext('members'),
+                                     related_name="group_members")
 
     class Meta:
         verbose_name = gettext('group')
@@ -25,34 +24,61 @@ class Group(models.Model):
 
 class UserMessage(models.Model):
     writer = models.ForeignKey(User, on_delete=models.CASCADE)
-    text=models.TextField(verbose_name=gettext('text'))
-    created_date=models.DateTimeField(auto_now_add=True, verbose_name=gettext('created'))
+    text = models.TextField(verbose_name=gettext('text'))
+    created_date = models.DateTimeField(auto_now_add=True,
+                                        verbose_name=gettext('created'))
+
     class Meta:
-        verbose_name=gettext('message')
-        verbose_name_plural=gettext('messages')
+        verbose_name = gettext('message')
+        verbose_name_plural = gettext('messages')
         ordering = ['-created_date']
+
     def __str__(self):
         return str(self.created_date)+": "+self.text
 
 
 class GroupMessage(models.Model):
-    group=models.ForeignKey(Group, on_delete=models.CASCADE)
-    messages=models.ManyToManyField(UserMessage)
+    group = models.ForeignKey(Group, on_delete=models.CASCADE)
+    messages = models.ManyToManyField(UserMessage)
+
     class Meta:
-        verbose_name=gettext('group message')
-        verbose_name_plural=gettext('group messages')
+        verbose_name = gettext('group message')
+        verbose_name_plural = gettext('group messages')
+
     def __str__(self):
         return 'Group message'+str(self.group)
 
+
 class UserProfile(models.Model):
-    user=models.OneToOneField(User, on_delete=models.CASCADE)
-    biography=models.TextField(verbose_name=gettext('biography'), null=True, blank=True)
-    avatar=models.ImageField(null=True,upload_to='uploads/avatars', blank=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    biography = models.TextField(verbose_name=gettext('biography'),
+                                 null=True,
+                                 blank=True)
+    avatar = models.ImageField(null=True,
+                               upload_to='uploads/avatars',
+                               blank=True)
+
     class Meta:
-        verbose_name=gettext('user profile')
-        verbose_name_plural=gettext('user profiles')
+        verbose_name = gettext('user profile')
+        verbose_name_plural = gettext('user profiles')
+
     def __str__(self):
         return str(self.user)
+
+
+class PrivateMessage(models.Model):
+    participants = models.ManyToManyField(User,
+                                          verbose_name=gettext('participants'),
+                                          related_name="participants")
+    messages = models.ManyToManyField(UserMessage)
+
+    class Meta:
+        verbose_name = gettext("private message")
+        verbose_name_plural = gettext("private messages")
+
+    def __str__(self):
+        return str(self.participants)
+
 
 #Status for friends
 friends_pending='pe'
@@ -65,23 +91,3 @@ FRIENDS_STATUS=(
     (friends_rejected,gettext('rejected')),
     (friends_removed,gettext('removed')),
 )
-class model_friends(models.Model):
-    status_user1=models.CharField(max_length=2,choices=FRIENDS_STATUS,default=friends_pending)
-    status_user2=models.CharField(max_length=2,choices=FRIENDS_STATUS,default=friends_pending)
-    user1=models.ForeignKey(User, related_name="User1", on_delete=models.CASCADE)
-    user2=models.ForeignKey(User, related_name="User2", on_delete=models.CASCADE)
-    class Meta:
-        verbose_name=gettext("friend")
-        verbose_name_plural=gettext("friends")
-        unique_together = (("user1", "user2"),)
-    def __str__(self):
-        return str(self.user1)+"("+self.get_status_user1_display()+") - "+str(self.user2)+"("+self.get_status_user2_display()+")"
-
-class PrivateMessage(models.Model):
-    participants=models.ManyToManyField(User, verbose_name=gettext('participants'), related_name="participants")
-    messages=models.ManyToManyField(UserMessage)
-    class Meta:
-        verbose_name=gettext("private message")
-        verbose_name_plural=gettext("private messages")
-    def __str__(self):
-        return str(self.participants)
