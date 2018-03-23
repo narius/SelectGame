@@ -5,23 +5,6 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 
-class Group(models.Model):
-    name = models.CharField(max_length=30, verbose_name=gettext('name'))
-    owners = models.ManyToManyField(User,
-                                    verbose_name=gettext('owners'),
-                                    related_name="group_owner")
-    members = models.ManyToManyField(User,
-                                     verbose_name=gettext('members'),
-                                     related_name="group_members")
-
-    class Meta:
-        verbose_name = gettext('group')
-        verbose_name_plural = gettext('groups')
-
-    def __str__(self):
-        return self.name
-
-
 class UserMessage(models.Model):
     writer = models.ForeignKey(User, on_delete=models.CASCADE)
     text = models.TextField(verbose_name=gettext('text'))
@@ -35,6 +18,26 @@ class UserMessage(models.Model):
 
     def __str__(self):
         return str(self.created_date)+": "+self.text
+
+
+class Group(models.Model):
+    name = models.CharField(max_length=30, verbose_name=gettext('name'))
+    owners = models.ManyToManyField(User,
+                                    verbose_name=gettext('owners'),
+                                    related_name="group_owner")
+    members = models.ManyToManyField(User,
+                                     verbose_name=gettext('members'),
+                                     related_name="group_members")
+
+    messages = models.ManyToManyField(UserMessage,
+                                      verbose_name=gettext("messages"))
+
+    class Meta:
+        verbose_name = gettext('group')
+        verbose_name_plural = gettext('groups')
+
+    def __str__(self):
+        return self.name
 
 
 class GroupMessage(models.Model):
