@@ -3,6 +3,7 @@ from django.shortcuts import HttpResponse
 from django.contrib.auth.models import User
 from Social.models import UserProfile
 from Social.models import UserMessage
+from Social.models import PrivateMessage
 from SelectGame.models import GameLibrary
 from SelectGame.models import Event
 from SelectGame.rating import rating_functions
@@ -11,7 +12,9 @@ from django.contrib import messages
 from django.utils.translation import gettext
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
+from django.views import View
 # Create your views here.
+
 
 def index(request):
     return HttpResponse("Hello, world. You're at the social index.")
@@ -99,3 +102,34 @@ def view_event(request, event_id):
     average = rating_functions.users_rating(users, 2)
     return render(request, 'Social/view_event.html', {'event': event,
                                                       'averages': average})
+
+
+class PrivateMessageView(View):
+    '''
+        View to display private messages
+    '''
+    def get(self, request):
+        user = request.user
+        # Get all PrivateMessages where user user is a participants
+        private_messages = PrivateMessage.objects.all().\
+            filter(participants__in=[user, ])
+        print("private_messages")
+        print(private_messages)
+        return render(request, 'Social/view_privatemessages.html', {
+            "private_messages": private_messages,
+            })
+
+    def post(self, request):
+        user = request.user
+        private_messages = PrivateMessage.objects.all().\
+            filter(participants__in=[user, ])
+        for private_message in private_messages:
+            if request.POST.get("new_message_"+str(private_message.id)):
+                text = request.POST.get("new_message_text_"
+                                        + str(private_message.id))
+                new_message = UserMessage(writer=user, text=text)
+                new_message.save()
+                private_message.messages.add(new_message)
+        return render(request, 'Social/view_privatemessages.html', {
+            "private_messages": private_messages,
+            })
