@@ -108,34 +108,16 @@ class PrivateMessageView(View):
     '''
         View to display private messages
     '''
-    def get(self, request, message_id=None):
+    def get(self, request):
         user = request.user
-        print(message_id)
-        if message_id is None:
-            # Get all PrivateMessages where user user is a participants
-            private_messages = PrivateMessage.objects.all().\
-                filter(participants__in=[user, ])
-            print("private_messages")
-            print(private_messages)
-            return render(request, 'Social/view_privatemessages.html', {
-                "private_messages": private_messages,
-                })
-        # Get the PrivateMessge with pk=message_id,
-        # and check if user is participant
-        private_message = PrivateMessage.objects.get(pk=message_id)
-        if user in private_message.participants:
-            return render(request, 'Social/view_privatemessage.html', {
-                "private_message": private_message,
-                })
-        else:
-            messages.add_message(request,
-                                 messages.ERROR,
-                                 gettext('You are not part of this conversation'))
-            private_messages = PrivateMessage.objects.all().\
-                filter(participants__in=[user, ])
-            return render(request, 'Social/view_privatemessages.html', {
-                "private_messages": private_messages,
-                })
+        # Get all PrivateMessages where user user is a participants
+        private_messages = PrivateMessage.objects.all().\
+            filter(participants__in=[user, ])
+        print("private_messages")
+        print(private_messages)
+        return render(request, 'Social/view_privatemessages.html', {
+            "private_messages": private_messages,
+            })
 
     def post(self, request):
         user = request.user
