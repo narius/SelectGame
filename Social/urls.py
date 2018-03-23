@@ -1,6 +1,7 @@
 from django.urls import path
-
+from django.contrib.auth.decorators import login_required
 from . import views
+
 app_name = 'social'
 urlpatterns = [
     path('', views.index, name='index'),
@@ -15,5 +16,11 @@ urlpatterns = [
          name='edit_profile'),
     path('event/<int:event_id>/',
          views.view_event,
-         name='view_event')
+         name='view_event'),
+    path('messages/<int: message_id>/',
+         login_required(views.PrivateMessageView.as_view()),
+         name='view_message'),
+    path('messages/',
+         login_required(views.PrivateMessageView.as_view()),
+         name='view_messages'),
 ]

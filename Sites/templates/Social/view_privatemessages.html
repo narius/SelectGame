@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% load wysiwyg %}
+{% block title %}{{ title }}{% endblock %}
+{% block extra_head %}
+{% wysiwyg_setup  %}
+{% endblock %}
+<div class="row">
+  {% block content %} {% if messages %}
+  <ul class="alert alert-dangers">
+    {% for message in messages %}
+    <div class="{{ message.tags }}" role="alert">
+      <button class="close" data-dismiss="alert">&times;</button> {{ message }}
+      <div>
+        {% endfor %}
+  </ul>
+  {% endif %}
+  <div id="accordion">
+    {% for private_message in private_messages %}
+    <div class="card">
+      <div class="card-header" id="heading{{private_message.id}}">
+        <h5 class="mb-0">
+      <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse{{private_message.id}}" aria-expanded="true" aria-controls="collapse{{private_message.id}}">
+        {% for participant in private_message.participants.all %}
+          {{participant.get_username}}
+        {% endfor %}
+      </button>
+      </h5>
+      </div>
+
+      <div id="collapse{{private_message.id}}" class="collapse" aria-labelledby="heading{{private_message.id}}" data-parent="#accordion">
+        <div class="card-body">
+          <form action="{% url 'social:view_messages' %}" method="post">
+              {% csrf_token %}
+              <textarea id="new_message_text_{{private_message.id}}" name="new_message_text_{{private_message.id}}"></textarea>
+              {% wysiwyg_editor "new_message_text_private_message.id" %}
+              <br>
+              <input type="submit" value="{% trans "Send" %}" name="new_message_{{private_message.id}}">
+          </form>
+          {% for message in private_message.messages.all%}
+          <div class="well">
+            <strong>{{message.writer.get_username}}</strong>
+            {{message.text|safe}}
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+  {% endblock %}
+  </div>
