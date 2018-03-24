@@ -14,15 +14,6 @@
     {% endfor %}
   </ul>
 {% endif %}
-<form action="{% url 'selectgame:locations'%}" method="post">{% csrf_token %}
-  {% for location in locations %}
-  <div class="form-group">
-    <input type="text" class="form-control" id="event_name" name="{{location.id}}" value="{{location.address}}" size="10">
-  </div>
-  {% endfor %}
-  <br><br>
-  <input type="submit">
-</form>
 
 {% endblock %}
 </div>
