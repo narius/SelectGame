@@ -1,15 +1,18 @@
 from django.shortcuts import render
+from django.shortcuts import HttpResponse
 from SelectGame.models import Rating
 from SelectGame.models import Game
 from .rating import rating_functions
 from SelectGame.models import Location
 from SelectGame.models import Event
 from SelectGame.models import Category
+from Social.models import UserMessage
 from django.contrib.auth import logout
 from django.contrib import messages
 from django.utils.translation import gettext
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
+from django.views import View
 
 
 def index(request):

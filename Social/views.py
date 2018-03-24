@@ -79,29 +79,35 @@ def edit_profile(request):
     return render(request, 'Social/edit_profile.html', {'profile': profile, })
 
 
-@login_required(login_url='/login')
-def view_event(request, event_id):
-    event = Event.objects.get(pk=event_id)
-    user = request.user
-    user_is_allowed = user in event.participants.all()\
-        or user == event.owner\
-        or event.is_public
-    if not user_is_allowed:
-        messages.add_message(request,
-                             messages.ERROR,
-                             gettext('You are not allowed to see this event'))
-        return render(request, 'SelectGame/index.html')
-    if request.method == 'POST':
-        message = UserMessage(writer=user, text=request.POST.get('message'))
-        message.save()
-        event.messages.add(message)
-    users = []
-    users.append(event.owner)
-    for participant in event.participants.all():
-        users.append(participant)
-    average = rating_functions.users_rating(users, 2)
-    return render(request, 'Social/view_event.html', {'event': event,
-                                                      'averages': average})
+class EventView(View):
+    '''
+        Displays a specifik event.
+    '''
+    def get(self, request, event_id):
+        user = request.user
+        event = Event.objects.get(pk=event_id)
+        if not (user in event.participants.all() or user == event.owner):
+            return HttpResponse(gettext("You are not part of this event"))
+        return render(request,
+                      'Social/view_event.html',
+                      {'event': event, })
+
+    def post(self, request, event_id):
+        user = request.user
+        event = Event.objects.get(pk=event_id)
+        if not (user in event.participants.all() or user == event.owner):
+            return HttpResponse(gettext("You are not part of this event"))
+        if request.POST.get("cancel"):
+            return render(request,
+                          'Social/view_event.html',
+                          {'event': event, })
+        text = request.POST.get("message")
+        new_message = UserMessage(writer=user, text=text)
+        new_message.save()
+        event.messages.add(new_message)
+        return render(request,
+                      'Social/view_event.html',
+                      {'event': event, })
 
 
 class PrivateMessageView(View):

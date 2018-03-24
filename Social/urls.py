@@ -15,7 +15,7 @@ urlpatterns = [
          views.edit_profile,
          name='edit_profile'),
     path('event/<int:event_id>/',
-         views.view_event,
+         login_required(views.EventView.as_view()),
          name='view_event'),
     path('messages/',
          login_required(views.PrivateMessageView.as_view()),
