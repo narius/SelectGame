@@ -1,4 +1,3 @@
-from django.http import HttpResponse
 from django.shortcuts import render
 from SelectGame.models import Rating
 from SelectGame.models import Game
@@ -7,16 +6,10 @@ from SelectGame.models import Location
 from SelectGame.models import Event
 from SelectGame.models import Category
 from django.contrib.auth import logout
-from django.core.signals import request_finished
-from django.dispatch import receiver
-from django.contrib.auth.signals import user_logged_out
-from django.contrib.auth.signals import user_logged_in
 from django.contrib import messages
 from django.utils.translation import gettext
-from .signals import *
-from .forms import  add_game_form
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist
 
 
 def index(request):
@@ -26,42 +19,50 @@ def index(request):
 def test_acc(request):
     return render(request, 'SelectGame/test_acc.html')
 
+
 def all_game_rating(request):
-    ratings=Rating.objects.all()
-    games=Game.objects.all()
-    mean_rating_per_game=rating_functions.mean_rating_per_game(games)
-    for mean_r in mean_rating_per_game:
-        print(type(mean_r))
-    return render(request, 'SelectGame/all_game_rating.html',{'ratings':mean_rating_per_game,})
+    games = Game.objects.all()
+    mean_rating_per_game = rating_functions.mean_rating_per_game(games)
+    return render(request,
+                  'SelectGame/all_game_rating.html',
+                  {'ratings': mean_rating_per_game, })
+
 
 def logout_view(request):
     logout(request)
     # Redirect to a success page.
-    return render(request,'registration/logged_out.html')
+    return render(request, 'registration/logged_out.html')
+
 
 def add_game(request):
     if request.method == 'POST':
         print(request.FILES['image'])
-        data={
-            'name':request.POST.get('name'),
-            'category':request.POST.get('category'),
-            'comment':request.POST.get('comment'),
-            'image':request.FILES['image'],
-            'minimum_number_of_players':request.POST.get('minimum_number_of_players'),
-            'maximum_number_of_players':request.POST.get('maximum_number_of_players')
-        }
+        data = {'name': request.POST.get('name'),
+                'category': request.POST.get('category'),
+                'comment': request.POST.get('comment'),
+                'image': request.FILES['image'],
+                'minimum_number_of_players':
+                request.POST.get('minimum_number_of_players'),
+                'maximum_number_of_players':
+                request.POST.get('maximum_number_of_players')
+                }
         new_game = Game(name=data['name'],
                         comment=data['comment'],
                         image=data['image'],
-                        minimum_number_of_players=data['minimum_number_of_players'],
-                        maximum_number_of_players=data['maximum_number_of_players'])
+                        minimum_number_of_players=data[
+                        'minimum_number_of_players'],
+                        maximum_number_of_players=data[
+                        'maximum_number_of_players'])
         new_game.save()
         for pk in request.POST.getlist('category'):
             category = Category.objects.get(pk=pk)
             new_game.category.add(category)
         new_game.save()
     categories = Category.objects.all()
-    return render(request, 'SelectGame/add_game.html',{'categories':categories})
+    return render(request,
+                  'SelectGame/add_game.html',
+                  {'categories': categories})
+
 
 @login_required(login_url='/login/')
 def create_event(request):
@@ -75,47 +76,56 @@ def create_event(request):
 
             :template:`SelectGame/create_event.html`
     '''
-    user=request.user
-    #user=User.objects.get(pk=user_id)
+    user = request.user
+    # user=User.objects.get(pk=user_id)
     try:
-        locations=Location.objects.filter(owner=user)
+        locations = Location.objects.filter(owner=user)
     except ObjectDoesNotExist:
-        messages.add_message(request, messages.ERROR, gettext('User has no locations'))
-        locations={}
-    if request.method=="POST":
-        event_name=request.POST.get('event_name')
-        location_id=request.POST.get('location_id')
-        location=Location.objects.get(pk=location_id)
-        is_public=True if request.POST.get('is_public')=='on' else False
-        event_date=request.POST.get('event_date')
-        new_event=Event.objects.create(name=event_name,
-                            location=location,
-                            owner=user,
-                            is_public=is_public,
-                            date=event_date)
+        messages.add_message(request,
+                             messages.ERROR,
+                             gettext('User has no locations'))
+        locations = {}
+    if request.method == "POST":
+        event_name = request.POST.get('event_name')
+        location_id = request.POST.get('location_id')
+        location = Location.objects.get(pk=location_id)
+        is_public = True if request.POST.get('is_public') == 'on' else False
+        event_date = request.POST.get('event_date')
+        new_event = Event.objects.create(name=event_name,
+                                         location=location,
+                                         owner=user,
+                                         is_public=is_public,
+                                         date=event_date)
         new_event.save()
-        messages.add_message(request, messages.SUCCESS, gettext('Event created'))
-    return render(request, 'SelectGame/create_event.html',{'locations':locations,
-                                                            })
+        messages.add_message(request,
+                             messages.SUCCESS,
+                             gettext('Event created'))
+    return render(request,
+                  'SelectGame/create_event.html',
+                  {'locations': locations, })
+
 
 @login_required(login_url='/login/')
 def all_events(request):
-    events=Event.objects.all()
-    return render(request, 'SelectGame/all_events.html',{'events': events,})
+    events = Event.objects.all()
+    return render(request, 'SelectGame/all_events.html', {'events': events, })
+
 
 @login_required(login_url='/login/')
 def locations(request):
-    user=request.user
+    user = request.user
     try:
-        locations=Location.objects.filter(owner=user)
+        locations = Location.objects.filter(owner=user)
     except ObjectDoesNotExist:
-        locations={}
-    return render(request, 'SelectGame/locations.html',{'locations':locations,})
+        locations = {}
+    return render(request,
+                  'SelectGame/locations.html',
+                  {'locations': locations, })
 
 
 def view_game(request, game_id):
     game = Game.objects.get(pk=game_id)
-    user_rating = Rating.objects.get_or_create(game=game,user=request.user)[0]
+    user_rating = Rating.objects.get_or_create(game=game, user=request.user)[0]
     if request.method == 'POST':
         if request.POST.get("1-star"):
             user_rating.rating = 1
@@ -128,44 +138,46 @@ def view_game(request, game_id):
         if request.POST.get("5-star"):
             user_rating.rating = 5
         user_rating.save()
-    #Sets the color of the stars
-    stars=['btn btn-default btn-grey btn-sm',
-            'btn btn-default btn-grey btn-sm',
-            'btn btn-default btn-grey btn-sm',
-            'btn btn-default btn-grey btn-sm',
-            'btn btn-default btn-grey btn-sm']
-    if user_rating.rating>=1:
-        stars=['btn btn-warning btn-sm',
-                'btn btn-default btn-grey btn-sm',
-                'btn btn-default btn-grey btn-sm',
-                'btn btn-default btn-grey btn-sm',
-                'btn btn-default btn-grey btn-sm']
-    if user_rating.rating>=2:
-        stars=['btn btn-warning btn-sm',
-                'btn btn-warning btn-sm',
-                'btn btn-default btn-grey btn-sm',
-                'btn btn-default btn-grey btn-sm',
-                'btn btn-default btn-grey btn-sm']
-    if user_rating.rating>=3:
-        stars=['btn btn-warning btn-sm',
-                'btn btn-warning btn-sm',
-                'btn btn-warning btn-sm',
-                'btn btn-default btn-grey btn-sm',
-                'btn btn-default btn-grey btn-sm']
-    if user_rating.rating>=4:
-        stars=['btn btn-warning btn-sm',
-                'btn btn-warning btn-sm',
-                'btn btn-warning btn-sm',
-                'btn btn-warning btn-sm',
-                'btn btn-default btn-grey btn-sm']
-    if user_rating.rating>=5:
-        stars=['btn btn-warning btn-sm',
-                'btn btn-warning btn-sm',
-                'btn btn-warning btn-sm',
-                'btn btn-warning btn-sm',
-                'btn btn-warning btn-sm']
+    # Sets the color of the stars
+    stars = ['btn btn-default btn-grey btn-sm',
+             'btn btn-default btn-grey btn-sm',
+             'btn btn-default btn-grey btn-sm',
+             'btn btn-default btn-grey btn-sm',
+             'btn btn-default btn-grey btn-sm']
+    if user_rating.rating >= 1:
+        stars = ['btn btn-warning btn-sm',
+                 'btn btn-default btn-grey btn-sm',
+                 'btn btn-default btn-grey btn-sm',
+                 'btn btn-default btn-grey btn-sm',
+                 'btn btn-default btn-grey btn-sm']
+    if user_rating.rating >= 2:
+        stars = ['btn btn-warning btn-sm',
+                 'btn btn-warning btn-sm',
+                 'btn btn-default btn-grey btn-sm',
+                 'btn btn-default btn-grey btn-sm',
+                 'btn btn-default btn-grey btn-sm']
+    if user_rating.rating >= 3:
+        stars = ['btn btn-warning btn-sm',
+                 'btn btn-warning btn-sm',
+                 'btn btn-warning btn-sm',
+                 'btn btn-default btn-grey btn-sm',
+                 'btn btn-default btn-grey btn-sm']
+    if user_rating.rating >= 4:
+        stars = ['btn btn-warning btn-sm',
+                 'btn btn-warning btn-sm',
+                 'btn btn-warning btn-sm',
+                 'btn btn-warning btn-sm',
+                 'btn btn-default btn-grey btn-sm']
+    if user_rating.rating >= 5:
+        stars = ['btn btn-warning btn-sm',
+                 'btn btn-warning btn-sm',
+                 'btn btn-warning btn-sm',
+                 'btn btn-warning btn-sm',
+                 'btn btn-warning btn-sm']
     mean_rating = rating_functions.mean_rating_per_game([game, ])
-    return render(request, 'SelectGame/view_game.html',{'game': game,
-                                                    'user_rating': user_rating,
-                                                    'rating': mean_rating[0],
-                                                    'stars': stars})
+    return render(request,
+                  'SelectGame/view_game.html',
+                  {'game': game,
+                   'user_rating': user_rating,
+                   'rating': mean_rating[0],
+                   'stars': stars})
