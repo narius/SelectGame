@@ -1,10 +1,10 @@
 from django.urls import path
 from django.contrib.auth.decorators import login_required
 from . import views
-
+from SelectGame.views import index
 app_name = 'social'
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('', index, name='index'),
     path('profile/<int:user_id>/',
          views.display_profiles,
          name='user_profile'),

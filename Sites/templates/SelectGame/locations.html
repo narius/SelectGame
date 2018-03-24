@@ -15,14 +15,15 @@
   </ul>
 {% endif %}
 <form action="{% url 'selectgame:locations'%}" method="post">{% csrf_token %}
-  {% for location in locations %}
-  <div class="form-group">
-    <input type="text" class="form-control" id="event_name" name="{{location.id}}" value="{{location.address}}" size="10">
-  </div>
-  {% endfor %}
+  {% trans "New location" %}
+  <input type="text" name="location">
   <br><br>
-  <input type="submit">
+  <input type="submit" value="{% trans 'Add location' %}">
 </form>
-
+{% for location in locations %}
+<div class="well">
+  {{location.address}}
+</div>
+{% endfor %}
 {% endblock %}
 </div>

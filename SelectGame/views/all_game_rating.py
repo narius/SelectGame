@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from SelectGame.models import Game
-from .rating import rating_functions
+from SelectGame.rating import rating_functions
 
 
 def all_game_rating(request):
