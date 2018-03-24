@@ -110,8 +110,10 @@ class Event(models.Model):
                                                     verbose_name=gettext("minimum number of players"),
                                                     validators=[MinValueValidator(1)])
     maximum_number_of_players = models.IntegerField(default=1,
-                                                    verbose_name=gettext("maximum number of players"),
-                                                    validators=[MaxValueValidator(100)])
+                                                    verbose_name=
+                                                    gettext("maximum number of players"),
+                                                    validators=[
+                                                        MaxValueValidator(100)])
 
     class Meta:
         verbose_name = gettext("event")

@@ -15,7 +15,6 @@ class rating_functions():
             width = [0, 0, 0, 0, 0]
             if (total != 0):
                 for rating in ratings:
-                    print(rating['rating'])
                     votes[rating['rating']-1] = votes[rating['rating']-1]+1
                 n = 0
                 while n < 5:
@@ -52,7 +51,6 @@ class rating_functions():
                     Rating.objects.all().filter(user=user).filter(game=game)
                 for rating in user_ratings:
                     if rating.rating > lower_limit:
-                        print(rating.game.name)
                         ratings[rating.game.name] = \
                             ratings.setdefault(rating.game.name, 0)\
                             + rating.rating
