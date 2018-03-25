@@ -18,41 +18,34 @@
     <li role="presentation"><a href="#waiting_approval" aria-controls="waiting_approval" role="tab" data-toggle="tab">{% trans "Waiting approval" %}</a></li>
     <li role="presentation"><a href="#rejected" aria-controls="rejected" role="tab" data-toggle="tab">{% trans "Rejected"%}</a></li>
   </ul>
-
   <!-- Tab panes -->
   <div class="tab-content">
     <div role="tabpanel" class="tab-pane active" id="friends">
-    	Friends
+			{% for friend in friends %}
+				{{friend.get_username}}<br>
+			{% endfor %}
     </div>
     <div role="tabpanel" class="tab-pane" id="pending">
-    	pending
+			{% for friend in sent %}
+				{{friend.receiver.get_username}}
+			{% endfor %}
     </div>
     <div role="tabpanel" class="tab-pane" id="waiting_approval">
-			waiting_approval
+			<form action="{% url 'social:friends'%}" method="post">{% csrf_token %}
+			{% for friend in received %}
+				{{friend.sender.get_username}}
+				<input type="submit" class="btn btn-success" name="Accept_{{friend.id}}" value="{% trans 'Accept'%}">
+				<input type="submit" class="btn btn-danger" name="Reject_{{friend.id}}" value="{% trans 'Reject'%}">
+			{% endfor %}
+			</form>
 		</div>
     <div role="tabpanel" class="tab-pane" id="rejected">
-			rejected
+			{% for friend in rejected %}
+				{{friend.receiver.get_username}}
+			{% endfor %}
 		</div>
   </div>
 
 </div>
-
-
-<table class="table table-striped">
-	<tr>
-		<th>{% trans "Owner" %}</th>
-		<th>{% trans "Name" %}</th>
-		<th>{% trans "Location" %}</th>
-		<th>{% trans "Date" %}</th>
-	</tr>
-  {% for event in events %}
-		<tr>
-			<td>{{event.owner}}</td>
-      <td><a href="{% url 'Social:view_event' event_id=event.id %}">{{event.name}}</a></td>
-			<td>{{event.location}}</td>
-			<td>{{event.date}}</td>
-		</tr>
-  {% endfor %}
-</table>
 {% endblock %}
 </div>

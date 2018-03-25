@@ -4,7 +4,7 @@ from Social.models import UserProfile
 from Social.models import FriendRequest
 from django.utils.translation import gettext
 from django.views import View
-
+from django.db.models import Q
 
 class FriendsView(View):
     '''
@@ -14,31 +14,55 @@ class FriendsView(View):
         user = request.user
         [profile, created] = UserProfile.objects.get_or_create(user=user)
         friends = profile.friend_list.all() if not created else None
+        sent_filter = Q(sender=user)&Q(status="PE")
         sent_request = FriendRequest.objects.all().\
-                                     filter(sender=user).\
-                                     exclude(status="AC")
+                                     filter(sent_filter)
+        print("Sent")
+        print(sent_request)
+        rec_filter = Q(status="PE") & Q(receiver=user)
+        received_request = FriendRequest.objects.all().\
+                                     filter(rec_filter)
+        filter = Q(status="RE") & (Q(sender=user) | Q(receiver=user))
+        rejected = FriendRequest.objects.all().\
+                                     filter(filter)
+
+        return render(request,
+                      'Social/friends.html',
+                      {'profile': profile,
+                       'friends': friends,
+                       'sent': sent_request,
+                       'received': received_request,
+                       'rejected': rejected})
+
+    def post(self, request):
+        user = request.user
+        filter = Q(sender=user)|Q(receiver=user)
+        friend_request = FriendRequest.objects.all().filter(filter)
+        print("post")
+        for friend in friend_request:
+            print(friend.id)
+            print(request.POST.get("Accept_"+str(friend.id)))
+            print("Accept_"+str(friend.id))
+            if request.POST.get("Accept_"+str(friend.id)):
+                print("Accept")
+                friend.status = "AC"
+                friend.save()
+            if request.POST.get("Reject_"+str(friend.id)):
+                friend.status = "RE"
+                friend.save()
+        [profile, created] = UserProfile.objects.get_or_create(user=user)
+        friends = profile.friend_list.all() if not created else None
+        sent_filter = Q(sender=user) & ~Q(status="AC")
+        sent_request = FriendRequest.objects.all().\
+                                     filter(sent_filter)
+        print("Sent")
+        print(sent_request)
         received_request = FriendRequest.objects.all().\
                                      filter(receiver=user).\
                                      exclude(status="AC")
         return render(request,
                       'Social/friends.html',
                       {'profile': profile,
+                       'friends': friends,
                        'sent': sent_request,
                        'received': received_request})
-
-    def post(self, request, event_id):
-        user = request.user
-        event = Event.objects.get(pk=event_id)
-        if not (user in event.participants.all() or user == event.owner):
-            return HttpResponse(gettext("You are not part of this event"))
-        if request.POST.get("cancel"):
-            return render(request,
-                          'Social/view_event.html',
-                          {'event': event, })
-        text = request.POST.get("message")
-        new_message = UserMessage(writer=user, text=text)
-        new_message.save()
-        event.messages.add(new_message)
-        return render(request,
-                      'Social/view_event.html',
-                      {'event': event, })

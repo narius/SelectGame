@@ -22,5 +22,5 @@ urlpatterns = [
          name='view_messages'),
     path('friends/',
          login_required(views.FriendsView.as_view()),
-         name='view_friends'),
+         name='friends'),
 ]
