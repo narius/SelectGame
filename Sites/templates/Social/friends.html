@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{{ title }}{% endblock %}
+<div class="row">
+{% block content %}
+{% if message_length > 0%}
+	<div class="alert alert-danger" role="alert">
+		{{message}}
+	</div>
+{%endif%}
+
+<div>
+
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#friends" aria-controls="friends" role="tab" data-toggle="tab">{% trans "Friends" %}</a></li>
+    <li role="presentation"><a href="#pending" aria-controls="pending" role="tab" data-toggle="tab">{% trans "Pending" %}</a></li>
+    <li role="presentation"><a href="#waiting_approval" aria-controls="waiting_approval" role="tab" data-toggle="tab">{% trans "Waiting approval" %}</a></li>
+    <li role="presentation"><a href="#rejected" aria-controls="rejected" role="tab" data-toggle="tab">{% trans "Rejected"%}</a></li>
+  </ul>
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="friends">
+			{% for friend in friends %}
+				{{friend.get_username}}<br>
+			{% endfor %}
+    </div>
+    <div role="tabpanel" class="tab-pane" id="pending">
+			{% for friend in sent %}
+				{{friend.receiver.get_username}}
+			{% endfor %}
+    </div>
+    <div role="tabpanel" class="tab-pane" id="waiting_approval">
+			<form action="{% url 'social:friends'%}" method="post">{% csrf_token %}
+			{% for friend in received %}
+				{{friend.sender.get_username}}
+				<input type="submit" class="btn btn-success" name="Accept_{{friend.id}}" value="{% trans 'Accept'%}">
+				<input type="submit" class="btn btn-danger" name="Reject_{{friend.id}}" value="{% trans 'Reject'%}">
+			{% endfor %}
+			</form>
+		</div>
+    <div role="tabpanel" class="tab-pane" id="rejected">
+			{% for friend in rejected %}
+				{{friend.receiver.get_username}}
+			{% endfor %}
+		</div>
+  </div>
+
+</div>
+{% endblock %}
+</div>
