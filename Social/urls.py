@@ -20,4 +20,7 @@ urlpatterns = [
     path('messages/',
          login_required(views.PrivateMessageView.as_view()),
          name='view_messages'),
+    path('friends/',
+         login_required(views.FriendsView.as_view()),
+         name='view_friends'),
 ]
