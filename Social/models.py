@@ -1,8 +1,31 @@
 from django.db import models
 from django.utils.translation import gettext
 from django.contrib.auth.models import User
-
+from SelectGame.models import Event
 # Create your models here.
+
+
+class Notification(models.Model):
+    STATUS = (
+        ('UR', gettext("Unread")),
+        ('RE', gettext("Read")),
+    )
+    status = models.CharField(max_length=2, choices=STATUS, default="UR")
+    sender = models.ManyToManyField(User,
+                                    on_delet=models.CASCADE,
+                                    related_name="sender",
+                                    verbose_name=gettex("sender"))
+    receiver = models.ManyToManyField(User,
+                                      on_delet=models.CASCADE,
+                                      related_name="receiver",
+                                      verbose_name=gettex("receiver"))
+
+    class Meta:
+        verbose_name = gettext("notification")
+        verbose_name_plural = gettext("notifications")
+
+    def __str__(self):
+        return str(self.sender)+" - "+str(self.receiver)+" - "+self.status
 
 
 class UserMessage(models.Model):
@@ -10,6 +33,9 @@ class UserMessage(models.Model):
     text = models.TextField(verbose_name=gettext('text'))
     created_date = models.DateTimeField(auto_now_add=True,
                                         verbose_name=gettext('created'))
+    notification = models.ForeignKey(Notification,
+                                     on_delete=models.CASCADE,
+                                     verbose_name=gettex("notification"))
 
     class Meta:
         verbose_name = gettext('message')
@@ -119,3 +145,43 @@ class FriendRequest(models.Model):
             send_profile.friend_list.add(self.receiver)
             rec_profile = UserProfile.objects.get_or_create(user=self.receiver)[0]
             rec_profile.friend_list.add(self.sender)
+
+
+class Notification(models.Model):
+    STATUS = (
+        ('UR', gettext("Unread")),
+        ('RE', gettext("Read")),
+    )
+    status = models.CharField(max_length=2, choices=STATUS, default="UR")
+    sender = models.ManyToManyField(User,
+                                    on_delet=models.CASCADE,
+                                    related_name="sender",
+                                    verbose_name=gettex("sender"))
+    receiver = models.ManyToManyField(User,
+                                      on_delet=models.CASCADE,
+                                      related_name="receiver",
+                                      verbose_name=gettex("receiver"))
+
+
+class Invite(models.Model):
+    '''
+        This models contains information about an invite from a group or event.
+    '''
+    notification = models.ForeignKey(Notification,
+                                     on_delete=models.CASCADE,
+                                     verbose_name=gettex("notification"))
+    group = models.ManyToManyField(Group,
+                                   on_delete=models.CASCADE,
+                                   null=True,
+                                   verbose_name=gettex("group"))
+    event = models.ManyToManyField(Event,
+                                   on_delet=models.CASCADE,
+                                   null=True,
+                                   verbose_name=gettext("event"))
+
+    class Meta:
+        verbose_name = gettex("Invite")
+        verbose_name_plural = gettex("Invites")
+
+    def __str__(self):
+        return str(self.receiver)+" - "+str(self.notification)
