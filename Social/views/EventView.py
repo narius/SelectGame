@@ -13,6 +13,8 @@ class EventView(View):
     def get(self, request, event_id):
         user = request.user
         event = Event.objects.get(pk=event_id)
+        profile = UserProfile.object.get(user=user)
+        friends = profile.friends
         if not (user in event.participants.all() or user == event.owner):
             return HttpResponse(gettext("You are not part of this event"))
         return render(request,

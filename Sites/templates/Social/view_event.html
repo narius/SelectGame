@@ -65,6 +65,11 @@
         {% trans "Owner" %}: {{event.owner.get_username}}<br>
         {% trans "Maximum number of players" %}: {{event.maximum_number_of_players}}<br>
         {% trans "Minimum number of players" %}: {{event.minimum_number_of_players}}
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#invite_friends">
+      {% trans "Invite friends" %}
+    </button>
     </div>
     <div class="well">
       {% for average in averages %}
@@ -94,6 +99,37 @@
       {% endfor %}
     </div>
 
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="invite_friends" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{% trans "Friends" %}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form enctype="multipart/form-data" action="{% url 'social:view_event' event_id=event.id%}" method="post">
+      <div class="modal-body">
+        <div class="form-group">
+          <select multiple class="form-control" id="friends" name="friends"  required>
+            {% for friend in friends %}
+              <option value="{{friend.id}}">{{friend.get_username}}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">{% trans "Close" %}</button>
+        <input type="submit" class="btn btn-primary">{% trans "Invite selected friends" %}</button>
+      </div>
+    </form>
+    </div>
+  </div>
 </div>
 {% endblock %}
 </div>
