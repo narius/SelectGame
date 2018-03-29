@@ -7,6 +7,7 @@ from django.core.validators import MinValueValidator
 # Models from Social
 from Social.models import Group
 from Social.models import UserMessage
+from Social.models import Notification
 # Create your models here.
 
 
@@ -114,7 +115,7 @@ class Event(models.Model):
                                                     gettext("maximum number of players"),
                                                     validators=[
                                                         MaxValueValidator(100)])
-
+    notifications = models.ManyToManyField(Notification)
     class Meta:
         verbose_name = gettext("event")
         verbose_name_plural = gettext("events")
