@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% load wysiwyg %}
+{% block title %}{{ title }}{% endblock %}
+{% block extra_head %}
+{% wysiwyg_setup  %}
+{% endblock %}
+<div class="row">
+  {% block content %} {% if messages %}
+  <ul class="alert alert-dangers">
+    {% for message in messages %}
+    <div class="{{ message.tags }}" role="alert">
+      <button class="close" data-dismiss="alert">&times;</button> {{ message }}
+      <div>
+        {% endfor %}
+  </ul>
+  {% endif %}
+    Notifications
+  {% endblock %}
+  </div>
