@@ -11,6 +11,7 @@ class UserMessage(models.Model):
     created_date = models.DateTimeField(auto_now_add=True,
                                         verbose_name=gettext('created'))
     notification = models.ForeignKey(Notification,
+                                     related_name='usermessage'
                                      null=True,
                                      on_delete=models.CASCADE,
                                      verbose_name=gettext("notification"))
