@@ -17,5 +17,15 @@
   </ul>
   {% endif %}
     Notifications
+    <div class="Well">
+      {% for event in events %}
+        <a href="{% url 'Social:view_event' event_id=event.id %}">{{event.name}}</a><br>
+      {% endfor %}
+    </div>
+    <div class="Well">
+      {% for user_message in user_messages %}
+        {{user_message.text|safe}}
+      {% endfor %}
+    </div>
   {% endblock %}
   </div>
