@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% load wysiwyg %}
+{% block title %}{{ title }}{% endblock %}
+{% block extra_head %}
+{% wysiwyg_setup  %}
+{% endblock %}
+<div class="row">
+  {% block content %} {% if messages %}
+  <ul class="alert alert-dangers">
+    {% for message in messages %}
+    <div class="{{ message.tags }}" role="alert">
+      <button class="close" data-dismiss="alert">&times;</button> {{ message }}
+      <div>
+        {% endfor %}
+  </ul>
+  {% endif %}
+    Notifications
+    <div class="Well">
+      {% for event in events %}
+        <a href="{% url 'Social:view_event' event_id=event.0.id %}">{{event.0.name}}</a><br>
+        <form action="{% url 'social:notifications' %}" method="post">
+            {% csrf_token %}
+            <input type="submit" value="{% trans 'Acknowledge' %}" name="read_{{event.1.id}}">
+        </form>
+      {% endfor %}
+    </div>
+    <div class="Well">
+      {% for user_message in user_messages %}
+        {{user_message.0.text|safe}}<br>
+        <form action="{% url 'social:notifications' %}" method="post">
+            {% csrf_token %}
+            <input type="submit" value="{% trans 'Acknowledge' %}" name="read_{{user_message.1.id}}">
+        </form>
+      {% endfor %}
+    </div>
+    <div class="Well">
+      {% for group in groups %}
+        {{group.0.name|safe}}<br>
+        <form action="{% url 'social:notifications' %}" method="post">
+            {% csrf_token %}
+            <input type="submit" value="{% trans 'Acknowledge' %}" name="read_{{group.1.id}}">
+        </form>
+      {% endfor %}
+    </div>
+  {% endblock %}
+  </div>

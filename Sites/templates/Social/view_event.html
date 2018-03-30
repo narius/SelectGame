@@ -52,7 +52,7 @@
           {% csrf_token %}
           <textarea id="message" name="message">{{h|safe}}</textarea>
           {% wysiwyg_editor "message" %}
-          <input type="submit">
+          <input type="submit" value="{% trans 'Send message' %}">
       </form>
 
     </div>
@@ -72,6 +72,7 @@
     </button>
     </div>
     <div class="well">
+      Games
       {% for average in averages %}
       {% if not average.too_low %}
       <div class="panel panel-default">
@@ -114,6 +115,7 @@
         </button>
       </div>
       <form enctype="multipart/form-data" action="{% url 'social:view_event' event_id=event.id%}" method="post">
+      {% csrf_token %}
       <div class="modal-body">
         <div class="form-group">
           <select multiple class="form-control" id="friends" name="friends"  required>
@@ -125,7 +127,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">{% trans "Close" %}</button>
-        <input type="submit" class="btn btn-primary">{% trans "Invite selected friends" %}</button>
+        <input name="invite_friends" type="submit" class="btn btn-primary" value="{% trans 'Invite selected friends' %}"></button>
       </div>
     </form>
     </div>
