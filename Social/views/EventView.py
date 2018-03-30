@@ -12,6 +12,7 @@ class EventView(View):
     '''
         Displays a specifik event.
     '''
+    # TODO join button, only if there is room
     def get(self, request, event_id):
         user = request.user
         event = Event.objects.get(pk=event_id)
