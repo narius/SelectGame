@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.translation import gettext
 from django.contrib.auth.models import User
 from .UserMessage import UserMessage
+from .Notification import Notification
 # Create your models here.
 
 
@@ -16,6 +17,9 @@ class Group(models.Model):
 
     messages = models.ManyToManyField(UserMessage,
                                       verbose_name=gettext("messages"))
+    notification = models.ManyToManyField(Notification,
+                                          related_name='group',
+                                          verbose_name=gettext("notification"))
 
     class Meta:
         verbose_name = gettext('group')

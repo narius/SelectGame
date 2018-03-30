@@ -19,12 +19,29 @@
     Notifications
     <div class="Well">
       {% for event in events %}
-        <a href="{% url 'Social:view_event' event_id=event.id %}">{{event.name}}</a><br>
+        <a href="{% url 'Social:view_event' event_id=event.0.id %}">{{event.0.name}}</a><br>
+        <form action="{% url 'social:notifications' %}" method="post">
+            {% csrf_token %}
+            <input type="submit" value="{% trans 'Acknowledge' %}" name="read_{{event.1.id}}">
+        </form>
       {% endfor %}
     </div>
     <div class="Well">
       {% for user_message in user_messages %}
-        {{user_message.text|safe}}
+        {{user_message.0.text|safe}}<br>
+        <form action="{% url 'social:notifications' %}" method="post">
+            {% csrf_token %}
+            <input type="submit" value="{% trans 'Acknowledge' %}" name="read_{{user_message.1.id}}">
+        </form>
+      {% endfor %}
+    </div>
+    <div class="Well">
+      {% for group in groups %}
+        {{group.0.name|safe}}<br>
+        <form action="{% url 'social:notifications' %}" method="post">
+            {% csrf_token %}
+            <input type="submit" value="{% trans 'Acknowledge' %}" name="read_{{group.1.id}}">
+        </form>
       {% endfor %}
     </div>
   {% endblock %}
