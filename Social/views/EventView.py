@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.shortcuts import HttpResponse
 from Social.models import UserMessage
 from Social.models import UserProfile
+from Social.models import Notification
 from SelectGame.models import Event
 from django.utils.translation import gettext
 from django.views import View
@@ -42,6 +43,10 @@ class EventView(View):
         if request.POST.get("invite_friends"):
             for pk in request.POST.getlist('friends'):
                 invite = User.objects.get(pk=pk)
+                notification = Notification(sender=user,
+                                            receiver=invite)
+                notification.save()
+                event.notifications.add(notification)
                 event.participants.add(invite)
             event.save()
         profile = UserProfile.objects.get(user=user)
