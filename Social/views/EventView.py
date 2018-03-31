@@ -8,10 +8,7 @@ from django.utils.translation import gettext
 from django.views import View
 from django.contrib.auth.models import User
 from SelectGame.models import EventParticipant
-from SelectGame.models.EventParticipant import EVENT_STATUS_MAYBE
-from SelectGame.models.EventParticipant import EVENT_STATUS_WILL_COME
-from SelectGame.models.EventParticipant import EVENT_STATUS_NOT_COMING
-from SelectGame.models.EventParticipant import EVENT_STATUS_PENDING
+from SelectGame.models.EventParticipant import STATUS as PARTCIPANTS_STATUS
 
 
 class EventView(View):
@@ -61,7 +58,7 @@ class EventView(View):
         participant = EventParticipant.objects.get(
                       user=self.user,
                       event=self.event)
-        for status in participant.STATUS:
+        for status in PARTCIPANTS_STATUS:
             if request.POST.get(status[0]):
                 participant = EventParticipant.objects.get(
                               user=self.user,
