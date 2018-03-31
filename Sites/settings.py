@@ -70,6 +70,7 @@ INSTALLED_APPS = [
     'ckeditor',
     'django_extensions',
     'django-dia',
+    'django_ajax',
 ]
 
 MIDDLEWARE = [
@@ -82,6 +83,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'django_ajax.middleware.AJAXMiddleware',
 ]
 
 ROOT_URLCONF = 'Sites.urls'

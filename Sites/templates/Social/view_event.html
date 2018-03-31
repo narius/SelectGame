@@ -30,15 +30,10 @@
         <div id="collapseOne" class="panel-collapse collapse in">
             <div class="panel-body">
                 <table class="table">
-                    <tr>
-                        <td>
-                            <span class="glyphicon glyphicon-user text-primary"></span><a href="{% url 'Social:user_profile' user_id=event.owner.id %}">{{event.owner.get_username}}</a>
-                        </td>
-                    </tr>
                     {% for participant in event.participants.all %}
                       <tr>
                           <td>
-                              <span class="glyphicon glyphicon-user text-success"></span><a href="{% url 'Social:user_profile' user_id=participant.id %}">{{participant.get_username}}</a>
+                              <span class="{{participant.glyphicon}}"></span><a href="{% url 'Social:user_profile' user_id=participant.user.id %}">{{participant.user.get_username}}</a>
                           </td>
                       </tr>
                     {% endfor %}
@@ -61,6 +56,12 @@
 <div class="col-sm-9 col-md-9">
     <div class="well">
         <h1>{{event.name}}</h1>
+        <form action="{% url 'social:view_event' event_id=event.id%}" method="post">
+            {% csrf_token %}
+            <input class="btn btn-success" type="submit" name="WC" value="{% trans 'Will come' %}">
+            <input class="btn btn-secondary" type="submit" name="MA" value="{% trans 'Maybe' %}">
+            <input class="btn btn-danger" type="submit" name="NC" value="{% trans 'Not coming' %}">
+        </form>
         {% trans "Location" %}: {{event.location.address}}<br>
         {% trans "Owner" %}: {{event.owner.get_username}}<br>
         {% trans "Maximum number of players" %}: {{event.maximum_number_of_players}}<br>
