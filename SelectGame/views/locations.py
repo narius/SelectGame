@@ -21,6 +21,7 @@ class LocationsView(View):
 
     def post(self, request):
         self.user = request.user
+        # TODO check if adress is empty, if it is empty return error message
         address = request.POST.get("location")
         new_location = Location(owner=self.user, address=address)
         new_location.save()
