@@ -62,14 +62,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'SelectGame.apps.SelectgameConfig',
     'Social.apps.SocialConfig',
-    'Frontend.apps.FrontendConfig',
     'bootstrap3',
     'bootstrap',
     'fontawesome',
     'django.contrib.admindocs',
     'django_wysiwyg',
     'ckeditor',
-    'django_extensions'
+    'django_extensions',
+    'django-dia',
 ]
 
 MIDDLEWARE = [
