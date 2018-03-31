@@ -16,13 +16,9 @@ from Social.models import Notification
 
 
 class Event(models.Model):
-    owner = models.ForeignKey(User,
-                              on_delete=models.CASCADE,
-                              related_name="event_owner")
-    participants = models.ManyToManyField(User,
-                                          verbose_name=gettext("participants"),
-                                          related_name="event_participants",
-                                          blank=True)
+    creator = models.ForeignKey(User,
+                                on_delete=models.CASCADE,
+                                related_name="event_creator")
     date = models.DateTimeField(verbose_name=gettext("date"))
     games = models.ManyToManyField(Game,
                                    verbose_name=gettext("games"),
@@ -55,4 +51,4 @@ class Event(models.Model):
         verbose_name_plural = gettext("events")
 
     def __str__(self):
-        return str(self.owner)+" "+str(self.date)
+        return str(self.creator)+" "+str(self.date)
