@@ -7,8 +7,10 @@ from SelectGame.models import Event
 from django.utils.translation import gettext
 from django.views import View
 from django.contrib.auth.models import User
+from django.contrib import messages
 from SelectGame.models import EventParticipant
 from SelectGame.models.EventParticipant import STATUS as PARTCIPANTS_STATUS
+from SelectGame.models.EventParticipant import EVENT_STATUS_WILL_COME
 
 
 class EventView(View):
@@ -40,6 +42,9 @@ class EventView(View):
         self.user = request.user
         self.event = Event.objects.get(pk=event_id)
         friends = self.filter_friends()
+        participants = self.event.participants.all()
+        coming = self.event.participants.all()\
+                 .filter(status=EVENT_STATUS_WILL_COME)
         if request.POST.get("new_message"):
             text = request.POST.get("message")
             new_message = UserMessage(writer=self.user, text=text)
@@ -63,6 +68,12 @@ class EventView(View):
                 participant = EventParticipant.objects.get(
                               user=self.user,
                               event=self.event)
+                if (len(coming) >= self.event.maximum_number_of_players
+                        and status[0] == EVENT_STATUS_WILL_COME):
+                    messages.add_message(request,
+                                         messages.WARNING,
+                                         gettext('The event is full'))
+                    break
                 participant.status = status[0]
                 participant.save()
         participants = self.event.participants.all().filter(user=self.user)
