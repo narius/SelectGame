@@ -43,11 +43,6 @@ class EventView(View):
         self.user = request.user
         self.event = Event.objects.get(pk=event_id)
         friends = self.filter_friends()
-        if request.POST.get("cancel"):
-            return render(request,
-                          'Social/view_event.html',
-                          {'event': self.event,
-                           'friends': friends})
         if request.POST.get("new_message"):
             text = request.POST.get("message")
             new_message = UserMessage(writer=self.user, text=text)
@@ -63,24 +58,16 @@ class EventView(View):
                 participant = EventParticipant.objects.get_or_create(
                               user=invite, event=self.event)
             self.event.save()
-        if request.POST.get(EVENT_STATUS_WILL_COME):
-            participant = EventParticipant.objects.get(
-                          user=self.user,
-                          event=self.event)
-            participant.status = EVENT_STATUS_WILL_COME
-            participant.save()
-        if request.POST.get(EVENT_STATUS_MAYBE):
-            participant = EventParticipant.objects.get(
-                          user=self.user,
-                          event=self.event)
-            participant.status = EVENT_STATUS_MAYBE
-            participant.save()
-        if request.POST.get(EVENT_STATUS_NOT_COMING):
-            participant = EventParticipant.objects.get(
-                          user=self.user,
-                          event=self.event)
-            participant.status = EVENT_STATUS_NOT_COMING
-            participant.save()
+        participant = EventParticipant.objects.get(
+                      user=self.user,
+                      event=self.event)
+        for status in participant.STATUS:
+            if request.POST.get(status[0]):
+                participant = EventParticipant.objects.get(
+                              user=self.user,
+                              event=self.event)
+                participant.status = status[0]
+                participant.save()
         participants = self.event.participants.all().filter(user=self.user)
         if len(participants) == 0:
             return HttpResponse(gettext("You are not part of this event"))
