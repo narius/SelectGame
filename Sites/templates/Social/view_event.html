@@ -78,7 +78,7 @@
       {% if not average.too_low %}
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">{{average.game}}</h3>
+          <h3 class="panel-title"><a href="{%url 'selectgame:view_game' game_id=average.game.id  %}" >{{average.game.name}}</a></h3>
           <form action="{% url 'social:view_event' event_id=event.id%}" method="post">
               {% csrf_token %}
               {{average.votes.all|length}}
