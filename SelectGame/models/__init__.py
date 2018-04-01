@@ -1,5 +1,6 @@
 from .Category import *
 from .Event import *
+from .EventGame import *
 from .Game import *
 from .GameLibrary import *
 from .Location import *

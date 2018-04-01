@@ -12,6 +12,9 @@ from SelectGame.models import EventParticipant
 from SelectGame.models.EventParticipant import STATUS as PARTCIPANTS_STATUS
 from SelectGame.models.EventParticipant import EVENT_STATUS_WILL_COME
 from SelectGame.rating import rating_functions
+from SelectGame.models import EventGameVote
+from SelectGame.models import EventGame
+from django.db.models import Count, F
 
 
 class EventView(View):
@@ -31,7 +34,9 @@ class EventView(View):
     def get_games(self):
         participants = self.event.participants.all()\
                        .filter(status=EVENT_STATUS_WILL_COME)
-        self.games = rating_functions.users_rating(participants, 0)
+        ratings = rating_functions.event_users_rating(self.event, participants, -1)
+        event_games = EventGame.objects.filter(event=self.event)
+        self.games = event_games
 
     def get(self, request, event_id):
         self.user = request.user
@@ -83,6 +88,19 @@ class EventView(View):
                     break
                 participant.status = status[0]
                 participant.save()
+        # "vote_{{average.id}}"
+        for event_game in EventGame.objects.filter(event=self.event):
+            print("vote_"+str(event_game.id))
+            print(request.POST.get("vote_"+str(event_game.id)))
+            if request.POST.get("vote_"+str(event_game.id)):
+                print("for event_game if vote")
+                h = EventGameVote.objects.get_or_create(event_game=event_game,
+                                                     user=self.user)
+                if not h[1]:
+                    messages.add_message(request,
+                                         messages.WARNING,
+                                         gettext('You may only vote ones!'))
+                print(h)
         participants = self.event.participants.all().filter(user=self.user)
         if len(participants) == 0:
             return HttpResponse(gettext("You are not part of this event"))

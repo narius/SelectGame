@@ -79,10 +79,17 @@
       <div class="panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title">{{average.game}}</h3>
+          <form action="{% url 'social:view_event' event_id=event.id%}" method="post">
+              {% csrf_token %}
+              {{average.votes.all|length}}
+              <button type="submit" value="True" name="vote_{{average.id}}">
+                <span class="glyphicon glyphicon-thumbs-up"></span)
+              </button>
+          </form>
         </div>
         <div class="panel-body">
-          {{average.number_of_votes}}<br>
-          {{average.average}}
+          {% trans "Number of votes" %} {{average.number_of_rated}}<br>
+          {% trans "Average" %} {{average.average}}
         </div>
       </div>
       {% endif %}

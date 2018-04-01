@@ -20,9 +20,6 @@ class Event(models.Model):
                                 on_delete=models.CASCADE,
                                 related_name="event_creator")
     date = models.DateTimeField(verbose_name=gettext("date"))
-    games = models.ManyToManyField(Game,
-                                   verbose_name=gettext("games"),
-                                   blank=True)
     location = models.ForeignKey(Location,
                                  on_delete=models.CASCADE,
                                  verbose_name=gettext("location"))
