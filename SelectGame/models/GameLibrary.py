@@ -8,7 +8,10 @@ from .Game import Game
 
 
 class GameLibrary(models.Model):
-    owner = models.OneToOneField(User, on_delete=models.CASCADE, unique=True)
+    owner = models.OneToOneField(User,
+                                 on_delete=models.CASCADE,
+                                 unique=True,
+                                 related_name="games")
     games = models.ManyToManyField(Game, verbose_name=gettext("games"))
 
     class Meta:

@@ -11,13 +11,13 @@ from django.contrib import messages
 from SelectGame.models import EventParticipant
 from SelectGame.models.EventParticipant import STATUS as PARTCIPANTS_STATUS
 from SelectGame.models.EventParticipant import EVENT_STATUS_WILL_COME
+from SelectGame.rating import rating_functions
 
 
 class EventView(View):
     '''
         Displays a specifik event.
     '''
-    # TODO join button, only if there is room
     def filter_friends(self):
         profile = UserProfile.objects.get_or_create(user=self.user)[0]
         friends = profile.friend_list.all()
@@ -28,15 +28,21 @@ class EventView(View):
                 fr.append(friend)
         return fr
 
+    def get_games(self):
+        participants = self.event.participants.all()
+        self.games = rating_functions.users_rating(participants, 2)
+
     def get(self, request, event_id):
         self.user = request.user
         self.event = Event.objects.get(pk=event_id)
         friends = self.filter_friends()
-        print("innan get return")
+        self.get_games()
+        print(self.games)
         return render(request,
                       'Social/view_event.html',
                       {'event': self.event,
-                       'friends': friends})
+                       'friends': friends,
+                       'games': self.games})
 
     def post(self, request, event_id):
         self.user = request.user
@@ -79,8 +85,9 @@ class EventView(View):
         participants = self.event.participants.all().filter(user=self.user)
         if len(participants) == 0:
             return HttpResponse(gettext("You are not part of this event"))
-
+        self.get_games()
         return render(request,
                       'Social/view_event.html',
                       {'event': self.event,
-                       'friends': friends})
+                       'friends': friends,
+                       'games': self.games})

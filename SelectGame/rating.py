@@ -42,23 +42,29 @@ class rating_functions():
         ratings = {}
         number_of_votes = {}
         avarage = []
+        voters = []
         for user in users:
             # Retrieve all games that the users own.
+            voters.append(user.user)
             users_game_library = \
-                GameLibrary.objects.get_or_create(owner=user)[0]
-            for game in users_game_library.games.all():
-                user_ratings = \
-                    Rating.objects.all().filter(user=user).filter(game=game)
-                for rating in user_ratings:
-                    if rating.rating > lower_limit:
-                        ratings[rating.game.name] = \
-                            ratings.setdefault(rating.game.name, 0)\
-                            + rating.rating
-                        number_of_votes[rating.game.name] = \
-                            number_of_votes.setdefault(rating.game.name, 0)+1
-                if game not in games:
-                    print("rating-append: "+str(game))
-                    games.append(game)
+                GameLibrary.objects.get_or_create(owner=user.user)[0]
+            for i in users_game_library.games.all():
+                games.append(i)
+        for game in games:
+            print(game)
+            user_ratings = \
+                Rating.objects.all().filter(user__in=voters).filter(game=game)
+            print(str(user)+" - "+str(game))
+            for rating in user_ratings:
+                if rating.rating > lower_limit:
+                    ratings[rating.game.name] = \
+                        ratings.setdefault(rating.game.name, 0)\
+                        + rating.rating
+                    number_of_votes[rating.game.name] = \
+                        number_of_votes.setdefault(rating.game.name, 0)+1
+            if game not in games:
+                print("rating-append: "+str(game))
+                games.append(game)
         # By now whe should have two list, one with all available game,
         # one with all ratings.
 
