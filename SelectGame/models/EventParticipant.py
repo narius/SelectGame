@@ -24,10 +24,10 @@ ROLES = (
 )
 
 GLYPHICONS = {
-    EVENT_STATUS_WILL_COME: "glyphicon glyphicon-user text-success",
-    EVENT_STATUS_MAYBE: "glyphicon glyphicon-user text-warning",
-    EVENT_STATUS_NOT_COMING: "glyphicon glyphicon-user text-danger",
-    EVENT_STATUS_PENDING: "glyphicon glyphicon-user text-primary",
+    EVENT_STATUS_WILL_COME: 'material-icons event_status_will_come',
+    EVENT_STATUS_MAYBE: 'material-icons event_status_maybe',
+    EVENT_STATUS_NOT_COMING: 'material-icons event_status_not_coming',
+    EVENT_STATUS_PENDING: 'material-icons event_status_pending',
 }
 
 
@@ -44,7 +44,7 @@ class EventParticipant(models.Model):
                               on_delete=models.CASCADE,
                               related_name="participants")
     glyphicon = models.CharField(max_length=100,
-                                 default="glyphicon glyphicon-user text-primary")
+                                 default="material-icons event_status_pending'")
 
     class Meta:
         verbose_name = gettext("event participant")
