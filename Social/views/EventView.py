@@ -33,10 +33,12 @@ class EventView(View):
     def get_games(self):
         participants = self.event.participants.all()\
                        .filter(status=EVENT_STATUS_WILL_COME)
-        self.games = rating_functions.users_rating(participants, 0)
-        event_game = EventGame.object.get_or_create(event=self.event)[0]
-        event_game.save()
-        # TODO filter out ratings and add to event_game
+        ratings = rating_functions.event_users_rating(self.event,participants, -1)
+        event_games = EventGame.objects.filter(event=self.event)
+        for game in event_games:
+            print("votes")
+            print(game.votes.all())
+        self.games = event_games
         # TODO Add thumbs up to game header glyphicon glyphicon-thumbs-up
         # TODO When thumbs up is pressed add new EventGameVote
 

@@ -2,6 +2,7 @@
 
 from .models import Rating
 from .models import GameLibrary
+from SelectGame.models import EventGame
 
 
 class rating_functions():
@@ -31,7 +32,7 @@ class rating_functions():
                                          'width': width})
         return mean_rating_per_game
 
-    def users_rating(users, lower_limit):
+    def event_users_rating(event, users, lower_limit):
         """
             This function will return the average rating for all games that
             :model:`auth.User` have
@@ -67,17 +68,16 @@ class rating_functions():
                 games.append(game)
         # By now whe should have two list, one with all available game,
         # one with all ratings.
-
-        print(ratings)
         for game in games:
             # Find all ratings for this game
             game_avarage = ratings.setdefault(game.name, 0) \
                            / number_of_votes.setdefault(game.name, 1)
             votes = number_of_votes[game.name]
             too_low = True if game_avarage == 0 else False
-            avarage.append({'game': game,
-                            'number_of_votes': votes,
-                            'average': game_avarage,
-                            'too_low': too_low
-                            })
-        return avarage
+            new_event_game = EventGame.objects.get_or_create(event=event,
+                                                            game=game)[0]
+            new_event_game.average = game_avarage
+            new_event_game.number_of_rated = votes
+            new_event_game.too_low = too_low
+            new_event_game.save()
+        return new_event_game
