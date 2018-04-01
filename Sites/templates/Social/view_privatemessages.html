@@ -39,9 +39,9 @@
               <input type="submit" value="{% trans "Send" %}" name="new_message_{{private_message.id}}">
           </form>
           {% for message in private_message.messages.all%}
-          <div class="well">
-            <strong>{{message.writer.get_username}}</strong>
-            {{message.text|safe}}
+          <div class="card">
+            <div class="card-header">{{message.writer.get_username}}</div>
+            <div class="card-body">{{message.text|safe}}</div>
           </div>
           {% endfor %}
         </div>

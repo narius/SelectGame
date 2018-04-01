@@ -20,35 +20,35 @@ def view_game(request, game_id):
             user_rating.rating = 5
         user_rating.save()
     # Sets the color of the stars
-    stars = ['btn btn-default btn-grey btn-sm',
-             'btn btn-default btn-grey btn-sm',
-             'btn btn-default btn-grey btn-sm',
-             'btn btn-default btn-grey btn-sm',
-             'btn btn-default btn-grey btn-sm']
+    stars = ['btn btn-secondary btn-grey btn-sm',
+             'btn btn-secondary btn-grey btn-sm',
+             'btn btn-secondary btn-grey btn-sm',
+             'btn btn-secondary btn-grey btn-sm',
+             'btn btn-secondary btn-grey btn-sm']
     if user_rating.rating >= 1:
-        stars = ['btn btn-warning btn-sm',
-                 'btn btn-default btn-grey btn-sm',
-                 'btn btn-default btn-grey btn-sm',
-                 'btn btn-default btn-grey btn-sm',
-                 'btn btn-default btn-grey btn-sm']
+        stars = ['btn btn-squared-default btn-warning',
+                 'btn btn-secondary btn-grey btn-sm',
+                 'btn btn-secondary btn-grey btn-sm',
+                 'btn btn-secondary btn-grey btn-sm',
+                 'btn btn-secondary btn-grey btn-sm']
     if user_rating.rating >= 2:
         stars = ['btn btn-warning btn-sm',
                  'btn btn-warning btn-sm',
-                 'btn btn-default btn-grey btn-sm',
-                 'btn btn-default btn-grey btn-sm',
-                 'btn btn-default btn-grey btn-sm']
+                 'btn btn-secondary btn-grey btn-sm',
+                 'btn btn-secondary btn-grey btn-sm',
+                 'btn btn-secondary btn-grey btn-sm']
     if user_rating.rating >= 3:
         stars = ['btn btn-warning btn-sm',
                  'btn btn-warning btn-sm',
                  'btn btn-warning btn-sm',
-                 'btn btn-default btn-grey btn-sm',
-                 'btn btn-default btn-grey btn-sm']
+                 'btn btn-secondary btn-grey btn-sm',
+                 'btn btn-secondary btn-grey btn-sm']
     if user_rating.rating >= 4:
         stars = ['btn btn-warning btn-sm',
                  'btn btn-warning btn-sm',
                  'btn btn-warning btn-sm',
                  'btn btn-warning btn-sm',
-                 'btn btn-default btn-grey btn-sm']
+                 'btn btn-secondary btn-grey btn-sm']
     if user_rating.rating >= 5:
         stars = ['btn btn-warning btn-sm',
                  'btn btn-warning btn-sm',

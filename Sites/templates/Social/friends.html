@@ -13,13 +13,13 @@
 
   <!-- Nav tabs -->
   <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active"><a href="#friends" aria-controls="friends" role="tab" data-toggle="tab">{% trans "Friends" %}</a></li>
-    <li role="presentation"><a href="#pending" aria-controls="pending" role="tab" data-toggle="tab">{% trans "Pending" %}</a></li>
-    <li role="presentation"><a href="#waiting_approval" aria-controls="waiting_approval" role="tab" data-toggle="tab">{% trans "Waiting approval" %}</a></li>
-    <li role="presentation"><a href="#rejected" aria-controls="rejected" role="tab" data-toggle="tab">{% trans "Rejected"%}</a></li>
+    <li class="nav-item"><a href="#friends" class="nav-link active" aria-controls="friends" role="tab" data-toggle="tab">{% trans "Friends" %}</a></li>
+    <li class="nav-item"><a href="#pending" class="nav-link" aria-controls="pending" role="tab" data-toggle="tab">{% trans "Pending" %}</a></li>
+    <li class="nav-item"><a href="#waiting_approval" class="nav-link" aria-controls="waiting_approval" role="tab" data-toggle="tab">{% trans "Waiting approval" %}</a></li>
+    <li class="nav-item"><a href="#rejected" class="nav-link" aria-controls="rejected" role="tab" data-toggle="tab">{% trans "Rejected"%}</a></li>
   </ul>
   <!-- Tab panes -->
-  <div class="tab-content">
+  <div class="tab-content" id="myTabContent">
     <div role="tabpanel" class="tab-pane active" id="friends">
 			{% for friend in friends %}
 				{{friend.get_username}}<br>
