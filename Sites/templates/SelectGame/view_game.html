@@ -15,6 +15,12 @@
 {% endif %}
 <div class="well">
   <h1>{{game.name}}</h1>
+    <form action="{% url 'selectgame:game_library' game_id=game.id%}" method="post">
+      {% csrf_token %}
+      <button name="add_game" type="submit" class="btn btn-success" aria-label="Left Align">
+  		    {% trans "Add to my library" %}
+  		</button>
+    </form>
   <div class="rating-block">
     <h4>{% trans "Average user rating" %}</h4>
     <form action="{% url 'selectgame:view_game' game_id=game.id%}" method="post">

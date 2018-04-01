@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.urls import path
 from django.contrib.auth.views import login
 from django.contrib.auth.views import logout
@@ -17,6 +18,12 @@ urlpatterns = [
          login_required(views.LocationsView.as_view()),
          name='locations'),
     path('view_game/<int:game_id>/', views.view_game, name='view_game'),
+    path('game_library/',
+         login_required(views.GameLibraryView.as_view()),
+         name='game_library'),
+    path('game_library/<int:game_id>/',
+         login_required(views.GameLibraryView.as_view()),
+         name='game_library'),
     path('logout/',
          logout,
          {'next_page': 'selectgame:index'},

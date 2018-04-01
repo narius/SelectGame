@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% block title %}{{ title }}{% endblock %}
+<div class="row">
+{% block content %}
+{% if messages %}
+  <ul class="alert alert-dangers">
+    {% for message in messages %}
+      <div class="{{ message.tags }}" role="alert" >
+				<button class="close" data-dismiss="alert">&times;</button>
+				{{ message }}<div>
+    {% endfor %}
+  </ul>
+{% endif %}
+<h1>{% trans "My game Library" %}</h1>
+{% for game in game_library.games.all %}
+  <a href="{%url 'selectgame:view_game' game_id=game.id%}">{{game.name}}</a><br>
+{% endfor %}
+{% endblock %}
+</div>
