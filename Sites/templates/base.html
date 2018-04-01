@@ -32,6 +32,7 @@
           <li><a href="{% url 'selectgame:all_events' %}">{% trans "All events" %}</a></li>
           <li><a href="{% url 'social:profiles' %}">{% trans "All profiles" %}</a></li>
           {% if user.is_authenticated %}
+          <li><a href="{% url 'selectgame:game_library' %}">{% trans "My game library" %}</a></li>
           <li><a href="{% url 'selectgame:logout' %}">{% trans "Sign out" %}</a></li>
           <li><a href="{% url 'selectgame:add_game' %}">{% trans "Add game" %}</a></li>
           <li><a href="{% url 'social:view_messages' %}">{% trans "Messages" %}</a></li>
