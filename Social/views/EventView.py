@@ -29,8 +29,9 @@ class EventView(View):
         return fr
 
     def get_games(self):
-        participants = self.event.participants.all()
-        self.games = rating_functions.users_rating(participants, 2)
+        participants = self.event.participants.all()\
+                       .filter(status=EVENT_STATUS_WILL_COME)
+        self.games = rating_functions.users_rating(participants, 0)
 
     def get(self, request, event_id):
         self.user = request.user
