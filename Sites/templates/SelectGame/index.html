@@ -16,7 +16,7 @@
   <div class="row">
     <!-- Events -->
     <div class="col">
-      Events
+      <h1>{% trans "Events" %}</h1>
     </div>
     <!-- Friends -->
     <div class="col">
@@ -25,7 +25,10 @@
     <div class="w-100"></div>
     <!-- Game Library -->
     <div class="col">
-      Game Library
+      <h1>{% trans "Game Library" %}</h1>
+      {% for game in game_library.games.all %}
+        {{game.name}}<br>
+      {% endfor %}
     </div>
     <!-- Messages -->
     <div class="col">
