@@ -20,7 +20,10 @@
     </div>
     <!-- Friends -->
     <div class="col">
-      Friends
+      <h1>{% trans "Friends" %}</h1>
+      {% for friend in profile.friend_list.all %}
+        <a href="{% url 'Social:user_profile' user_id=friend.id %}">{{friend.get_username}}</a><br>
+      {% endfor %}
     </div>
     <div class="w-100"></div>
     <!-- Game Library -->
@@ -32,7 +35,7 @@
     </div>
     <!-- Messages -->
     <div class="col">
-      Messages
+      <h1>{% trans "Messages" %}</h1>
     </div>
   </div>
 

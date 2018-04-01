@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 class UserProfile(models.Model):
     user = models.OneToOneField(User,
                                 on_delete=models.CASCADE,
-                                related_name="user")
+                                related_name="profile")
     friend_list = models.ManyToManyField(User,
                                          verbose_name=gettext("Friend list"),
                                          related_name="friend_list")
