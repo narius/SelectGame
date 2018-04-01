@@ -12,6 +12,8 @@ from SelectGame.models import EventParticipant
 from SelectGame.models.EventParticipant import STATUS as PARTCIPANTS_STATUS
 from SelectGame.models.EventParticipant import EVENT_STATUS_WILL_COME
 from SelectGame.rating import rating_functions
+from SelectGame.models import EventGameVote
+from SelectGame.models import EventGame
 
 
 class EventView(View):
@@ -32,6 +34,11 @@ class EventView(View):
         participants = self.event.participants.all()\
                        .filter(status=EVENT_STATUS_WILL_COME)
         self.games = rating_functions.users_rating(participants, 0)
+        event_game = EventGame.object.get_or_create(event=self.event)[0]
+        event_game.save()
+        # TODO filter out ratings and add to event_game
+        # TODO Add thumbs up to game header glyphicon glyphicon-thumbs-up
+        # TODO When thumbs up is pressed add new EventGameVote
 
     def get(self, request, event_id):
         self.user = request.user
