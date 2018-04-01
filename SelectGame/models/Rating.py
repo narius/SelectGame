@@ -1,9 +1,10 @@
+from django.contrib.auth.models import User
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils.translation import gettext
-from django.contrib.auth.models import User
-from django.core.validators import MaxValueValidator
-from django.core.validators import MinValueValidator
+
 from .Game import Game
+
 # Create your models here.
 
 

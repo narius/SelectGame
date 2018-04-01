@@ -1,17 +1,15 @@
+from django.contrib.auth.models import User
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils.translation import gettext
-from django.contrib.auth.models import User
-from django.core.validators import MaxValueValidator
-from django.core.validators import MinValueValidator
+
+# Models from Social
+from Social.models import Group, Notification, UserMessage
 
 # Model from SelectGame
 from .Game import Game
 from .Location import Location
 
-# Models from Social
-from Social.models import Group
-from Social.models import UserMessage
-from Social.models import Notification
 # Create your models here.
 
 
