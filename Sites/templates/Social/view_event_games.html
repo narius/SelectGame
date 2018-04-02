@@ -4,7 +4,7 @@
 {% block extra_head %}
 {% wysiwyg_setup  %}
 {% endblock %}
-<div class="card">
+
   {% for average in games %}
   {% if not average.too_low %}
   <div class="card">
@@ -25,4 +25,3 @@
   </div>
   {% endif %}
   {% endfor %}
-</div>
