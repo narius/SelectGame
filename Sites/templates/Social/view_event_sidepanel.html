@@ -1,0 +1,39 @@
+{% load i18n %}
+{% load static %}
+{% load wysiwyg %}
+{% block extra_head %}
+{% wysiwyg_setup  %}
+{% endblock %}
+<div class="panel-group" id="accordion">
+    <div class="card">
+        <div class="card-header">
+            <h4>
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><i class="material-icons">supervisor_account</i>
+                </span>{% trans "Partcipants" %}</a>
+            </h4>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse in">
+            <div class="card-body">
+                <table class="table">
+                    {% for participant in event.participants.all %}
+                      <tr>
+                          <td>
+                              <i class="{{participant.glyphicon}}">android</i><a href="{% url 'Social:user_profile' user_id=participant.user.id %}">{{participant.user.get_username}}</a>
+                          </td>
+                      </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+      <div class=card-header><h1>{% trans "Messages" %}</h1></div>
+      <form action="{% url 'social:view_event' event_id=event.id%}" method="post">
+          {% csrf_token %}
+          <textarea id="message" name="message">{{h|safe}}</textarea>
+          {% wysiwyg_editor "message" %}
+          <input type="submit" name="new_message" value="{% trans 'Send message' %}">
+      </form>
+
+    </div>
+</div>

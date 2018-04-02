@@ -1,0 +1,28 @@
+{% load i18n %}
+{% load static %}
+{% load wysiwyg %}
+{% block extra_head %}
+{% wysiwyg_setup  %}
+{% endblock %}
+<div class="card">
+  {% for average in games %}
+  {% if not average.too_low %}
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title"><a href="{%url 'selectgame:view_game' game_id=average.game.id  %}" >{{average.game.name}}</a></h3>
+      <form action="{% url 'social:view_event' event_id=event.id%}" method="post">
+          {% csrf_token %}
+          <p class="card-title">{{average.votes.all|length}}</p>
+          <button type="submit" value="True" name="vote_{{average.id}}">
+            <i class="material-icons orange600">thumb_up</i>
+          </button>
+      </form>
+    </div>
+    <div class="card-body">
+      {% trans "Number of votes" %} {{average.number_of_rated}}<br>
+      {% trans "Average" %} {{average.average}}
+    </div>
+  </div>
+  {% endif %}
+  {% endfor %}
+</div>

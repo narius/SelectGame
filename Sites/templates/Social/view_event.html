@@ -21,128 +21,36 @@
 {% endif %}
 <div class="row">
 <div class="col-4">
-<div class="panel-group" id="accordion">
-    <div class="card">
-        <div class="card-header">
-            <h4>
-                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><i class="material-icons">supervisor_account</i>
-                </span>{% trans "Partcipants" %}</a>
-            </h4>
-        </div>
-        <div id="collapseOne" class="panel-collapse collapse in">
-            <div class="card-body">
-                <table class="table">
-                    {% for participant in event.participants.all %}
-                      <tr>
-                          <td>
-                              <i class="{{participant.glyphicon}}">android</i><a href="{% url 'Social:user_profile' user_id=participant.user.id %}">{{participant.user.get_username}}</a>
-                          </td>
-                      </tr>
-                    {% endfor %}
-                </table>
-            </div>
-        </div>
-    </div>
-    <div class="card">
-      <div class=card-header><h1>{% trans "Messages" %}</h1></div>
-      <form action="{% url 'social:view_event' event_id=event.id%}" method="post">
-          {% csrf_token %}
-          <textarea id="message" name="message">{{h|safe}}</textarea>
-          {% wysiwyg_editor "message" %}
-          <input type="submit" name="new_message" value="{% trans 'Send message' %}">
-      </form>
-
-    </div>
-</div>
+  {% include "Social/view_event_sidepanel.html" %}
 </div>
 <div class="col-8">
-    <div class="card">
-        <div class="card-header"><h1>{{event.name}}</h1></div>
-        <div class="card-body">
-        <form action="{% url 'social:view_event' event_id=event.id%}" method="post">
-            {% csrf_token %}
-            <input class="btn btn-success" type="submit" name="WC" value="{% trans 'Will come' %}">
-            <input class="btn btn-secondary" type="submit" name="MA" value="{% trans 'Maybe' %}">
-            <input class="btn btn-danger" type="submit" name="NC" value="{% trans 'Not coming' %}">
-        </form>
-        {% trans "Location" %}: {{event.location.address}}<br>
-        {% trans "Owner" %}: {{event.owner.get_username}}<br>
-        {% trans "Maximum number of players" %}: {{event.maximum_number_of_players}}<br>
-        {% trans "Minimum number of players" %}: {{event.minimum_number_of_players}}<br>
+  <div class="card">
+    <div class="card-header"><h1>{{event.name}}</h1></div>
+    <div class="card-body">
+      <form action="{% url 'social:view_event' event_id=event.id%}" method="post">
+        {% csrf_token %}
+        <input class="btn btn-success" type="submit" name="WC" value="{% trans 'Will come' %}">
+        <input class="btn btn-secondary" type="submit" name="MA" value="{% trans 'Maybe' %}">
+        <input class="btn btn-danger" type="submit" name="NC" value="{% trans 'Not coming' %}">
+      </form>
+      {% trans "Location" %}: {{event.location.address}}<br>
+      {% trans "Owner" %}: {{event.owner.get_username}}<br>
+      {% trans "Maximum number of players" %}: {{event.maximum_number_of_players}}<br>
+      {% trans "Minimum number of players" %}: {{event.minimum_number_of_players}}<br>
 
-    <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#invite_friends">
-      {% trans "Invite friends" %}
-    </button>
-  </div>
-    </div>
-    <div class="card">
-      {% for average in games %}
-      {% if not average.too_low %}
-      <div class="card">
-        <div class="card-header">
-          <h3 class="card-title"><a href="{%url 'selectgame:view_game' game_id=average.game.id  %}" >{{average.game.name}}</a></h3>
-          <form action="{% url 'social:view_event' event_id=event.id%}" method="post">
-              {% csrf_token %}
-              <p class="card-title">{{average.votes.all|length}}</p>
-              <button type="submit" value="True" name="vote_{{average.id}}">
-                <i class="material-icons orange600">thumb_up</i>
-              </button>
-          </form>
-        </div>
-        <div class="card-body">
-          {% trans "Number of votes" %} {{average.number_of_rated}}<br>
-          {% trans "Average" %} {{average.average}}
-        </div>
-      </div>
-      {% endif %}
-      {% endfor %}
-    </div>
-    <div class="card">
-      {% for message in event.messages.all%}
-      <div class="card">
-        <div class="card-header">
-          <h3 class="panel-title">{{message.writer}} {{message.created_date|date:"Y-m-d H:i"}}</h3>
-        </div>
-        <div class="card-body">
-          {{message.text|safe}}
-        </div>
-      </div>
-      {% endfor %}
-    </div>
-
-</div>
-</div>
-
-
-<!-- Modal -->
-<div class="modal fade" id="invite_friends" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">{% trans "Friends" %}</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <form enctype="multipart/form-data" action="{% url 'social:view_event' event_id=event.id%}" method="post">
-      {% csrf_token %}
-      <div class="modal-body">
-        <div class="form-group">
-          <select multiple class="form-control" id="friends" name="friends"  required>
-            {% for friend in friends %}
-              <option value="{{friend.id}}">{{friend.get_username}}</option>
-            {% endfor %}
-          </select>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">{% trans "Close" %}</button>
-        <input name="invite_friends" type="submit" class="btn btn-primary" value="{% trans 'Invite selected friends' %}"></button>
-      </div>
-    </form>
+      <!-- Button trigger modal -->
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#invite_friends">
+        {% trans "Invite friends" %}
+      </button>
     </div>
   </div>
+    {% include "Social/view_event_games.html" %}
+    {% include "Social/view_event_messages.html" %}
+
 </div>
+</div>
+
+
+{% include "Social/view_event_invite_friends.html" %}
 {% endblock %}
 </div>
