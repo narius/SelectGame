@@ -27,7 +27,7 @@
         </div>
     </div>
     <div class="card">
-      <div class=card-header><h1>{% trans "Messages" %}</h1></div>
+      <div class=card-header><h4>{% trans "Messages" %}</h4></div>
       <form action="{% url 'social:view_event' event_id=event.id%}" method="post">
           {% csrf_token %}
           <textarea id="message" name="message">{{h|safe}}</textarea>
