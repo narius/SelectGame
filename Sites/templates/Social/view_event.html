@@ -34,7 +34,7 @@
         <input class="btn btn-danger" type="submit" name="NC" value="{% trans 'Not coming' %}">
       </form>
       {% trans "Location" %}: {{event.location.address}}<br>
-      {% trans "Owner" %}: {{event.owner.get_username}}<br>
+      {% trans "Owner" %}: {{event.creator.get_username}}<br>
       {% trans "Maximum number of players" %}: {{event.maximum_number_of_players}}<br>
       {% trans "Minimum number of players" %}: {{event.minimum_number_of_players}}<br>
 
@@ -44,9 +44,38 @@
       </button>
     </div>
   </div>
-  {% include "Social/view_event_games.html" %}
-  {% include "Social/view_event_messages.html" %}
+  <div id="accordion">
+    <div class="card">
+      <div class="card-header" id="heading_games">
+        <h5 class="mb-0">
+          <button class="btn btn-link" data-toggle="collapse" data-target="#games" aria-expanded="true" aria-controls="games">
+            {% trans "Games" %}
+          </button>
+        </h5>
+      </div>
 
+      <div id="games" class="collapse" aria-labelledby="games" data-parent="#accordion">
+        <div class="card-body">
+          {% include "Social/view_event_games.html" %}
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header" id="heading_messages">
+        <h5 class="mb-0">
+          <button class="btn btn-link" data-toggle="collapse" data-target="#messages" aria-expanded="true" aria-controls="messages">
+            {% trans "Messages" %}
+          </button>
+        </h5>
+      </div>
+
+      <div id="messages" class="collapse" aria-labelledby="messages" data-parent="#accordion">
+        <div class="card-body">
+          {% include "Social/view_event_messages.html" %}
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 </div>
 
