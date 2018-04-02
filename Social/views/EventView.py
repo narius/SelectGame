@@ -58,6 +58,7 @@ class EventView(View):
         coming = self.event.participants.all()\
                  .filter(status=EVENT_STATUS_WILL_COME)
         if request.POST.get("new_message"):
+            print("EventView new_message")
             text = request.POST.get("message")
             new_message = UserMessage(writer=self.user, text=text)
             new_message.save()
