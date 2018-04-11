@@ -16,8 +16,8 @@
     <meta name="MobileOptimized" content="320">
     <link rel="icon" href="./favicon.ico" type="image/x-icon"/>
     <link rel="shortcut icon" type="image/x-icon" href="./favicon.ico" />
-    <!-- Generated: 2018-04-06 16:27:42 +0200 -->
-    <title>Homepage - tabler.github.io - a responsive, flat and full featured admin template</title>
+
+    <title>SelectGame</title>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,500,500i,600,600i,700,700i&amp;subset=latin-ext">
@@ -45,13 +45,10 @@
         <div class="header py-4">
           <div class="container">
             <div class="d-flex">
-              <a class="header-brand" href="./index.html">
+              <a class="header-brand" href="{% url 'selectgame:index' %}">
                 <img src="{% static 'tabler/demo/brand/tabler.svg' %}" class="header-brand-img" alt="tabler logo">
               </a>
               <div class="d-flex order-lg-2 ml-auto">
-                <div class="nav-item d-none d-md-flex">
-                  <a href="https://github.com/tabler/tabler" class="btn btn-sm btn-outline-primary" target="_blank">Source code</a>
-                </div>
                 <div class="dropdown d-none d-md-flex">
                   <a class="nav-link icon" data-toggle="dropdown">
                     <i class="fe fe-bell"></i>
@@ -118,7 +115,7 @@
               <div class="col-lg order-lg-first">
                 <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
                   <li class="nav-item">
-                    <a href="./index.html" class="nav-link active"><i class="fe fe-home"></i> Home</a>
+                    <a href="{% url 'selectgame:index' %}" class="nav-link active"><i class="fe fe-home"></i> Home</a>
                   </li>
                   <li class="nav-item">
                     <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-box"></i> Interface</a>
@@ -219,9 +216,6 @@
                     <li class="list-inline-item"><a href="./docs/index.html">Documentation</a></li>
                     <li class="list-inline-item"><a href="./faq.html">FAQ</a></li>
                   </ul>
-                </div>
-                <div class="col-auto">
-                  <a href="https://github.com/tabler/tabler" class="btn btn-outline-primary btn-sm">Source code</a>
                 </div>
               </div>
             </div>

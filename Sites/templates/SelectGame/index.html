@@ -13,32 +13,54 @@
     {% endfor %}
   </ul>
 {% endif %}
-  <div class="row">
-    <!-- Events -->
-    <div class="col">
-      <h1>{% trans "Events" %}</h1>
-    </div>
-    <!-- Friends -->
-    <div class="col">
-      <h1>{% trans "Friends" %}</h1>
-      {% for friend in profile.friend_list.all %}
-        <a href="{% url 'Social:user_profile' user_id=friend.id %}">{{friend.get_username}}</a><br>
-      {% endfor %}
-    </div>
-    <div class="w-100"></div>
-    <!-- Game Library -->
-    <div class="col">
-      <h1>{% trans "Game Library" %}</h1>
-      {% for game in game_library.games.all %}
-        {{game.name}}<br>
-      {% endfor %}
-    </div>
-    <!-- Messages -->
-    <div class="col">
-      <h1>{% trans "Messages" %}</h1>
+  <div class="my-3 my-md-5">
+    <div class="container">
+      <div class="page-header">
+        <h1 class="page-title">
+          Dashboard
+        </h1>
+      </div>
+      <div class="row row-cards row-deck">
+        <div class="col-6">
+          <div class="card">
+            <div class="table-responsive">
+              Friends
+              <table class="table table-hover table-outline table-vcenter text-nowrap card-table">
+                {% for friend in profile.friend_list.all%}
+                  <tr>
+                    <td><a href="{% url 'Social:user_profile' user_id=friend.id %}">{{friend.get_username}}</a></td>
+                  </tr>
+                {% endfor %}
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="card">
+            <div class="table-responsive">
+              Events
+            </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="card">
+            <div class="table-responsive">
+              <h1>{% trans "Game Library" %}</h1>
+              {% for game in game_library.games.all %}
+                {{game.name}}<br>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="card">
+            <div class="table-responsive">
+              <h1>{% trans "Messages" %}</h1>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-
-
 {% endblock %}
 </div>
