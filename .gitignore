@@ -121,3 +121,5 @@ Sites/__pycache__/settings.cpython-35.pyc
 *.sqlite3
 *.pyc
 *.pyc
+
+Sites/templates/base-old\.html
