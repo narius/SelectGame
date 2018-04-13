@@ -2,7 +2,6 @@
 {% load i18n %}
 {% load static %}
 {% block title %}{{ title }}{% endblock %}
-<div class="row">
 {% block content %}
 {% if messages %}
   <ul class="alert alert-dangers">
@@ -13,6 +12,8 @@
     {% endfor %}
   </ul>
 {% endif %}
+<div class="my-3 my-md-5">
+	<div class="container">
 <div class="well">
   <h1>{{game.name}}</h1>
     <form action="{% url 'selectgame:game_library' game_id=game.id%}" method="post">
@@ -27,21 +28,20 @@
       {% csrf_token %}
     <h2 class="bold padding-bottom-7">{{rating.mean_rating|floatformat:"1"}} <small>/ 5</small></h2>
     <button value=1 name="1-star" type="submit" class="material-icons {{stars.0}}" aria-label="Left Align">
-        star_rate
-		    <!--<i class="material-icons">star_rate</i>-->
+      <i class="fe fe-sun"></i>
     </button>
 
 		<button value=1 name="2-star" type="submit" class="{{stars.1}}" aria-label="Left Align">
-		    <i class="material-icons md-24">star_rate</i>
+		    <i class="fe fe-sun"></i>
 		</button>
 		<button value=1 name="3-star" type="submit" class="{{stars.2}}" aria-label="Left Align">
-		    <i class="material-icons">star_rate</i>
+		    <i class="fe fe-sun"></i>
 		</button>
 		<button value=1 name="4-star" type="submit" class="{{stars.3}}" aria-label="Left Align">
-		    <i class="material-icons">star_rate</i>
+		    <i class="fe fe-sun"></i>
 		</button>
 		<button value=1 name="5-star" type="submit" class="{{stars.4}}" aria-label="Left Align">
-		    <i class="material-icons">star_rate</i>
+		    <i class="fe fe-sun"></i>
 		 </button>
 
    </form>
@@ -54,6 +54,6 @@
     <li>{{category.name}}</li>
   {% endfor %}
 </div>
-
-{% endblock %}
 </div>
+</div>
+{% endblock %}

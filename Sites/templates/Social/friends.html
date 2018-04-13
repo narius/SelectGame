@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% block title %}{{ title }}{% endblock %}
-<div class="row">
 {% block content %}
 {% if message_length > 0%}
 	<div class="alert alert-danger" role="alert">
 		{{message}}
 	</div>
 {%endif%}
-
+<div class="my-3 my-md-5">
+	<div class="container">
 <div>
 
   <!-- Nav tabs -->
@@ -47,5 +47,6 @@
   </div>
 
 </div>
-{% endblock %}
 </div>
+</div>
+{% endblock %}

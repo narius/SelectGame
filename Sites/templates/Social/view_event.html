@@ -7,7 +7,8 @@
 {% block extra_head %}
 {% wysiwyg_setup  %}
 {% endblock %}
-<div class="row">
+<div class="my-3 my-md-5">
+	<div class="container">
 {% block content %}
 {% if messages %}
   <ul class="alert alert-dangers">
@@ -81,5 +82,6 @@
 
 
 {% include "Social/view_event_invite_friends.html" %}
-{% endblock %}
 </div>
+</div>
+{% endblock %}

@@ -6,7 +6,7 @@
 {% block extra_head %}
 {% wysiwyg_setup  %}
 {% endblock %}
-<div class="row">
+
   {% block content %} {% if messages %}
   <ul class="alert alert-dangers">
     {% for message in messages %}
@@ -16,6 +16,8 @@
         {% endfor %}
   </ul>
   {% endif %}
+  <div class="my-3 my-md-5">
+  	<div class="container">
   <div id="accordion">
     {% for private_message in private_messages %}
     <div class="card">
@@ -49,5 +51,6 @@
     </div>
   </div>
   {% endfor %}
+    </div>
+      </div>
   {% endblock %}
-  </div>

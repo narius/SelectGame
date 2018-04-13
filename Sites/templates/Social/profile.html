@@ -2,7 +2,6 @@
 {% load i18n %}
 {% load static %}
 {% block title %}{{ title }}{% endblock %}
-<div class="row">
 {% block content %}
 {% if messages %}
   <ul class="alert alert-dangers">
@@ -13,6 +12,8 @@
     {% endfor %}
   </ul>
 {% endif %}
+<div class="my-3 my-md-5">
+	<div class="container">
 <form action="{% url 'social:profiles'%}" method="post">{% csrf_token %}
   <select name="user">
     {%for user_to_select in users%}
@@ -44,5 +45,6 @@
   {% endfor %}
 </table>
 {% endif %}
-{% endblock %}
 </div>
+</div>
+{% endblock %}
