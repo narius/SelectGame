@@ -5,13 +5,16 @@
 {% block extra_head %}
 {% wysiwyg_setup  %}
 {% endblock %}
-<div class="row">
+
 {% block content %}
+<div class="my-3 my-md-5">
+	<div class="container">
 <form action="{% url 'social:edit_profile'%}" method="post">
     {% csrf_token %}
     <textarea id="biography" name="biography">{{profile.biography|safe}}</textarea>
     {% wysiwyg_editor "biography" %}
     <input type="submit">
 </form>
-{% endblock %}
 </div>
+</div>
+{% endblock %}
