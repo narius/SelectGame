@@ -1,13 +1,13 @@
 from Social.models import Notification
-
+from Social.models.Notification import NOTIFICATION_STATUS_UNREAD
 
 def notifications_context_processor(request):
     user = request.user
-    notifications = []
-    if not user.is_anonymous:
-        notifications = Notification.objects.all().\
-            filter(receiver=user).\
-            filter(status="UR")
+    un_read_notifications = Notification.objects.filter(
+                            receiver=user,
+                            status=NOTIFICATION_STATUS_UNREAD
+    ).count()
+    has_unread = un_read_notifications > 0
     return {
-        'number_of_notification': len(notifications),
+        'has_unread': has_unread,
     }
