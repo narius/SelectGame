@@ -3,12 +3,16 @@ from django.utils.translation import gettext
 from django.contrib.auth.models import User
 # Create your models here.
 
+NOTIFICATION_STATUS_UNREAD = 'UR'
+NOTIFICATION_STATUS_READ = 'RE'
+STATUS = (
+        (NOTIFICATION_STATUS_UNREAD, gettext("Unread")),
+        (NOTIFICATION_STATUS_READ, gettext("Read")),
+    )
+
 
 class Notification(models.Model):
-    STATUS = (
-        ('UR', gettext("Unread")),
-        ('RE', gettext("Read")),
-    )
+
     status = models.CharField(max_length=2, choices=STATUS, default="UR")
     sender = models.ForeignKey(User,
                                on_delete=models.CASCADE,
