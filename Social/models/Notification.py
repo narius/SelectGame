@@ -12,11 +12,11 @@ class Notification(models.Model):
     status = models.CharField(max_length=2, choices=STATUS, default="UR")
     sender = models.ForeignKey(User,
                                on_delete=models.CASCADE,
-                               related_name="not_sender",
+                               related_name="notification_sender",
                                verbose_name=gettext("sender"))
     receiver = models.ForeignKey(User,
                                  on_delete=models.CASCADE,
-                                 related_name="not_receiver",
+                                 related_name="notification_receiver",
                                  verbose_name=gettext("receiver"))
 
     class Meta:
