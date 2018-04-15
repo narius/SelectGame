@@ -33,7 +33,7 @@
   <link href="{% static 'tabler/assets/plugins/charts-c3/plugin.css' %}" rel="stylesheet" />
   <script src="{% static 'tabler/assets/plugins/charts-c3/plugin.js' %}"></script>
   <!-- Google Maps Plugin -->
-  <link href="{% static 'tabler/assets/plugins/maps-google/plugin.css %'}" rel="stylesheet" />
+  <link href="{% static 'tabler/assets/plugins/maps-google/plugin.css' %}" rel="stylesheet" />
   <script src="{% static 'tabler/assets/plugins/maps-google/plugin.js' %}"></script>
   <!-- Input Mask Plugin -->
   <script src="{% static 'tabler/assets/plugins/input-mask/plugin.js' %}"></script>
@@ -63,7 +63,7 @@
               <!-- Profile image -->
               <div class="dropdown">
                 <a href="#" class="nav-link pr-0 leading-none" data-toggle="dropdown">
-                    <span class="avatar" style="background-image: url(./demo/faces/female/25.jpg)"></span>
+                    <span class="avatar" style="background-image: url({% static 'tabler/demo/faces/female/25.jpg' %})"></span>
                     <span class="ml-2 d-none d-lg-block">
                       <span class="text-default">Username</span>
                       <small class="text-muted d-block mt-1">Role</small>
