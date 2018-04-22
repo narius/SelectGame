@@ -12,7 +12,7 @@ STATUS = (
 
 
 class Notification(models.Model):
-
+    created = models.DateTimeField(auto_now_add=True, null=True)
     status = models.CharField(max_length=2, choices=STATUS, default="UR")
     sender = models.ForeignKey(User,
                                on_delete=models.CASCADE,
@@ -26,6 +26,7 @@ class Notification(models.Model):
     class Meta:
         verbose_name = gettext("notification")
         verbose_name_plural = gettext("notifications")
+        ordering = ['-created']
 
     def __str__(self):
         return str(self.sender)+" - "+str(self.receiver)+" - "+self.status
