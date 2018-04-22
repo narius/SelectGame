@@ -60,8 +60,13 @@
                   </a>
                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
                   <a href="#" class="dropdown-item d-flex">
-                      Notification dropdown
-                    </a>
+                      Notification dropdown<br>
+                  </a>
+                  {% for notification in notifications %}
+                      <a class="dropdown-item" href="#">
+                          <i class="dropdown-icon fe fe-user"></i> {{ notification }}
+                      </a>
+                  {% endfor %}
                 </div>
               </div>
               <!-- Profile image -->
@@ -76,14 +81,14 @@
                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
                   <a class="dropdown-item" href="#">
                       <i class="dropdown-icon fe fe-user"></i> Profile
-                    </a>
+                  </a>
                   <a class="dropdown-item" href="#">
                       <i class="dropdown-icon fe fe-settings"></i> Settings
-                    </a>
+                  </a>
                   <a class="dropdown-item" href="#">
                       <span class="float-right"><span class="badge badge-primary">6</span></span>
                       <i class="dropdown-icon fe fe-mail"></i> Inbox
-                    </a>
+                  </a>
                   <a class="dropdown-item" href="#">
                       <i class="dropdown-icon fe fe-send"></i> Message
                     </a>
