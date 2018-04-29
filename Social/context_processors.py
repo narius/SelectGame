@@ -1,3 +1,4 @@
+# pylint: disable=E1101
 from Social.models import Notification
 from Social.models.Notification import NOTIFICATION_STATUS_UNREAD
 
