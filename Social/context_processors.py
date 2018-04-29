@@ -4,7 +4,11 @@ from Social.models.Notification import NOTIFICATION_STATUS_UNREAD
 
 def notifications_context_processor(request):
     print("notifications_context_processor")
+    # We can't get notifications if user is not logged in
+    if request.user.is_authenticated():
+        return
     user = request.user
+
     # Gets the last 10 notifications
     notifications = Notification.objects.filter(
                             receiver=user,
@@ -15,8 +19,6 @@ def notifications_context_processor(request):
         print(len(notification.message.all()))
         print("Group")
         print(len(notification.group.all()))
-
-        h=1
     un_read_notifications = Notification.objects.filter(
                             receiver=user,
                             status=NOTIFICATION_STATUS_UNREAD
