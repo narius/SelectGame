@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext
 from django.contrib.auth.models import User
+from django.urls import reverse
 # Create your models here.
 
 NOTIFICATION_STATUS_UNREAD = 'UR'
@@ -22,6 +23,17 @@ class Notification(models.Model):
                                  on_delete=models.CASCADE,
                                  related_name="notification_receiver",
                                  verbose_name=gettext("receiver"))
+
+    @property
+    def link(self):
+        #Returns link to group
+        if self.group.all().count()>0:
+            return
+        elif self.message.all().count()>0:
+            return reverse('social:view_messages')
+        elif self.event.all().count()>0:
+            event = self.event.all().first()
+            return reverse('social:view_event', kwargs={'event_id':event.id})
 
     class Meta:
         verbose_name = gettext("notification")

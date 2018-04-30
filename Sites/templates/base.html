@@ -63,7 +63,7 @@
                       Notification dropdown<br>
                   </a>
                   {% for notification in notifications %}
-                      <a class="dropdown-item" href="#">
+                      <a class="dropdown-item" href="{{notification.link}}">
                           <i class="dropdown-icon fe fe-user"></i> {{ notification }}
                       </a>
                   {% endfor %}
