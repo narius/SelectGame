@@ -13,7 +13,6 @@ class PrivateMessage(models.Model):
     messages = models.ManyToManyField(UserMessage)
     notification = models.ManyToManyField(Notification,
                                      related_name='message',
-                                     null=True,
                                      blank=True,
                                      verbose_name=gettext("notification"))
     class Meta:
