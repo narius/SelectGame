@@ -8,7 +8,7 @@
     <div class="card">
         <div class="card-header">
             <h4>
-                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><i class="material-icons">supervisor_account</i>
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
                 </span>{% trans "Partcipants" %}</a>
             </h4>
         </div>
@@ -18,7 +18,7 @@
                     {% for participant in event.participants.all %}
                       <tr>
                           <td>
-                              <i class="{{participant.glyphicon}}">android</i><a href="{% url 'Social:user_profile' user_id=participant.user.id %}">{{participant.user.get_username}}</a>
+                              <a href="{% url 'Social:user_profile' user_id=participant.user.id %}">{{participant.user.get_username}}</a>
                           </td>
                       </tr>
                     {% endfor %}
