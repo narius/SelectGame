@@ -5,8 +5,8 @@ from Social.models.Notification import NOTIFICATION_STATUS_UNREAD
 def notifications_context_processor(request):
     print("notifications_context_processor")
     # We can't get notifications if user is not logged in
-    if request.user.is_authenticated():
-        return
+    if not request.user.is_authenticated:
+        return {}
     user = request.user
 
     # Gets the last 10 notifications
