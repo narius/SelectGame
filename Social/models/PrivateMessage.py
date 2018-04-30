@@ -9,7 +9,7 @@ from Social.models import Notification
 class PrivateMessage(models.Model):
     participants = models.ManyToManyField(User,
                                           verbose_name=gettext('participants'),
-                                          related_name="participants")
+                                          related_name="private_messages")
     messages = models.ManyToManyField(UserMessage)
     notification = models.ManyToManyField(Notification,
                                      related_name='message',
