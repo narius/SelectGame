@@ -13,6 +13,9 @@ def notifications_context_processor(request):
     notifications = Notification.objects.filter(
                             receiver=user,
     )[:10]
+    # Gets all unread messages
+    unread_messages = user.private_messages.all().filter(notification__status=NOTIFICATION_STATUS_UNREAD)
+    number_unread_message = unread_messages.count()
     # TODO: Get links for events, messages, groups etc from notifcation
     for notification in notifications:
         print("Message")
@@ -26,5 +29,6 @@ def notifications_context_processor(request):
     has_unread = un_read_notifications > 0
     return {
         'has_unread': has_unread,
-        'notifications': notifications
+        'notifications': notifications,
+        'number_of_unread_messages': number_unread_message
     }
