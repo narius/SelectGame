@@ -41,4 +41,13 @@ class Notification(models.Model):
         ordering = ['-created']
 
     def __str__(self):
-        return str(self.sender)+" - "+str(self.receiver)+" - "+self.status
+        if self.group.all().count()>0:
+            group = self.group.all().first()
+            return group.name
+        elif self.message.all().count()>0:
+            return gettext("new message from ")+str(self.sender)
+        elif self.event.all().count()>0:
+            event = self.event.all().first()
+            return event.name    
+        else:
+            return str(self.sender)+" - "+str(self.receiver)+" - "+self.status
