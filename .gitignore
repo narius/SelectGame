@@ -123,3 +123,5 @@ Sites/__pycache__/settings.cpython-35.pyc
 *.pyc
 
 Sites/templates/base-old\.html
+node_modules
+.idea

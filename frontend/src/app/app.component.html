@@ -1,0 +1,24 @@
+<nav class="navbar navbar-expand-lg fixed-top">
+  <a class="navbar-brand" href="#">SB Admin Angular7 BS4 </a>
+
+  <button class="navbar-toggler" type="button" (click)="toggleSidebar()">
+    <!-- <span class="navbar-toggler-icon"></span> -->
+    <i class="fa fa-bars text-muted" aria-hidden="true">Hej</i>
+  </button>
+</nav>
+<nav class="sidebar" [ngClass]="{sidebarPushRight: isActive, collapsed: collapsed}">
+  <div class="list-group">
+    <a [routerLink]="['']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+      <fa-icon icon="coffee"></fa-icon> <span>{{ 'Home' | translate }}</span>
+    </a>
+    <a [routerLink]="['game/create']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+      <fa-icon icon="gamepad"></fa-icon> <span>{{ 'game.create' | translate }}</span>
+    </a>
+    <a [routerLink]="['location/new']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+      <fa-icon icon="compass"></fa-icon> <span>{{ 'location.new' | translate }}</span>
+    </a>
+  </div>
+</nav>
+<section class="main-container" [ngClass]="{collapsed: collapedSideBar}">
+  <router-outlet></router-outlet>
+</section>

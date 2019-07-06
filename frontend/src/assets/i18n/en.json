@@ -1,0 +1,46 @@
+{
+	"demo": {
+		"text": "This is a simple demonstration app for ngx-translate",
+		"title": "Translation demo!"
+	},
+	"friendship": {
+		"status": {
+			"accepted": "It is accepted",
+			"rejected": "It have been rejected",
+			"sent": "It is pending"
+		}
+	},
+	"game": {
+		"category": {
+			"action": "action",
+			"card": "card",
+			"co-op": "co-op"
+		},
+		"create": "Create game"
+	},
+	"location": {
+		"create": {
+			"city": "city",
+			"name": "Name",
+			"postalcode": "postalcode",
+			"public": "Public",
+			"street": "Street"
+		},
+		"new": "create new location"
+	},
+	"registration": {
+		"password": "password",
+		"register": "register",
+		"registration_code": "registration code",
+		"username": "username"
+	},
+	"system": {
+		"roles": {
+			"game": {
+				"create": "Create games",
+				"update": "Update games"
+			}
+		}
+	},
+  "save": "save"
+}
