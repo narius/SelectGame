@@ -16,7 +16,8 @@
 			"card": "card",
 			"co-op": "co-op"
 		},
-		"create": "Create game"
+		"create": "Create game",
+    "view": "View game"
 	},
 	"location": {
 		"create": {

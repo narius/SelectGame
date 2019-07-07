@@ -39,6 +39,7 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {library} from '@fortawesome/fontawesome-svg-core';
 import {fas} from '@fortawesome/free-solid-svg-icons';
 import {AuthInterceptor} from "./services/auth.service";
+import { GameDetailsComponent } from './game/game-details/game-details.component';
 
 // ranslate-your-angular8-app-with-ngx-translate
 
@@ -54,7 +55,8 @@ import {AuthInterceptor} from "./services/auth.service";
     ViewGameComponent,
     CreateLocationComponent,
     ViewMyLocationsComponent,
-    HeaderComponent
+    HeaderComponent,
+    GameDetailsComponent
   ],
   imports: [
     BrowserModule,

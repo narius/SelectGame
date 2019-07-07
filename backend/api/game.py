@@ -9,21 +9,32 @@ from api.decorators import login_required
 class GameWebAPI(Resource):
     # all = True means that we take all locations, if false only the ones owned by user
     @login_required
-    def get(self,userid):
-        r = request
-        s = session
+    def get(self,id, **kwargs):
+        userid = userid = kwargs['userid']
         [conn, cursor] = get_db()
-        sql = """SELECT * FROM game"""
-        cursor.execute(sql)
-        result = cursor.fetchall()
+        game_sql = """SELECT * FROM game WHERE id={}""".format(int(id))
+        cursor.execute(game_sql)
+        game = cursor.fetchone()
+        my_rating_sql = """SELECT * FROM game_rating WHERE user_id={}""".format(int(userid))
+        cursor.execute(my_rating_sql)
+        my_rating = cursor.fetchone()
+
+        result = {
+            'game': game,
+            'my_rating':my_rating
+        }
         return jsonify(result)
 
-    def post(self):
+    @login_required
+    def put(self,id,**kwargs):
+        userid = userid = kwargs['userid']
         data = json.loads(request.data)
-        s = session
-        name = data.get('name','')
         [conn, cursor] = get_db()
-        sql = """INSERT INTO game (name) VALUES('{0}')""".format(name)
-        cursor.execute(sql)
+        rating = data['rate']
+        sql = """
+        INSERT INTO game_rating(user_id,game_id, rating) VALUES({0},{1},{2})\
+        ON CONFLICT (user_id,game_id) DO UPDATE SET rating={2}"""
+        sql = sql.format(userid,id,rating)
+        cursor.execute(sql);
         conn.commit()
         return
