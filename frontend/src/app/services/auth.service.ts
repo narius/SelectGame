@@ -15,6 +15,10 @@ export class AuthService {
     return this.httpclient.get('/api/login');
   }
 
+  logout(){
+    return this.httpclient.delete('/api/login');
+  }
+
 }
 
 

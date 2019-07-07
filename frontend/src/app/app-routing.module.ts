@@ -7,10 +7,10 @@ import {AuthGuard} from "./auth-guard.guard";
 import {CreateLocationComponent} from "./location/create-location/create-location.component";
 
 const routes: Routes = [
-  {path: '', component: DashboardComponent,canActivate: [AuthGuard]},
+  {path: '', component: DashboardComponent, canActivate: [AuthGuard]},
   {path: 'login', component: RegistrationComponent},
-  {path: 'game/create', component: CreateGameComponent},
-  {path: 'location/new', component: CreateLocationComponent}
+  {path: 'game/create', component: CreateGameComponent, canActivate: [AuthGuard]},
+  {path: 'location/new', component: CreateLocationComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({

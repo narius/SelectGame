@@ -1,8 +1,16 @@
 <nav class="navbar navbar-expand-lg fixed-top">
-      <a class="navbar-brand" href="#">SB Admin Angular7 BS4 </a>
+  <a class="navbar-brand" href="#">SB Admin Angular7 BS4 </a>
+  <a class="navbar-brand" href="#">SB Admin Angular7 BS4 </a>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a class="nav-link" (click)="toggleSidebar()"> Logout</a>
+      </li>
+    </ul>
 
-    <button class="navbar-toggler" type="button" (click)="toggleSidebar()">
-        <!-- <span class="navbar-toggler-icon"></span> -->
-        <i class="fa fa-bars text-muted" aria-hidden="true">Hej</i>
-    </button>
+  </div>
+  <button class="navbar-toggler" type="button" (click)="toggleSidebar()">
+    <!-- <span class="navbar-toggler-icon"></span> -->
+    <i class="fa fa-bars text-muted" aria-hidden="true">Hej</i>
+  </button>
 </nav>

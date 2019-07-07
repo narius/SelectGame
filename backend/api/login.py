@@ -36,7 +36,12 @@ class LoginWebAPI(Resource):
         else:
             abort(401,"Invalid username or password") # Invalid password
 
-    def delete(self):
-        print(session.get('userid','missing'))
-        session.pop('userid')
-        print(session.get('userid', 'missing'))
+    @login_required
+    def delete(self, *args, **kwargs):
+        userid = kwargs['userid']
+        [conn, cursor] = get_db()
+        sql = """DELETE FROM session WHERE user_id={}""".format(int(userid))
+        cursor.execute(sql)
+        conn.commit()
+        return {}, 200
+

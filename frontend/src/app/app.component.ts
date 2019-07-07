@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {AuthGuard} from "./auth-guard.guard";
+import {AuthService} from "./services/auth.service";
 
 @Component({
   selector: 'app-root',
@@ -37,7 +38,8 @@ export class AppComponent {
   ];
 
   constructor(private translate: TranslateService,
-              private auth: AuthGuard) {
+              private auth: AuthGuard,
+              private as: AuthService) {
     translate.setDefaultLang('en');
   }
 
@@ -51,7 +53,20 @@ export class AppComponent {
   }
 
   toggleSidebar() {
-        const dom: any = document.querySelector('body');
-        dom.classList.toggle(this.pushRightClass);
-    }
+    const dom: any = document.querySelector('body');
+    dom.classList.toggle(this.pushRightClass);
+  }
+
+  logout(){
+    this.as.logout().subscribe((res)=>{
+      console.log("logout");
+      console.log(res);
+      localStorage.removeItem("access_token")
+      window.location.href = "/login";
+    })
+
+  }
+
+
+
 }
