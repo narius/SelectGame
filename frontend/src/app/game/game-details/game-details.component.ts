@@ -34,10 +34,10 @@ export class GameDetailsComponent implements OnInit {
   }
 
   rate_game(rating){
-    this.gs.rate_gate(this.id,rating).subscribe((res)=>{
+    this.gs.rate_gate(this.id, rating).subscribe((res)=>{
       console.log(res);
       location.reload();
-    })
+    });
   }
 
 }
