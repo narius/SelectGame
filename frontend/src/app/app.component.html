@@ -18,6 +18,9 @@
     <a [routerLink]="['']" [routerLinkActive]="['router-link-active']" class="list-group-item">
       <fa-icon icon="coffee"></fa-icon> <span>{{ 'Home' | translate }}</span>
     </a>
+     <a [routerLink]="['library']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+      <fa-icon icon="gamepad"></fa-icon> <span>{{ 'game.library' | translate }}</span>
+    </a>
     <a [routerLink]="['game/view']" [routerLinkActive]="['router-link-active']" class="list-group-item">
       <fa-icon icon="gamepad"></fa-icon> <span>{{ 'game.view' | translate }}</span>
     </a>

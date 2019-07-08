@@ -40,4 +40,16 @@ export class GameDetailsComponent implements OnInit {
     });
   }
 
+  add_to_library(){
+    this.gs.add_to_library(this.game['id']).subscribe((res)=>{
+      location.reload();
+    })
+  }
+
+  remove_from_library(){
+    this.gs.remove_from_library(this.game['id']).subscribe((res)=>{
+      location.reload();
+    })
+  }
+
 }

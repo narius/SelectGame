@@ -8,6 +8,7 @@ import {AuthGuard} from "./auth-guard.guard";
 import {CreateLocationComponent} from "./location/create-location/create-location.component";
 import {ViewGameComponent} from "./game/view-game/view-game.component";
 import {GameDetailsComponent} from "./game/game-details/game-details.component";
+import {GameLibraryComponent} from "./game/game-library/game-library.component";
 
 
 const routes: Routes = [
@@ -16,7 +17,8 @@ const routes: Routes = [
   {path: 'game/create', component: CreateGameComponent, canActivate: [AuthGuard]},
   {path: 'game/view', component: ViewGameComponent, canActivate: [AuthGuard]},
   {path: 'game/view/:id', component: GameDetailsComponent, canActivate: [AuthGuard]},
-  {path: 'location/new', component: CreateLocationComponent, canActivate: [AuthGuard]}
+  {path: 'location/new', component: CreateLocationComponent, canActivate: [AuthGuard]},
+  {path: 'library', component: GameLibraryComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({

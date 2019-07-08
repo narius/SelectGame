@@ -12,10 +12,10 @@ class GameWebAPI(Resource):
     def get(self,id, **kwargs):
         userid = userid = kwargs['userid']
         [conn, cursor] = get_db()
-        game_sql = """SELECT * FROM game WHERE id={}""".format(int(id))
+        game_sql = """SELECT game.id, game.name, (SELECT COUNT(id) FROM game_library WHERE game_library.game_id={0} and game_library.user_id={1}) FROM game WHERE id={0}""".format(int(id),int(userid))
         cursor.execute(game_sql)
         game = cursor.fetchone()
-        my_rating_sql = """SELECT * FROM game_rating WHERE user_id={}""".format(int(userid))
+        my_rating_sql = """SELECT * FROM game_rating WHERE user_id={0} AND game_id={1}""".format(int(userid),int(id))
         cursor.execute(my_rating_sql)
         my_rating = cursor.fetchone()
 

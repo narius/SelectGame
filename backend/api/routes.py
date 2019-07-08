@@ -6,6 +6,7 @@ from api.locations import LocationsWebAPI
 from api.login import LoginWebAPI
 from api.game import GameWebAPI
 from api.games import GamesWebAPI
+from api.game_library import GameLibraryWebAPI
 blueprint = Blueprint('', __name__, url_prefix='/api')
 api = Api(blueprint)
 
@@ -17,6 +18,8 @@ endpoints = [
     (['/games'], GamesWebAPI),
     (['/game/<int:id>'], GameWebAPI),
     (['/game/rate/<int:id>'], GameWebAPI),
+    (['/library'], GameLibraryWebAPI),
+    (['/library/<int:game_id>'], GameLibraryWebAPI),
 ]
 
 for endpoint in endpoints:

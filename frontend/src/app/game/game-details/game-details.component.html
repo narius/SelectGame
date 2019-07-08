@@ -34,7 +34,9 @@
                 [ngClass]="(rate>=5)?'btn-warning':'btn-secondary'"
                 (click)="rate_game(5)"
                 aria-label="Left Align">
-        </button>
+        </button><br>
+        <button type="button" class="btn btn-lg btn-success" *ngIf="game['count']==0" (click)="add_to_library()">ADD</button>
+        <button type="button" class="btn btn-lg btn-danger" *ngIf="game['count']>0" (click)="remove_from_library()">DELETE</button>
       </div>
     </div>
   </div>
