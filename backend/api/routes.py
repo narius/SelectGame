@@ -4,9 +4,11 @@ from api.user.user import UsersWebAPI
 from api.registration.registration import RegistrationWebAPI
 from api.locations import LocationsWebAPI
 from api.login import LoginWebAPI
+from api.event import EventWebAPI
 from api.game import GameWebAPI
 from api.games import GamesWebAPI
 from api.game_library import GameLibraryWebAPI
+from api.news import NewsWebAPI
 blueprint = Blueprint('', __name__, url_prefix='/api')
 api = Api(blueprint)
 
@@ -20,6 +22,9 @@ endpoints = [
     (['/game/rate/<int:id>'], GameWebAPI),
     (['/library'], GameLibraryWebAPI),
     (['/library/<int:game_id>'], GameLibraryWebAPI),
+    (['/event'], EventWebAPI),
+    (['/event/<int:event_id>'], EventWebAPI),
+    (['/news'], NewsWebAPI),
 ]
 
 for endpoint in endpoints:

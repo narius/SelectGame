@@ -41,6 +41,11 @@ import {fas} from '@fortawesome/free-solid-svg-icons';
 import {AuthInterceptor} from "./services/auth.service";
 import { GameDetailsComponent } from './game/game-details/game-details.component';
 import { GameLibraryComponent } from './game/game-library/game-library.component';
+import { EventListComponent } from './event/event-list/event-list.component';
+import { EventViewComponent } from './event/event-view/event-view.component';
+import { EventCreateComponent } from './event/event-create/event-create.component';
+import { NewsCreateComponent } from './news/news-create/news-create.component';
+import { NewsViewComponent } from './news/news-view/news-view.component';
 
 // ranslate-your-angular8-app-with-ngx-translate
 
@@ -58,7 +63,12 @@ import { GameLibraryComponent } from './game/game-library/game-library.component
     ViewMyLocationsComponent,
     HeaderComponent,
     GameDetailsComponent,
-    GameLibraryComponent
+    GameLibraryComponent,
+    EventListComponent,
+    EventViewComponent,
+    EventCreateComponent,
+    NewsCreateComponent,
+    NewsViewComponent,
   ],
   imports: [
     BrowserModule,

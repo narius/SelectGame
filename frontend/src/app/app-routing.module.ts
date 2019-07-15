@@ -9,6 +9,7 @@ import {CreateLocationComponent} from "./location/create-location/create-locatio
 import {ViewGameComponent} from "./game/view-game/view-game.component";
 import {GameDetailsComponent} from "./game/game-details/game-details.component";
 import {GameLibraryComponent} from "./game/game-library/game-library.component";
+import {EventViewComponent} from "./event/event-view/event-view.component";
 
 
 const routes: Routes = [
@@ -18,6 +19,7 @@ const routes: Routes = [
   {path: 'game/view', component: ViewGameComponent, canActivate: [AuthGuard]},
   {path: 'game/view/:id', component: GameDetailsComponent, canActivate: [AuthGuard]},
   {path: 'location/new', component: CreateLocationComponent, canActivate: [AuthGuard]},
+  {path: 'event/:event_id', component: EventViewComponent, canActivate: [AuthGuard]},
   {path: 'library', component: GameLibraryComponent, canActivate: [AuthGuard]}
 ];
 

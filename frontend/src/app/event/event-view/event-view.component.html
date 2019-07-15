@@ -1,0 +1,49 @@
+<div class="container">
+  <div class="row">
+    <div class="card">
+      <div class="card-header">{{event.name}}</div>
+      <div class="card-body">
+        <p>Date: {{event.eventdate| date:'yyyy-MM-dd'}}</p>
+        <p>Location: {{location.name}}</p>
+        <p>Street: {{location.street}}</p>
+      </div>
+    </div>
+
+
+  </div>
+  <div class="row">
+    <div class="col-sm">
+      <h1>Ratings</h1>
+      <table class="table">
+        <thead>
+          <td>Game</td>
+          <td>Firstname</td>
+          <td>Surname</td>
+          <td>Rating</td>
+        </thead>
+        <tbody>
+          <tr *ngFor="let r of ratings">
+            <td>{{r.name}}</td>
+            <td>{{r.firstname}}</td>
+            <td>{{r.surname}}</td>
+            <td>{{r.rating}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-sm">
+      <h1>Participants</h1>
+      <div class="card">
+      <div class="card-header">Invite</div>
+      <div class="card-body">
+        Send invite
+      </div>
+    </div>
+      <p *ngFor="let p of participants">{{p.firstname}} {{p.surname}}</p>
+    </div>
+    <div class="col-sm">
+      <h1>Games</h1>
+      <p  *ngFor="let g of games">{{g.name}}</p>
+    </div>
+  </div>
+</div>

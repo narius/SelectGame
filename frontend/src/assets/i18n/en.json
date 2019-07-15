@@ -35,6 +35,13 @@
 		"registration_code": "registration code",
 		"username": "username"
 	},
+  "event": {
+		"status": {
+			"accepted": "It is accepted",
+			"rejected": "It have been rejected",
+			"sent": "It is pending"
+		}
+	},
 	"system": {
 		"roles": {
 			"game": {

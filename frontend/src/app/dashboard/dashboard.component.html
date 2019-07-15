@@ -3,7 +3,19 @@
     <small>Statistics Overview</small>
   </h2>
   <div class="row">
-    <div class="card" style="width: 18rem;margin: 10px;" >
+    <div class="card" style="width: 18rem;margin: 10px;">
+      <div class="card-header">
+        News
+      </div>
+      <div class="card-body">
+        <div *ngFor="let n of news">
+          <h3>{{n.header}}</h3>
+          <p [innerHTML]="n.text"></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="width: 18rem;margin: 10px;">
       <div class="card-header">
         <i class="fa fa-clock-o fa-fw"></i>Locations
       </div>
@@ -47,7 +59,9 @@
         Events
       </div>
       <div class="card-body">
-        massa av events
+        <div *ngFor="let e of events">
+          <a [routerLink]="['/event',e.id]">{{e.name}}</a>
+        </div>
       </div>
     </div>
   </div>

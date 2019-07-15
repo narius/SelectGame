@@ -11,6 +11,9 @@ flask-restplus = "*"
 psycopg2 = "*"
 yoyo-migrations = "*"
 uwsgi = "*"
+pytest = "*"
+pytest-flask = "*"
+pylint = "*"
 
 [requires]
 python_version = "3.7"
