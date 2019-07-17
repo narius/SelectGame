@@ -5,6 +5,7 @@ from api.registration.registration import RegistrationWebAPI
 from api.locations import LocationsWebAPI
 from api.login import LoginWebAPI
 from api.event import EventWebAPI
+from api.event_invite import EventInviteWebAPI
 from api.game import GameWebAPI
 from api.games import GamesWebAPI
 from api.game_library import GameLibraryWebAPI
@@ -23,6 +24,7 @@ endpoints = [
     (['/library'], GameLibraryWebAPI),
     (['/library/<int:game_id>'], GameLibraryWebAPI),
     (['/event'], EventWebAPI),
+    (['/event/invite'], EventInviteWebAPI),
     (['/event/<int:event_id>'], EventWebAPI),
     (['/news'], NewsWebAPI),
 ]

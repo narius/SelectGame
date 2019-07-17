@@ -46,6 +46,7 @@ import { EventViewComponent } from './event/event-view/event-view.component';
 import { EventCreateComponent } from './event/event-create/event-create.component';
 import { NewsCreateComponent } from './news/news-create/news-create.component';
 import { NewsViewComponent } from './news/news-view/news-view.component';
+import { EventInvitesComponent } from './event/event-invites/event-invites.component';
 
 // ranslate-your-angular8-app-with-ngx-translate
 
@@ -69,6 +70,7 @@ import { NewsViewComponent } from './news/news-view/news-view.component';
     EventCreateComponent,
     NewsCreateComponent,
     NewsViewComponent,
+    EventInvitesComponent,
   ],
   imports: [
     BrowserModule,

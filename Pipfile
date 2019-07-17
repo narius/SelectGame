@@ -6,7 +6,6 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-flask = "*"
 flask-restplus = "*"
 psycopg2 = "*"
 yoyo-migrations = "*"
@@ -14,6 +13,8 @@ uwsgi = "*"
 pytest = "*"
 pytest-flask = "*"
 pylint = "*"
+requests = "==1.0.3"
+flask = "==1.0.3"
 
 [requires]
 python_version = "3.7"

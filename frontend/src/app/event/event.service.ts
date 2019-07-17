@@ -17,4 +17,15 @@ export class EventService {
     return this.http.get('api/event/'+event_id);
   }
 
+  send_invite(event_id, receiver){
+    return this.http.post('api/event/invite',{
+      'event_id': event_id,
+      'receiver': receiver
+    })
+  }
+
+  get_my_invites(){
+    return this.http.get('api/event/invite')
+  }
+
 }

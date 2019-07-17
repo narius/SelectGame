@@ -1,0 +1,13 @@
+<div class="container">
+  <div class="row">
+    <div class="card-body" *ngFor="let i of invites">
+      <div class="card-header">
+        {{i.event_name}}
+      </div>
+      <div class="card-body">
+        <p>Date: {{i.eventdate| date:'yyyy-MM-dd'}}</p>
+         <a [routerLink]="['/event',i.event_id]">Link</a>
+      </div>
+    </div>
+  </div>
+</div>

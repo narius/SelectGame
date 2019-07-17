@@ -2,7 +2,7 @@ from functools import wraps
 from flask import session, request
 from flask_restplus import abort
 from db import get_db
-
+import logging
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
@@ -10,6 +10,7 @@ def login_required(f):
         #if userid is None:
         #    abort(401, "Not loggedin") # Not logged in
         r = request
+        logging.debug(r)
         headers_dict = dict(request.headers)
         token = headers_dict.get('Authorization','')
         if token == '':

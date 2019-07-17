@@ -37,9 +37,20 @@
       <div class="card-header">Invite</div>
       <div class="card-body">
         Send invite
+        <select #receiver name="receiver">
+          <option *ngFor="let f of friends" value="{{f.id}}">{{f.firstname}} {{f.surname}}</option>
+        </select>
+        <button class="btn btn-secondary" type="button" (click)="send_invite(receiver.value)"><fa-icon icon="save"></fa-icon> Send invite</button>
       </div>
     </div>
+      <h2>Comming</h2>
       <p *ngFor="let p of participants">{{p.firstname}} {{p.surname}}</p>
+
+      <h2>Sent</h2>
+      <p *ngFor="let p of sent">{{p.firstname}} {{p.surname}}</p>
+
+      <h2>Rejected</h2>
+      <p *ngFor="let p of rejected">{{p.firstname}} {{p.surname}}</p>
     </div>
     <div class="col-sm">
       <h1>Games</h1>

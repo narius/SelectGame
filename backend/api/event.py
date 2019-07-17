@@ -17,13 +17,13 @@ class EventWebAPI(Resource):
             event_sql = event_sql+" WHERE id={}".format(int(event_id))
             cursor.execute(event_sql)
             event = cursor.fetchone()
-            participants_sql  = """SELECT users.id, users.surname, users.firstname, 'ACCEPTED' status FROM event
+            participants_sql  = """SELECT users.id, users.surname, users.firstname, 'event.status.accepted' status FROM event
 INNER JOIN users ON users.id=event.owner
-WHERE event.id=1
+WHERE event.id={0}
 UNION
 SELECT users.id, users.surname, users.firstname, event_participant.status FROM event_participant
 INNER JOIN users ON users.id=event_participant.user_id 
-WHERE event_participant.event_id=1;"""
+WHERE event_participant.event_id={0} AND event_participant.status='event.status.accepted';""".format(event_id)
             cursor.execute(participants_sql)
             participants = cursor.fetchall()
             users_ids = []
@@ -34,6 +34,18 @@ WHERE event_participant.event_id=1;"""
             WHERE user_id in {}""".format(tuple(users_ids))
             cursor.execute(games_sql)
             games = cursor.fetchall()
+            sent_sql = """SELECT users.id, users.surname, users.firstname, event_participant.status FROM event_participant
+INNER JOIN users ON users.id=event_participant.user_id 
+WHERE event_participant.event_id={0} AND event_participant.status='event.status.sent';""".format(event_id)
+            cursor.execute(sent_sql)
+            sent = cursor.fetchall()
+
+            rejected_sql = """SELECT users.id, users.surname, users.firstname, event_participant.status FROM event_participant
+INNER JOIN users ON users.id=event_participant.user_id 
+WHERE event_participant.event_id={0} AND event_participant.status='event.status.rejected';""".format(event_id)
+            cursor.execute(rejected_sql)
+            rejected = cursor.fetchall()
+
             location_sql = """SELECT * FROM locations WHERE id={}""".format(int(event['location']))
             cursor.execute(location_sql)
             location = cursor.fetchone()
@@ -47,6 +59,8 @@ WHERE event_participant.event_id=1;"""
             rating = cursor.fetchall()
             result = {'event': event,
                       'participants': participants,
+                      'sent': sent,
+                      'rejected': rejected,
                       'games': games,
                       'location': location,
                       'ratings': rating
