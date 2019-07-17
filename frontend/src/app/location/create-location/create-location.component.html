@@ -1,0 +1,28 @@
+<div>
+  <h2 class="text-muted">Create location
+  </h2>
+  <form>
+    <!--public, name, street, postalcode, city-->
+    <div class="form-group">
+      <label for="name">{{"location.create.name"|translate}}</label>
+      <input #name type="text" class="form-control" id="name">
+    </div>
+    <div class="form-group">
+      <label for="public">{{"location.create.public"|translate}}</label>
+      <input #ispublic type="checkbox" class="form-control" id="public">
+    </div>
+    <div class="form-group">
+      <label for="street">{{"location.create.street"|translate}}</label>
+      <input #street type="text" class="form-control" id="street">
+    </div>
+    <div class="form-group">
+      <label for="postalcode">{{"location.create.postalcode"|translate}}</label>
+      <input #postalcode type="text" class="form-control" id="postalcode">
+    </div>
+    <div class="form-group">
+      <label for="city">{{"location.create.city"|translate}}</label>
+      <input #city type="text" class="form-control" id="city">
+    </div>
+    <button type="button" class="btn btn-success" (click)="create_location(name.value,ispublic.checked,street.value, postalcode.value,city.value)">{{"save"|translate}}</button>
+  </form>
+</div>

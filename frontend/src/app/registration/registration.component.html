@@ -1,0 +1,47 @@
+<nb-layout>
+  <nb-layout-column>
+    <nb-card>
+      <nb-card-header>Marcus</nb-card-header>
+      <nb-card-body class="example-items-rows">
+        <form [formGroup]="queryForm" (ngSubmit)="register()">
+        <table>
+          <tr>
+            <td>{{'registration.username'|translate}}</td>
+            <td><input type="text" nbInput formControlName="username"></td>
+          </tr>
+          <tr>
+            <td>{{'registration.password'|translate}}</td>
+            <td><input type="password" nbInput formControlName="password"></td>
+          </tr>
+          <tr *ngIf="require_registrationcode">
+            <td>{{'registration.registration_code'|translate}}</td>
+            <td><input type="text" nbInput></td>
+          </tr>
+        </table>
+          <button nbButton status="info"  type="submit">{{'registration.register'|translate}}</button>
+        </form>
+
+      </nb-card-body>
+    </nb-card>
+    <nb-card>
+      <nb-card-header>Login</nb-card-header>
+      <nb-card-body class="example-items-rows">
+        <form [formGroup]="loginForm" (ngSubmit)="login()">
+        <table>
+          <tr>
+            <td>{{'registration.username'|translate}}</td>
+            <td><input type="text" nbInput formControlName="username"></td>
+          </tr>
+          <tr>
+            <td>{{'registration.password'|translate}}</td>
+            <td><input type="password" nbInput formControlName="password"></td>
+          </tr>
+        </table>
+          <button nbButton status="info"  type="submit">{{'registration.login'|translate}}</button>
+        </form>
+
+      </nb-card-body>
+    </nb-card>
+  </nb-layout-column>
+</nb-layout>
+

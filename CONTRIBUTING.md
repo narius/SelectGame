@@ -1,1 +1,1 @@
-Everyone is wellcome to create bug reports and pull request.
+Everyone is welcome to create bug reports and pull request.

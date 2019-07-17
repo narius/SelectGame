@@ -1,0 +1,45 @@
+{
+	"demo": {
+		"text": "Detta är en enkel demonstration app för ngx-translate",
+		"title": "Översättnings demo!"
+	},
+	"friendship": {
+		"status": {
+			"accepted": "",
+			"rejected": "",
+			"sent": ""
+		}
+	},
+	"game": {
+		"category": {
+			"action": "",
+			"card": "",
+			"co-op": ""
+		},
+		"create": ""
+	},
+	"location": {
+		"create": {
+			"city": "",
+			"name": "",
+			"postalcode": "",
+			"public": "",
+			"street": ""
+		},
+		"new": ""
+	},
+	"registration": {
+		"password": "",
+		"register": "",
+		"registration_code": "",
+		"username": ""
+	},
+	"system": {
+		"roles": {
+			"game": {
+				"create": "",
+				"update": ""
+			}
+		}
+	}
+}
