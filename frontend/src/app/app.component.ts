@@ -2,6 +2,10 @@ import {Component} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {AuthGuard} from "./auth-guard.guard";
 import {AuthService} from "./services/auth.service";
+import {HttpClient} from "@angular/common/http";
+import { timer } from 'rxjs';
+import { concatMap, map, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -14,6 +18,8 @@ import {AuthService} from "./services/auth.service";
 export class AppComponent {
   public pushRightClass: string;
   title = 'frontend';
+  invites: any;
+  number_of_invites: any;
 
   items = [
     {
@@ -39,7 +45,8 @@ export class AppComponent {
 
   constructor(private translate: TranslateService,
               private auth: AuthGuard,
-              private as: AuthService) {
+              private as: AuthService,
+              private http: HttpClient) {
     translate.setDefaultLang('en');
   }
 
@@ -50,6 +57,13 @@ export class AppComponent {
     this.translate.get("friendship.status").subscribe((res) => {
       console.log(res);
     });
+    const log = this.http.get('api/event/invite');
+
+    this.invites = timer(0, 1000).pipe(
+        concatMap(_ => log),
+        map((response) => this.test(response)),
+      );
+    console.log(this.invites.valueOf())
   }
 
   toggleSidebar() {
@@ -65,6 +79,12 @@ export class AppComponent {
       window.location.href = "/login";
     })
 
+  }
+
+  test(re){
+    console.log("test");
+    console.log(re);
+    this.number_of_invites=re.length;
   }
 
 

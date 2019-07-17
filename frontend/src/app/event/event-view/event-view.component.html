@@ -8,6 +8,8 @@
         <p>Street: {{location.street}}</p>
       </div>
     </div>
+    <button class="btn-danger" (click)="change_status('event.status.rejected')" *ngIf="my_status!='event.status.rejected' && my_status">Reject</button>
+    <button class="btn-success" (click)="change_status('event.status.accepted')" *ngIf="my_status!='event.status.accepted' && my_status">Accept</button>
 
 
   </div>

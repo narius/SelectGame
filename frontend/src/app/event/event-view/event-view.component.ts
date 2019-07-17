@@ -22,6 +22,7 @@ export class EventViewComponent implements OnInit {
   ratings: any;
   showrating: boolean=false
   friends: any;
+  my_status: any;
 
   constructor(private es: EventService,
               private route: ActivatedRoute,
@@ -40,6 +41,8 @@ export class EventViewComponent implements OnInit {
         this.rejected = res['rejected'];
         this.location = res['location'];
         this.ratings = res['ratings'];
+        this.my_status = res['my_status']['status'];
+
       });
     });
     this.fs.get_friends(this.event_id).subscribe((res)=>{
@@ -53,6 +56,13 @@ export class EventViewComponent implements OnInit {
     this.es.send_invite(this.event_id,receiver).subscribe((res)=>{
       console.log("send_invite");
       console.log(res)
+    })
+  }
+
+  change_status(status){
+    this.es.change_invite_status(this.event_id,status).subscribe((res)=>{
+      console.log("change_status");
+      console.log(res);
     })
   }
 

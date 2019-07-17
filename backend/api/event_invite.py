@@ -55,3 +55,19 @@ AND id not in (SELECT event.creator FROM event WHERE id={0});""".format(event_id
         cursor.execute(sql)
         conn.commit()
         return
+
+    # Used to change status of invite
+    @login_required
+    def put(self,**kwargs):
+        [conn, cursor] = get_db()
+        userid = kwargs['userid']
+        data = json.loads(request.data)
+        event_id = data.get('event_id','')
+        status = data.get('status', '')
+        if event_id=='' or status=='':
+            abort(400)
+        sql = """UPDATE event_participant SET status='{0}' 
+                 WHERE user_id={1} AND event_id={2}""".format(status,userid,event_id)
+        cursor.execute(sql)
+        conn.commit()
+        return

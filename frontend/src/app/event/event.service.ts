@@ -28,4 +28,10 @@ export class EventService {
     return this.http.get('api/event/invite')
   }
 
+  change_invite_status(event_id, status){
+    return this.http.put('api/event/invite',
+                        {'event_id': event_id,
+                        'status': status});
+  }
+
 }

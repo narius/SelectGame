@@ -29,9 +29,12 @@ WHERE event_participant.event_id={0} AND event_participant.status='event.status.
             users_ids = []
             for p in participants:
                 users_ids.append(int(p['id']))
+            length_user_id = len(users_ids)
+            t = tuple(users_ids)
+            user_tuple = t if length_user_id > 1 else str(t).replace(',','')
             games_sql = """SELECT * FROM game_library 
             INNER JOIN game ON game.id=game_library.game_id
-            WHERE user_id in {}""".format(tuple(users_ids))
+            WHERE user_id in {}""".format(user_tuple)
             cursor.execute(games_sql)
             games = cursor.fetchall()
             sent_sql = """SELECT users.id, users.surname, users.firstname, event_participant.status FROM event_participant
@@ -54,16 +57,21 @@ WHERE event_participant.event_id={0} AND event_participant.status='event.status.
             INNER JOIN game ON game.id=game_rating.game_id
             INNER JOIN users ON users.id=game_rating.user_id
             WHERE game_rating.user_id in {}
-            ORDER BY game.name""".format(tuple(users_ids))
+            ORDER BY game.name""".format(user_tuple)
             cursor.execute(rating_sql)
             rating = cursor.fetchall()
+
+            my_status_sql = """SELECT * FROM event_participant WHERE user_id={0} AND event_id={1}""".format(userid,event_id)
+            cursor.execute(my_status_sql)
+            my_status = cursor.fetchone()
             result = {'event': event,
                       'participants': participants,
                       'sent': sent,
                       'rejected': rejected,
                       'games': games,
                       'location': location,
-                      'ratings': rating
+                      'ratings': rating,
+                      'my_status': my_status
                       }
             return jsonify(result)
         cursor.execute(event_sql)
