@@ -59,7 +59,7 @@ export class AppComponent {
     });
     const log = this.http.get('api/event/invite');
 
-    this.invites = timer(0, 1000).pipe(
+    this.invites = timer(0, 60000).pipe(
         concatMap(_ => log),
         map((response) => this.test(response)),
       );
