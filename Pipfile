@@ -7,14 +7,14 @@ verify_ssl = true
 
 [packages]
 flask-restplus = "*"
-psycopg2 = "*"
 yoyo-migrations = "*"
-uwsgi = "*"
 pytest = "*"
 pytest-flask = "*"
 pylint = "*"
 requests = "==1.0.3"
 flask = "==1.0.3"
+psycopg2 = "*"
+psycopg2-binary = "*"
 
 [requires]
 python_version = "3.7"
