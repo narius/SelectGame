@@ -1,0 +1,3 @@
+files:
+  - source: frontend/src/assets/i18n/en.json
+    translation: frontend/src/assets/i18n/%two_letters_code%.json
